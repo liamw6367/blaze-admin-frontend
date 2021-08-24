@@ -1,0 +1,196 @@
+.justify {
+    position: relative;
+    background-color: #E1E1E1;
+    margin-top: 24px;
+    height: 83px;
+    border-bottom: transparent;
+}
+.justify {
+    padding: 19px 0;
+}
+.justify > .search-input {
+    width: 303px;
+    height: 47px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #3A3F50;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    padding: 12px 12px 11px;
+}
+.justify > .search-input > input {    
+    font-size: 16px;
+    color: #3A3F50;
+    width: 100%;
+}
+.justify > .search-input > i {
+    background-image: url('../assets/icons/main/search-icon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    cursor: pointer;
+}
+.text {
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #3A3F50;
+    display: inline-block;
+    margin: 0 35px;
+}
+.add-store-button {
+    width: 123px;
+    height: 47px;
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    background-color: rgba(255, 132, 0, 0.8);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.1s linear;
+}
+.add-store-button:hover {
+    background-color: rgb(255, 132, 0);
+}
+.add-store-button > a {
+    text-decoration: none;
+    outline: none;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #FFFFFF;
+}
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0 35px;
+}
+.info-table thead tr {
+    text-align: left;
+    color: #000000;
+    font-family: "Muli-Regular";
+    font-size: 16px;
+}
+.store-info-box {
+    background-color: #FFFFFF;
+}
+.margin-top {
+    margin-top: 42px;
+}
+.store-info-box > div {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+}
+.info-table th, 
+.info-table td {
+    padding-bottom: 18px;
+}
+.info-table thead tr,
+.info-table tbody tr:not(:last-child),
+.info-table tbody .last-tr-border:last-child {
+    border-bottom: 1px solid #BFBFBF;
+}
+.info-table th {
+    padding-top: 29px;
+}
+.info-table td {
+    padding-top: 18px;
+}
+.info-table tbody tr {
+    font-family: "Muli-Regular";
+    color: #000000;
+    font-size: 15px;
+}
+tr th:last-child {
+    text-align: center;
+}
+tr .group-td-boxes {
+    width: 150px;
+
+}
+thead tr .text-align {
+    padding-left: 60px;
+}
+.info-table thead tr .last-box {
+    width: 150px;
+}
+.info-table thead tr .send-message-box {
+    text-align: left;
+}
+thead tr .order-td-box {
+    padding-left: 0;
+}
+
+/* styles for all orders */
+.padding {
+    padding-left: 24px;
+    padding-right: 24px;
+    position: relative;
+}
+.status-dropdown-box {
+    position: absolute;
+    top: 20px;
+    right: 800px;
+}
+.names-dropdown-box {
+    position: absolute;
+    top: 20px;
+    right: 350px;
+}
+.date-to {
+    margin-left: 50px;
+}
+.span-margin {
+    display: inline-block;
+    margin-top: 10px;
+}
+.all-orders-box {
+    margin: 34px 0;
+    padding: 32px 0;
+}
+.no-orders-available {
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #3A3F50;
+    text-align: center;
+}
+.no-orders-available::first-letter {
+    text-transform: uppercase;
+}
+
+
+/* styles for new driver-page */
+.background-color {
+    background-color: #E1E1E1;
+}
+.driver-list-title {
+    padding-right: 25px;
+    margin-right: 25px;
+    border-right: 1px solid #BEBEBE;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* styles for groups page */
+.groups-title-container {
+    padding: 85px 0 19px;
+    border-bottom: 1px solid #BFBFBF;
+}
+.groups-title-container > p {
+    font-family: "Muli-SemiBold";
+    font-size: 25px;
+    color: #3A3F50;
+}

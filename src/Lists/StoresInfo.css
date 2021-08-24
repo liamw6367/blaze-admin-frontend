@@ -1,0 +1,75 @@
+tr td {
+    max-width: 700px;
+}
+tr .order-td-boxes {
+    text-align: center;
+}
+tr td:last-child {
+    text-align: center;
+}
+tr .padding-left {
+    padding-left: 30px;
+}
+tr .box-width {
+    width: 30px;
+}
+.edit-icon {
+    width: 17px;
+    height: 16px;
+}
+.send-msg-button {
+    width: 157px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EEEEEE;
+    border-radius: 3px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.1s linear;
+}
+.send-msg-button:hover,
+.send-msg-button:active {
+    transform: scale(0.9);
+}
+.mail-link {
+    text-decoration: none;
+    color: #004C8A;
+    font-weight: 500;
+}
+.cancel-butn {
+    font-family: Roboto-Regular, sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+
+/* styles for new driver-page */
+.view-icon {
+    cursor: pointer;
+}
+
+/* styles for banners page */
+.banner-image-container {
+    width: 682px;
+    height: 261px;
+}
+.banner-image-container > img {
+    width: 100%;
+}
+.icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    column-gap: 15px;
+}
+.remove-icon-container {
+    width: 25px;
+    height: 25px;
+}
+.remove-icon-container > img {
+    width: 100%;
+    cursor: pointer;
+}

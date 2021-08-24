@@ -1,0 +1,128 @@
+.dropdown {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 28px;
+    cursor: pointer;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    margin-left: 22px;
+    position: relative;
+    width: 303px;
+}
+.search {
+    width: 100%;
+    height: 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.search > p {
+    font-family: "Muli-SemiBold";
+    text-transform: capitalize;
+    color: #3A3F50;
+}
+i {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+}
+.search > i {
+    background-image: url('../assets/icons/main/arrow-down-icon.png');
+}
+
+.input-and-options-box {
+    position: absolute;
+    top: 43px;
+    left: 0;
+    width: 303px;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+}
+
+.input {
+    width: 100%;
+    height: 37px;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    padding: 5px 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.input > i {
+    background-image: url('../assets/icons/main/search-icon.png');
+}
+.input > input {
+    font-size: 14px;
+    color: #3A3F50;
+    width: 100%;
+}
+.options {
+    padding: 7px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.options > .store:last-child {
+    padding-bottom: 8px;
+}
+.store {
+    width: 100%;
+    text-transform: capitalize;
+    padding: 0 7px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #3A3F50;
+}
+.store:hover {
+    background-color: #3A3F50;
+    color: #FFFFFF;
+    transition: 0.2s linear;
+}
+
+/* styles foro add discount page */
+.reward-type-div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 55px;
+}
+.reward-type {
+    width: 962px;
+    height: 43px;
+    position: relative;
+    background-color: #EDF1F2;
+}
+.options-and-input-box {
+    position: absolute;
+    top: 43px;
+    left: 0;
+    z-index: 99;
+    width: 962px;
+    background-color: #EDF1F2;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+}
+.input-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+}
+.input {
+    max-width: 99%;
+    width: 100%;
+}

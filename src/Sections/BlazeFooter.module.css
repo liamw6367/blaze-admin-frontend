@@ -1,0 +1,16 @@
+.footer,
+.wide-footer {
+    border-top: 1px solid #BFBFBF;
+    padding: 20px 0;
+    margin: 0 52px 0 286px;
+    transition: margin 0.1s linear;
+}
+.wide-footer {
+    margin: 0 52px 0 106px;
+    transition: margin 0.2s linear;
+}
+.footer > p,
+.wide-footer > p {
+    font-size: 18px;
+    color: #6B6B6B;
+}

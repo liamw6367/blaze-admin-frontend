@@ -1,0 +1,282 @@
+.blaze-aside, 
+.narrow-blaze-aside {
+    width: 256px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.1s linear;
+    z-index: 5;
+}
+.narrow-blaze-aside {
+    width: 70px;
+    height: 100vh;
+}
+.blaze-aside__logo,
+.narrow-blaze-aside__logo {
+    width: 100%;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #004C8A;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+.blaze-aside__logo > img {
+    width: 116px;
+    transition: width 0.2s linear;
+}
+.narrow-blaze-aside__logo > img {
+    width: 60px;
+    transition: width 0.2s linear;
+}
+.blaze-aside__links,
+.narrow-blaze-aside__links {
+    border: 1px solid #707070;
+    background-color: #3A3F50;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    transition: all 0.2s linear;
+}
+.narrow-blaze-aside__links {
+    padding: 0;
+    padding-left: 24px;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a,
+.narrow-blaze-aside__links a {
+    text-decoration: none;
+    outline: none;
+    margin-bottom: 17px;
+    display: flex;
+    align-items: center;
+    column-gap: 18px;
+    transition: all 0.2s linear;
+}
+.narrow-blaze-aside__links a {
+    margin: 20px 0 40px;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a > i,
+.narrow-blaze-aside__links a > i {
+    display: block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 14px;
+    height: 14px;
+    transition: all 0.2s linear;
+}
+.narrow-blaze-aside__links a > i {
+    width: 22px;
+    height: 22px;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links .dashboard i {
+    background-image: url('../assets/icons/aside/dashboard-icon.png');
+}
+.narrow-blaze-aside__links .narrow-dashboard i {
+    background-image: url('../assets/icons/aside/dashboard-big-icon.png');
+}
+.blaze-aside__links .dashboard.active i,
+.blaze-aside__links .dashboard:hover i {
+    background-image: url('../assets/icons/aside/dashboard-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-dashboard.active i, 
+.narrow-blaze-aside__links .narrow-dashboard:hover i {
+    background-image: url('../assets/icons/aside/dashboard-big-orange-icon.png');
+}
+.blaze-aside__links .stores i {
+    background-image: url('../assets/icons/aside/store-icon.png');
+}
+.narrow-blaze-aside__links .narrow-stores i {
+    background-image: url('../assets/icons/aside/store-big-icon.png');
+}
+.blaze-aside__links .stores.active i,
+.blaze-aside__links .stores:hover i {
+    background-image: url('../assets/icons/aside/store-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-stores.active i, 
+.narrow-blaze-aside__links .narrow-stores:hover i {
+    background-image: url('../assets/icons/aside/store-big-orange-icon.png');
+}
+.blaze-aside__links .categories i {
+    background-image: url('../assets/icons/aside/list-icon.png');
+}
+.narrow-blaze-aside__links .narrow-categories i {
+    background-image: url('../assets/icons/aside/list-big-icon.png');
+}
+.blaze-aside__links .categories.active i,
+.blaze-aside__links .categories:hover i {
+    background-image: url('../assets/icons/aside/list-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-categories.active i, 
+.narrow-blaze-aside__links .narrow-categories:hover i {
+    background-image: url('../assets/icons/aside/list-big-orange-icon.png');
+}
+.blaze-aside__links .products i {
+    background-image: url('../assets/icons/aside/product-icon.svg');
+}
+.narrow-blaze-aside__links .narrow-products i {
+    background-image: url('../assets/icons/aside/product-big-icon.svg');
+}
+.blaze-aside__links .products.active i,
+.blaze-aside__links .products:hover i {
+    background-image: url('../assets/icons/aside/product-orange-icon.svg');
+}
+.narrow-blaze-aside__links .narrow-products.active i, 
+.narrow-blaze-aside__links .narrow-products:hover i {
+    background-image: url('../assets/icons/aside/product-big-orange-icon.svg');
+}
+.blaze-aside__links .drivers i {
+    background-image: url('../assets/icons/aside/car-icon.png');
+}
+.narrow-blaze-aside__links .narrow-drivers i {
+    background-image: url('../assets/icons/aside/car-big-icon.png');
+}
+.blaze-aside__links .drivers.active i,
+.blaze-aside__links .drivers:hover i {
+    background-image: url('../assets/icons/aside/car-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-drivers.active i, 
+.narrow-blaze-aside__links .narrow-drivers:hover i {
+    background-image: url('../assets/icons/aside/car-big-orange-icon.png');
+}
+.blaze-aside__links .user-list i {
+    background-image: url('../assets/icons/aside/user-icon.png');
+}
+.narrow-blaze-aside__links .narrow-user-list i {
+    background-image: url('../assets/icons/aside/user-big-icon.png');
+}
+.blaze-aside__links .user-list.active i,
+.blaze-aside__links .user-list:hover i {
+    background-image: url('../assets/icons/aside/user-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-user-list.active i, 
+.narrow-blaze-aside__links .narrow-user-list:hover i {
+    background-image: url('../assets/icons/aside/user-big-orange-icon.png');
+}
+.blaze-aside__links .prom-message i {
+    background-image: url('../assets/icons/aside/flash-icon.png');
+}
+.narrow-blaze-aside__links .narrow-prom-message i {
+    background-image: url('../assets/icons/aside/flash-big-icon.png');
+}
+.blaze-aside__links .prom-message.active i,
+.blaze-aside__links .prom-message:hover i {
+    background-image: url('../assets/icons/aside/flash-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-prom-message.active i, 
+.narrow-blaze-aside__links .narrow-prom-message:hover i {
+    background-image: url('../assets/icons/aside/flash-big-orange-icon.png');
+}
+.blaze-aside__links .all-orders i {
+    background-image: url('../assets/icons/aside/shopping-bag-icon.png');
+}
+.narrow-blaze-aside__links .narrow-all-orders i {
+    background-image: url('../assets/icons/aside/shopping-bag-big-icon.png');
+}
+.blaze-aside__links .all-orders.active i,
+.blaze-aside__links .all-orders:hover i {
+    background-image: url('../assets/icons/aside/shopping-bag-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow.all-orders.active i, 
+.narrow-blaze-aside__links .narrow-all-orders:hover i {
+    background-image: url('../assets/icons/aside/shopping-bag-big-orange-icon.png');
+}
+.blaze-aside__links .cancel-transaction i {
+    background-image: url('../assets/icons/aside/close-icon.png');
+}
+.narrow-blaze-aside__links .narrow-cancel-transaction i {
+    background-image: url('../assets/icons/aside/close-big-icon.png');
+}
+.blaze-aside__links .cancel-transaction.active i,
+.blaze-aside__links .cancel-transaction:hover i {
+    background-image: url('../assets/icons/aside/close-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-cancel-transaction.active i, 
+.narrow-blaze-aside__links .narrow-cancel-transaction:hover i {
+    background-image: url('../assets/icons/aside/close-big-orange-icon.png');
+}
+.blaze-aside__links .discounts i {
+    background-image: url('../assets/icons/aside/discount-icon.png');
+}
+.narrow-blaze-aside__links .narrow-discounts i {
+    background-image: url('../assets/icons/aside/discount-big-icon.png');
+}
+.blaze-aside__links .discounts.active i,
+.blaze-aside__links .discounts:hover i {
+    background-image: url('../assets/icons/aside/discount-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-discounts.active i, 
+.narrow-blaze-aside__links .narrow-discounts:hover i {
+    background-image: url('../assets/icons/aside/discount-big-orange-icon.png');
+}
+.blaze-aside__links .tax i {
+    background-image: url('../assets/icons/aside/dollar-icon.png');
+}
+.narrow-blaze-aside__links .narrow-tax i {
+    background-image: url('../assets/icons/aside/dollar-big-icon.png');
+}
+.blaze-aside__links .tax.active i,
+.blaze-aside__links .tax:hover i {
+    background-image: url('../assets/icons/aside/dollar-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-tax.active i, 
+.narrow-blaze-aside__links .narrow-tax:hover i {
+    background-image: url('../assets/icons/aside/dollar-big-orange-icon.png');
+}
+.blaze-aside__links .banners i {
+    background-image: url('../assets/icons/aside/photo-icon.png');
+}
+.narrow-blaze-aside__links .narrow-banners i {
+    background-image: url('../assets/icons/aside/photo-big-icon.png');
+}
+.blaze-aside__links .banners.active i,
+.blaze-aside__links .banners:hover i {
+    background-image: url('../assets/icons/aside/photo-orange-icon.png');
+}
+.narrow-blaze-aside__links .narrow-banners.active i, 
+.narrow-blaze-aside__links .narrow-banners:hover i {
+    background-image: url('../assets/icons/aside/photo-big-orange-icon.png');
+}
+.blaze-aside__links .delivery-fee i {
+    background-image: url('../assets/icons/aside/delivery-icon.svg');
+}
+.narrow-blaze-aside__links .narrow-delivery-fee i {
+    background-image: url('../assets/icons/aside/delivery-big-icon.svg');
+}
+.blaze-aside__links .delivery-fee.active i,
+.blaze-aside__links .delivery-fee:hover i {
+    background-image: url('../assets/icons/aside/delivery-orange-icon.svg');
+}
+.narrow-blaze-aside__links .narrow-delivery-fee.active i, 
+.narrow-blaze-aside__links .narrow-delivery-fee:hover i {
+    background-image: url('../assets/icons/aside/delivery-big-orange-icon.svg');
+}
+.blaze-aside__links a.active,
+.blaze-aside__links a:hover {
+    column-gap: 11px;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a.active,
+.narrow-blaze-aside__links a.active {
+    border-right: 4px solid #FF8400;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a .p {
+    font-size: 16px;
+    color: #FFFFFF;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a .narrow-p {
+    background-color: yellow;
+    transition: all 0.2s linear;
+}
+.blaze-aside__links a.active p,
+.blaze-aside__links a:hover p {
+    color: #FF8400;
+    transition: all 0.2s linear;
+}

@@ -1,38 +1,24 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: "Muli-Bold";
+    src: url('./assets/fonts/Muli-Bold.ttf');
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+    font-family: "Muli-ExtraLight";
+    src: url('./assets/fonts/Muli-ExtraLight.ttf');
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+    font-family: "Muli-Light";
+    src: url('./assets/fonts/Muli-Light.ttf');
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+    font-family: "Muli-SemiBold";
+    src: url('./assets/fonts/Muli-SemiBold.ttf');
 }
-
-.App-link {
-  color: #61dafb;
+@font-face {
+    font-family: "Muli";
+    src: url('./assets/fonts/Muli.ttf');
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+    font-family: "Muli-Regular";
+    src: url('./assets/fonts/Muli-Regular.ttf');
 }

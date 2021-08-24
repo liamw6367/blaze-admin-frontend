@@ -1,0 +1,50 @@
+.header,
+.wide-header {
+    width: 100%;
+    height: 74px;
+    background-color: #004C8A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 70px 0 300px;
+    transition: padding 0.1s linear;
+    position: fixed;
+    z-index: 5;
+}
+.wide-header {
+    padding: 0 70px 0 100px;
+    transition: padding 0.2s linear;
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 100px;
+}
+.logo > img {
+    cursor: pointer;
+}
+.logo > img {
+    padding: 8px;
+    border-radius: 8px;
+}
+.logo > img:hover {
+    box-shadow: 3px 3px 10px rgb(255, 255, 255);
+}
+.logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 11px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+}
+.logout:hover {
+    box-shadow: 3px 3px 10px rgb(255, 255, 255);
+}
+.logout > p {
+    font-size: 16px;
+    color: #FFFFFF;
+}
