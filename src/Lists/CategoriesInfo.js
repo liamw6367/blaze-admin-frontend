@@ -26,7 +26,7 @@ const CategoriesInfo = (props) => {
                 { props.category.description }
             </td>
             <td>
-                <Link to="/EditCategory"> 
+                <Link to="/admin/edit-category"> 
                     <img 
                         className="edit-icon"
                         src={editIcon} 

@@ -13,10 +13,6 @@ const BlazeHeader = () => {
     const logOutHandler = () => {
         history.push('/');
     };
-
-        console.log("header runs");
-
-
     return (
         <header className={justCtx.isExtended ? styles.header : styles["wide-header"]}>
             <div className={styles.logo} onClick={justCtx.onJustify}>   
@@ -30,4 +26,4 @@ const BlazeHeader = () => {
     );
 };
 
-export default React.memo(BlazeHeader);
+export default BlazeHeader;

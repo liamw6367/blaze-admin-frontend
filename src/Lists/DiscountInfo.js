@@ -25,7 +25,7 @@ const DiscountInfo = (props) => {
                 { discountStatus }
             </td>
             <td className="group-td-boxes">
-                <Link to="/EditDiscount"> 
+                <Link to="/admin/edit-discount"> 
                     <img 
                         className="edit-icon" 
                         src={editIcon} 

@@ -70,7 +70,7 @@ const AddCategory = (props) => {
         setTumbnailAreaIsOpen(false);
         setBannerAreaIsOpen(false);
 
-        history.push('/Categories');
+        history.push('/admin/categories');
     };
     
     return (
@@ -79,8 +79,8 @@ const AddCategory = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Categories"><p>Categories/</p></Link> 
-                    <Link to="/AddCategory"><p className="text-color">Add Category</p></Link> 
+                    <Link to="/admin/categories"><p>Categories/</p></Link> 
+                    <Link to="/admin/add-category"><p className="text-color">Add Category</p></Link> 
                 </div> 
             }
             main={

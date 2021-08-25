@@ -31,7 +31,7 @@ const BannerInfo = (props) => {
             </td>
             <td className="group-td-boxes">
                 <div className="icons-container">
-                    <Link to="/EditBanner"> 
+                    <Link to="/admin/edit-banner"> 
                         <img 
                             className="edit-icon"
                             src={editIcon} 

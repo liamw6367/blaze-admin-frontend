@@ -36,7 +36,7 @@ const AddTax = (props) => {
         resetNameInputValueHandler();
         setEnteredTaxPercentage("");
 
-        history.push('./Tax');
+        history.push('./admin/tax');
     };
 
     return (
@@ -45,8 +45,8 @@ const AddTax = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Tax"><p>Tax/</p></Link> 
-                    <Link to="/AddTax"><p className="text-color">Add Tax</p></Link> 
+                    <Link to="/admin/tax"><p>Tax/</p></Link> 
+                    <Link to="/admin/add-tax"><p className="text-color">Add Tax</p></Link> 
                 </div> 
             }
             main={

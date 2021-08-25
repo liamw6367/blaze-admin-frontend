@@ -43,7 +43,7 @@ const Banners = (props) => {
                         <span className="text">View:</span>
                         <StoreStatusDropdown onTrigger={triggerStatusHandler} />
                         <div className="add-store-button">
-                            <Link to="/AddBanner">Add New</Link>
+                            <Link to="/admin/add-banner">Add New</Link>
                         </div>
                     </div>
                     {

@@ -58,7 +58,7 @@ const AddBanner = (props) => {
         setBannerIsActive(false);
         setBannerAreaIsOpen(false);
 
-        history.push('/Banners');
+        history.push('/admin/banners');
     };
 
     return (
@@ -67,8 +67,8 @@ const AddBanner = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Banners"><p>Banners/</p></Link> 
-                    <Link to="/AddBanner"><p className="text-color">Add Banner</p></Link> 
+                    <Link to="/admin/banners"><p>Banners/</p></Link> 
+                    <Link to="/admin/add-banner"><p className="text-color">Add Banner</p></Link> 
                 </div> 
             }
             main={

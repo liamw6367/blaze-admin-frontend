@@ -116,7 +116,7 @@ const AddGroup = (props) => {
         resetTotalAmountInputValueHandler();
         setEnteredRewardProductName("");
 
-        history.push('./Discounts');
+        history.push('./admin/discounts');
     };
 
     return (
@@ -125,8 +125,8 @@ const AddGroup = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Discounts"><p>Groups/</p></Link> 
-                    <Link to="/AddDiscount"><p className="text-color">Add Group</p></Link> 
+                    <Link to="/admin/discounts"><p>Groups/</p></Link> 
+                    <Link to="/admin/add-group"><p className="text-color">Add Group</p></Link> 
                 </div> 
             }
             main={

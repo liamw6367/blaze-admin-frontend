@@ -111,7 +111,7 @@ const EditStore = (props) => {
         console.log(updatedStoreData, "uppdatedstoredATA");
         props.onUpdate(updatedStoreData);
 
-        history.push('./Stores');
+        history.push('./admin/stores');
     };
 
     return (
@@ -120,8 +120,8 @@ const EditStore = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Stores"><p>Stores/</p></Link> 
-                    <Link to="/EditStore"><p className="text-color">Edit Store</p></Link> 
+                    <Link to="/admin/stores"><p>Stores/</p></Link> 
+                    <Link to="/admin/edit-store"><p className="text-color">Edit Store</p></Link> 
                 </div> 
             }
             main={

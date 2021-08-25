@@ -22,8 +22,8 @@ const Drivers = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
-                    <Link to="/Drivers"><p className="driver-list-title text-color">List</p></Link> 
-                    <Link to="/DriversPending"><p>Pending</p></Link>
+                    <Link to="/admin/drivers"><p className="driver-list-title text-color">List</p></Link> 
+                    <Link to="/admin/drivers-pending"><p>Pending</p></Link>
                 </div>
             }
             main={

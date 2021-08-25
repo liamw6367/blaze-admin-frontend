@@ -10,11 +10,8 @@ const BlazeAside = () => {
     const history = useHistory();
 
     const redirectHomeHandler = () => {
-        history.push('/Dashboard')
+        history.push('/admin/dashboard')
     };
-
-    console.log("sidebar runs");
-
 
     return (
         <aside className={justCtx.isExtended ? "blaze-aside" : "narrow-blaze-aside"}>
@@ -22,43 +19,43 @@ const BlazeAside = () => {
                 <img src={logoIcon} alt="logo icon" />
             </div>
             <div className={justCtx.isExtended ? "blaze-aside__links" : "narrow-blaze-aside__links"}>
-                <NavLink to='/Dashboard' className={justCtx.isExtended ? "dashboard" : "narrow-dashboard"}>
+                <NavLink to='/admin/dashboard' className={justCtx.isExtended ? "dashboard" : "narrow-dashboard"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Dashboard</p> : ""} 
                 </NavLink>
-                <NavLink to='/Stores' className={justCtx.isExtended ? "stores" : "narrow-stores"}>
+                <NavLink to='/admin/stores' className={justCtx.isExtended ? "stores" : "narrow-stores"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Stores</p> : ""}  
                 </NavLink>
-                <NavLink to='/Categories' className={justCtx.isExtended ? "categories" : "narrow-categories"}>
+                <NavLink to='/admin/categories' className={justCtx.isExtended ? "categories" : "narrow-categories"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Categories</p> : ""}  
                 </NavLink>
-                <NavLink to='/Products' className={justCtx.isExtended ? "products" : "narrow-products"}>
+                <NavLink to='/admin/products' className={justCtx.isExtended ? "products" : "narrow-products"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Products</p> : ""}  
                 </NavLink> 
-                <NavLink to='/Drivers' className={justCtx.isExtended ? "drivers" : "narrow-drivers"}>
+                <NavLink to='/admin/drivers' className={justCtx.isExtended ? "drivers" : "narrow-drivers"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Drivers</p> : ""}  
                 </NavLink>
-                <NavLink to='/UserList' className={justCtx.isExtended ? "user-list" : "narrow-user-list"}>
+                <NavLink to='/admin/user-list' className={justCtx.isExtended ? "user-list" : "narrow-user-list"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>User List</p> : ""}  
                 </NavLink>
-                <NavLink to='/PromotionalMessage' className={justCtx.isExtended ? "prom-message" : "narrow-prom-message"}>
+                <NavLink to='/admin/promotional-message' className={justCtx.isExtended ? "prom-message" : "narrow-prom-message"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Promotional Message</p> : ""}  
                 </NavLink>
-                <NavLink to='/AllOrders' className={justCtx.isExtended ? "all-orders" : "narrow-all-orders"}>
+                <NavLink to='/admin/all-orders' className={justCtx.isExtended ? "all-orders" : "narrow-all-orders"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>All Orders</p> : ""}  
                 </NavLink>
-                <NavLink to='/CancelTransaction' className={justCtx.isExtended ? "cancel-transaction" : "narrow-cancel-transaction"}>
+                <NavLink to='/admin/cancel-transaction' className={justCtx.isExtended ? "cancel-transaction" : "narrow-cancel-transaction"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Cancel Transaction</p> : ""}  
                 </NavLink>
-                <NavLink to='/Discounts' className={justCtx.isExtended ? "discounts" : "narrow-discounts"}>
+                <NavLink to='/admin/discounts' className={justCtx.isExtended ? "discounts" : "narrow-discounts"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Discounts</p> : ""}  
                 </NavLink>
-                <NavLink to='/Tax' className={justCtx.isExtended ? "tax" : "narrow-tax"}>
+                <NavLink to='/admin/tax' className={justCtx.isExtended ? "tax" : "narrow-tax"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Tax</p> : ""}  
                 </NavLink>
-                <NavLink to='/Banners' className={justCtx.isExtended ? "banners" : "narrow-banners"}>
+                <NavLink to='/admin/banners' className={justCtx.isExtended ? "banners" : "narrow-banners"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Banners</p> : ""}  
                 </NavLink>
-                <NavLink to='/DeliveryFee' className={justCtx.isExtended ? "delivery-fee" : "narrow-delivery-fee"}>
+                <NavLink to='/admin/delivery-fee' className={justCtx.isExtended ? "delivery-fee" : "narrow-delivery-fee"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Delivery Fee</p> : ""}  
                 </NavLink>
             </div>
@@ -66,4 +63,4 @@ const BlazeAside = () => {
     );
 };
 
-export default React.memo(BlazeAside);
+export default BlazeAside;

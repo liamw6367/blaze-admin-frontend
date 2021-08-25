@@ -48,7 +48,7 @@ const Categories = (props) => {
                         </div>
                         <StoreStatusDropdown onTrigger={triggerStatusHandler} />
                         <div className="add-store-button">
-                            <Link to="/AddCategory">Add New</Link>
+                            <Link to="/admin/add-category">Add New</Link>
                         </div>
                     </div>
                     <div className="store-info-box">

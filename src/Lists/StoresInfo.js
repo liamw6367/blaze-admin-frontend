@@ -32,7 +32,7 @@ const StoresInfo = (props) => {
                 { storeStatus } 
             </td>
             <td>
-                <Link to="/EditStore"> 
+                <Link to="/admin/edit-store"> 
                     <img 
                         className="edit-icon" 
                         src={editIcon} 

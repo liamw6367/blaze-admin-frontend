@@ -16,4 +16,4 @@ const Blaze = (props) => {
     );
 };
 
-export default React.memo(Blaze);
+export default Blaze;

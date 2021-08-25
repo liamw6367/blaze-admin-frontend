@@ -38,7 +38,7 @@ const Groups = (props) => {
                     <i />
                 </div>
                 <div className="add-store-button">
-                    <Link to="/AddGroup">Add New</Link>
+                    <Link to="/admin/add-group">Add New</Link>
                 </div>
             </div>
             {

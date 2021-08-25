@@ -44,7 +44,7 @@ const Tax = (props) => {
                             <i />
                         </div>
                         <div className="add-store-button">
-                            <Link to="/AddTax">Add New</Link>
+                            <Link to="/admin/add-tax">Add New</Link>
                         </div>
                     </div>
                     {

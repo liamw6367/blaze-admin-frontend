@@ -139,7 +139,7 @@ const AddStore = (props) => {
         setEnteredAddress("");
         setIsActive(false);
 
-        history.push('./Stores');
+        history.push('./admin/stores');
     };
 
     return (
@@ -148,8 +148,8 @@ const AddStore = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Stores"><p>Stores/</p></Link> 
-                    <Link to="/AddStore"><p className="text-color">Add Store</p></Link> 
+                    <Link to="/admin/stores"><p>Stores/</p></Link> 
+                    <Link to="/admin/add-store"><p className="text-color">Add Store</p></Link> 
                 </div> 
             }
             main={

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
 import uploadCloudImage from '../assets/images/main/upload-cloud-image.png';
@@ -10,9 +10,21 @@ import bitcoinImage from '../assets/images/main/bitcoin-logo-image.png';
 import Blaze from './Blaze';
 import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import JustifyContext from '../Contexts/JustifyingContext';
+import axios from 'axios';
 
 const Dashboard = (props) => {
     const justCtx = useContext(JustifyContext);
+    const [stores, setStores] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`http://54.184.111.173/test-stores/`)
+        .then((res) => {
+            setStores(res.data);
+            setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }, []);
     
     let currentMonth = new Date().getMonth() + 1;
     currentMonth = (currentMonth < 10) ? ("0" + currentMonth) : currentMonth;
@@ -21,6 +33,14 @@ const Dashboard = (props) => {
     let currentYear = new Date().getFullYear(); 
     let lastMonth = +currentMonth - 1;
     lastMonth = (lastMonth < 10) ? ("0" + lastMonth) : lastMonth;
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
 
     return (
         <Blaze 
@@ -41,7 +61,7 @@ const Dashboard = (props) => {
                             <input type="date" name="" id="" defaultValue={`${currentYear}-${currentMonth}-${currentDay}`} />
                         </label>
                         <span className="title">Stores</span>
-                        <StoreNamesDropdown stores={props.stores} />
+                        <StoreNamesDropdown stores={stores} />
                     </div>
                     <div className="cards-container">
                         <div className="card-1">

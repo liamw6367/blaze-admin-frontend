@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './UI/LoginPage';
@@ -32,124 +32,126 @@ import Products from './Pages/Products';
 import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
+import axios from 'axios';
+// import { API_URL } from './configs/config';
 
 
 
 const App = () => {
-  const [stores, setStores] = useState([
-    {
-      name: "All",
-      area: "Some",
-      latitude: "19.546545454545465465612",
-      longitude: "72.546545454545465465612",
-      deliveryRadius: "2",
-      storeTiming: "8am",
-      contactPersonName: "Aziz Tinwala",
-      contactNumber: "+12345678912778",
-      blazePersonName:"Aziz Tinwala",
-      blazePersonNumber: "",
-      address: "Vasai East",
-      storeEmailId: "all@all.com",
-      password: "123456",
-      isActive: true,
-  },
-    {
-        name: "Funny Store",
-        area: "Some",
-        latitude: "19.546545454545465465612",
-        longitude: "72.546545454545465465612",
-        deliveryRadius: "2",
-        storeTiming: "8am",
-        contactPersonName: "Aziz Tinwala",
-        contactNumber: "+12345678912778",
-        blazePersonName:"Aziz Tinwala",
-        blazePersonNumber: "",
-        address: "Vasai East",
-        storeEmailId: "example@example.com",
-        password: "123456",
-        isActive: true,
-    },
-    {
-        name: "Cornucopia",
-        area: "Place",
-        latitude: "19.546545454545465465612",
-        longitude: "72.546545454545465465612",
-        deliveryRadius: "2",
-        storeTiming: "8am",
-        contactPersonName: "Aziz Tinwala",
-        contactNumber: "+12345555444312",
-        blazePersonName:"Aziz Tinwala",
-        blazePersonNumber: "",
-        address: "Vasai East",
-        storeEmailId: "test@test.com",
-        password: "123456",
-        isActive: true,
-    },
-    {
-        name: "The Corner Store",
-        area: "Bandra",
-        latitude: "19.546545454545465465612",
-        longitude: "72.546545454545465465612",
-        deliveryRadius: "2",
-        storeTiming: "8am",
-        contactPersonName: "Aziz Tinwala",
-        contactNumber: "+12366500893123",
-        blazePersonName:"Aziz Tinwala",
-        blazePersonNumber: "",
-        address: "Vasai East",
-        storeEmailId: "instance@instance.com",
-        password: "123456",
-        isActive: false,
-    },
-    {
-      name: "Drinks",
-      area: "Something",
-      latitude: "19.546545454545465465612",
-      longitude: "72.546545454545465465612",
-      deliveryRadius: "2",
-      storeTiming: "8am",
-      contactPersonName: "Aziz Tinwala",
-      contactNumber: "+12345678912778",
-      blazePersonName:"Aziz Tinwala",
-      blazePersonNumber: "",
-      address: "Vasai East",
-      storeEmailId: "ample@ample.com",
-      password: "123456",
-      isActive: false,
-    },
-    {
-        name: "The best shop",
-        area: "any place",
-        latitude: "19.546545454545465465612",
-        longitude: "72.546545454545465465612",
-        deliveryRadius: "2",
-        storeTiming: "8am",
-        contactPersonName: "Aziz Tinwala",
-        contactNumber: "+12345555444312",
-        blazePersonName:"Aziz Tinwala",
-        blazePersonNumber: "",
-        address: "Vasai East",
-        storeEmailId: "task@task.com",
-        password: "123456",
-        isActive: true,
-    },
-    {
-        name: "The Circle Store",
-        area: "Bandra",
-        latitude: "19.546545454545465465612",
-        longitude: "72.546545454545465465612",
-        deliveryRadius: "2",
-        storeTiming: "8am",
-        contactPersonName: "Aziz Tinwala",
-        contactNumber: "+12366500893123",
-        blazePersonName:"Aziz Tinwala",
-        blazePersonNumber: "",
-        address: "Vasai East",
-        storeEmailId: "inst@inst.com",
-        password: "123456",
-        isActive: true,
-    },
-  ]);
+  // const [stores, setStores] = useState([
+  //   {
+  //     name: "All",
+  //     area: "Some",
+  //     latitude: "19.546545454545465465612",
+  //     longitude: "72.546545454545465465612",
+  //     deliveryRadius: "2",
+  //     storeTiming: "8am",
+  //     contactPersonName: "Aziz Tinwala",
+  //     contactNumber: "+12345678912778",
+  //     blazePersonName:"Aziz Tinwala",
+  //     blazePersonNumber: "",
+  //     address: "Vasai East",
+  //     storeEmailId: "all@all.com",
+  //     password: "123456",
+  //     isActive: true,
+  // },
+  //   {
+  //       name: "Funny Store",
+  //       area: "Some",
+  //       latitude: "19.546545454545465465612",
+  //       longitude: "72.546545454545465465612",
+  //       deliveryRadius: "2",
+  //       storeTiming: "8am",
+  //       contactPersonName: "Aziz Tinwala",
+  //       contactNumber: "+12345678912778",
+  //       blazePersonName:"Aziz Tinwala",
+  //       blazePersonNumber: "",
+  //       address: "Vasai East",
+  //       storeEmailId: "example@example.com",
+  //       password: "123456",
+  //       isActive: true,
+  //   },
+  //   {
+  //       name: "Cornucopia",
+  //       area: "Place",
+  //       latitude: "19.546545454545465465612",
+  //       longitude: "72.546545454545465465612",
+  //       deliveryRadius: "2",
+  //       storeTiming: "8am",
+  //       contactPersonName: "Aziz Tinwala",
+  //       contactNumber: "+12345555444312",
+  //       blazePersonName:"Aziz Tinwala",
+  //       blazePersonNumber: "",
+  //       address: "Vasai East",
+  //       storeEmailId: "test@test.com",
+  //       password: "123456",
+  //       isActive: true,
+  //   },
+  //   {
+  //       name: "The Corner Store",
+  //       area: "Bandra",
+  //       latitude: "19.546545454545465465612",
+  //       longitude: "72.546545454545465465612",
+  //       deliveryRadius: "2",
+  //       storeTiming: "8am",
+  //       contactPersonName: "Aziz Tinwala",
+  //       contactNumber: "+12366500893123",
+  //       blazePersonName:"Aziz Tinwala",
+  //       blazePersonNumber: "",
+  //       address: "Vasai East",
+  //       storeEmailId: "instance@instance.com",
+  //       password: "123456",
+  //       isActive: false,
+  //   },
+  //   {
+  //     name: "Drinks",
+  //     area: "Something",
+  //     latitude: "19.546545454545465465612",
+  //     longitude: "72.546545454545465465612",
+  //     deliveryRadius: "2",
+  //     storeTiming: "8am",
+  //     contactPersonName: "Aziz Tinwala",
+  //     contactNumber: "+12345678912778",
+  //     blazePersonName:"Aziz Tinwala",
+  //     blazePersonNumber: "",
+  //     address: "Vasai East",
+  //     storeEmailId: "ample@ample.com",
+  //     password: "123456",
+  //     isActive: false,
+  //   },
+  //   {
+  //       name: "The best shop",
+  //       area: "any place",
+  //       latitude: "19.546545454545465465612",
+  //       longitude: "72.546545454545465465612",
+  //       deliveryRadius: "2",
+  //       storeTiming: "8am",
+  //       contactPersonName: "Aziz Tinwala",
+  //       contactNumber: "+12345555444312",
+  //       blazePersonName:"Aziz Tinwala",
+  //       blazePersonNumber: "",
+  //       address: "Vasai East",
+  //       storeEmailId: "task@task.com",
+  //       password: "123456",
+  //       isActive: true,
+  //   },
+  //   {
+  //       name: "The Circle Store",
+  //       area: "Bandra",
+  //       latitude: "19.546545454545465465612",
+  //       longitude: "72.546545454545465465612",
+  //       deliveryRadius: "2",
+  //       storeTiming: "8am",
+  //       contactPersonName: "Aziz Tinwala",
+  //       contactNumber: "+12366500893123",
+  //       blazePersonName:"Aziz Tinwala",
+  //       blazePersonNumber: "",
+  //       address: "Vasai East",
+  //       storeEmailId: "inst@inst.com",
+  //       password: "123456",
+  //       isActive: true,
+  //   },
+  // ]);
   const [categories, setCategories] = useState([
     {
         id: Math.random().toString(),
@@ -472,6 +474,15 @@ const App = () => {
       bannerIsActive: true,
     },
   ]);
+  const [stores, setStores] = useState([]);
+
+  // useEffect(() => {
+  //   axios.get(`http://54.184.111.173/test-stores/`)
+  //   .then((res) => {
+  //     setStores(res.data);
+  //   })
+  //   .catch(err => console.log(err.message));
+  // }, []);
 
   const removingCtx = useContext(RemovingContext);
 
@@ -612,85 +623,85 @@ const App = () => {
   return (
     <div className="App">
       <Switch>
-        <Redirect exact from="/" to="/LoginPage" />
-        <Route exact path="/LoginPage">
+        <Redirect exact from="/" to="/admin/login" />
+        <Route exact path="/admin/login">
           <LoginPage />
         </Route>
-        <Route path="/Dashboard">
+        <Route path="/admin/dashboard">
           <Dashboard stores={stores} />
         </Route>
-        <Route path="/Stores">
+        <Route path="/admin/stores">
           <Stores stores={stores} showStore={showStoreHandler} />
         </Route>
-        <Route path="/AddStore">
+        <Route path="/admin/add-store">
           <AddStore triggerStoreData={addStoreDataHandler} />
         </Route>
-        <Route path="/EditStore">
+        <Route path="/admin/edit-store">
           <EditStore targetStore={targetStore} onUpdate={updateStoreDataHandler} />
         </Route>
-        <Route path="/Categories">
+        <Route path="/admin/categories">
           <Categories categories={categories} showCategory={showCategoryHandler} />
         </Route>
-        <Route path="/AddCategory">
+        <Route path="/admin/add-category">
           <AddCategory triggerCategoryData={addCategoryDataHandler} />
         </Route>
-        <Route path="/EditCategory">
+        <Route path="/admin/edit-category">
           <EditCategory targetCategory={targetCategory} onUpdate={updateCategoryDataHandler} />
         </Route>
-        <Route path="/Products">
+        <Route path="/admin/products">
           <Products products={products} categories={categories} />
         </Route>
-        <Route path="/Drivers">
+        <Route path="/admin/drivers">
           <Drivers drivers={drivers} onReject={rejectDriverHandler} />
         </Route>
-        <Route path="/DriversPending">
+        <Route path="/admin/drivers-pending">
           <DriversPending drivers={drivers} onActivate={makeDriverActive} />
         </Route>
-        <Route path="/UserList">
+        <Route path="/admin/user-list">
           <UserList />
         </Route>
-        <Route path="/PromotionalMessage">
+        <Route path="/admin/promotional-message">
           <PromotionalMessage />
         </Route>
-        <Route path="/AllOrders">
+        <Route path="/admin/all-orders">
           <AllOrders stores={stores} orders={orders} />
         </Route>
-        <Route path="/CancelTransaction">
+        <Route path="/admin/cancel-transaction">
           <CancelTransaction orders={orders} 
           // onRemove={removeOrderHandler} 
           />
         </Route>
-        <Route path="/Discounts">
+        <Route path="/admin/discounts">
           <Discounts discounts={discounts} showDiscount={showDiscountHandler} groups={groups} showGroup={showGroupHandler} />
         </Route>
-        <Route path="/AddDiscount">
+        <Route path="/admin/add-discount">
             <AddDiscount categories={categories} products={products} triggerDiscountData={addDiscountDataHandler} />
         </Route>
-        <Route path="/EditDiscount">
+        <Route path="/admin/edit-discount">
             <EditDiscount targetDiscount={targetDiscount} categories={categories} products={products} onUpdate={updateDiscountDataHandler} />
         </Route>
-        <Route path="/AddGroup">
+        <Route path="/admin/add-group">
             <AddGroup products={products} triggerGroupData={addGroupDataHandler} />
         </Route>
-        <Route path="/EditGroup">
+        <Route path="/admin/edit-group">
             <EditGroup targetGroup={targetGroup} products={products} onUpdate={updateGroupDataHandler} />
         </Route>
-        <Route path="/Tax"> 
+        <Route path="/admin/tax"> 
           <Tax taxes={taxes} />
         </Route>
-        <Route path="/AddTax">
+        <Route path="/admin/add-tax">
           <AddTax triggerTaxData={addTaxDataHandler} />
         </Route>
-        <Route path="/Banners">
+        <Route path="/admin/banners">
           <Banners banners={banners} showBanner={showBannerHandler} onRemove={removeBannerHandler} />
         </Route>
-        <Route path="/AddBanner">
+        <Route path="/admin/add-banner">
           <AddBanner triggerBannerData={addBannerDataHandler} />
         </Route>
-        <Route path="/EditBanner">
+        <Route path="/admin/edit-banner">
           <EditBanner targetBanner={targetBanner} onUpdate={updateBannerDataHandler} />
         </Route>
-        <Route path="/DeliveryFee">
+        <Route path="/admin/delivery-fee">
           <DeliveryFee />
         </Route>
       </Switch>

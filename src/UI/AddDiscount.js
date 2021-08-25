@@ -200,7 +200,7 @@ const AddDiscount = (props) => {
         setAllProductsAreMarked(false);
         setDiscountIsActive(true);
 
-        history.push('./Discounts');
+        history.push('./admin/discounts');
     };
 
     return (
@@ -209,8 +209,8 @@ const AddDiscount = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Discounts"><p>Discounts/</p></Link> 
-                    <Link to="/AddDiscount"><p className="text-color">Add Discount</p></Link> 
+                    <Link to="/admin/discounts"><p>Discounts/</p></Link> 
+                    <Link to="/admin/add-discount"><p className="text-color">Add Discount</p></Link> 
                 </div> 
             }
             main={

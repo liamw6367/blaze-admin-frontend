@@ -56,7 +56,7 @@ const Discounts = (props) => {
                         </div>
                         <StoreStatusDropdown onTrigger={triggerStatusHandler} />
                         <div className="add-store-button">
-                            <Link to="/AddDiscount">Add New</Link>
+                            <Link to="/admin/add-discount">Add New</Link>
                         </div>
                     </div>
                     {

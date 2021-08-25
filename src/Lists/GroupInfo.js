@@ -23,7 +23,7 @@ const GroupInfo = (props) => {
                 { props.group.totalAmount }
             </td>
             <td className="group-td-boxes">
-                <Link to="/EditGroup"> 
+                <Link to="/admin/edit-group"> 
                     <img 
                         className="edit-icon" 
                         src={editIcon} 

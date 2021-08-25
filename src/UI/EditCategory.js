@@ -68,7 +68,7 @@ const EditCategory = (props) => {
         setTumbnailAreaIsOpen(false);
         setBannerAreaIsOpen(false);
 
-        history.push('/Categories');
+        history.push('/admin/categories');
     };
 
     return (
@@ -77,8 +77,8 @@ const EditCategory = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Categories"><p>Categories/</p></Link> 
-                    <Link to="/EditCategory"><p className="text-color">Edit Category</p></Link> 
+                    <Link to="/admin/categories"><p>Categories/</p></Link> 
+                    <Link to="/admin/edit-category"><p className="text-color">Edit Category</p></Link> 
                 </div> 
             }
             main={

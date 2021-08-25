@@ -185,7 +185,7 @@ const EditDiscount = (props) => {
         };
         props.onUpdate(updatedDiscountData);
 
-        history.push('./Discounts');
+        history.push('./admin/discounts');
     };
 
     return (
@@ -194,8 +194,8 @@ const EditDiscount = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Discounts"><p>Discounts/</p></Link> 
-                    <Link to="/EditDiscount"><p className="text-color">Edit Discount</p></Link> 
+                    <Link to="/admin/discounts"><p>Discounts/</p></Link> 
+                    <Link to="/admin/edit-discount"><p className="text-color">Edit Discount</p></Link> 
                 </div> 
             }
             main={

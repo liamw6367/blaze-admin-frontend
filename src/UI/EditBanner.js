@@ -54,7 +54,7 @@ const EditBanner = (props) => {
         }
         props.onUpdate(updatedBannerData);
 
-        history.push('/Banners');
+        history.push('/admin/banners');
     };
     
     return (
@@ -63,8 +63,8 @@ const EditBanner = (props) => {
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav border" : "wide-blaze-nav border"}>
-                    <Link to="/Banners"><p>Banners/</p></Link> 
-                    <Link to="/EditBanner"><p className="text-color">Edit Banner</p></Link> 
+                    <Link to="/admin/banners"><p>Banners/</p></Link> 
+                    <Link to="/admin/edit-banner"><p className="text-color">Edit Banner</p></Link> 
                 </div> 
             }
             main={

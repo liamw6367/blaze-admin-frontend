@@ -35,7 +35,7 @@ const LoginPage = () => {
         if(!loginFormIsValid) {
             return;
         }
-        history.push('/Dashboard');
+        history.push('/admin/dashboard');
         resetEmailInputValueHandler();
         resetPasswordInputValueHandler();
     };
