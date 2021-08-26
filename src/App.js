@@ -34,6 +34,7 @@ import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
 import axios from 'axios';
 // import { API_URL } from './configs/config';
+require('dotenv').config();
 
 
 

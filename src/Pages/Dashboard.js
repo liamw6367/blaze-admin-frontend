@@ -11,6 +11,7 @@ import Blaze from './Blaze';
 import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import JustifyContext from '../Contexts/JustifyingContext';
 import axios from 'axios';
+require('dotenv').config({path:__dirname+'/.env'})
 
 const Dashboard = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -18,7 +19,7 @@ const Dashboard = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`${process.env.API_URL}/test-stores/`)
+        axios.get(`${process.env.REACT_APP_API_URL}/test-stores/`)
         .then((res) => {
             setStores(res.data);
             setIsLoading(false);
@@ -50,7 +51,7 @@ const Dashboard = (props) => {
                 <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
                     <Link to="/Dashboard"><p>Dashboard</p></Link> 
                 </div>
-            } 
+            }
             main={
                 <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
                     <div className="filtering">
