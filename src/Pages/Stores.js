@@ -13,7 +13,7 @@ const Stores = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://54.184.111.173/test-stores/`)
+        axios.get(`${process.env.API_URL}test-stores/`)
         .then((res) => {
             setStores(res.data);
             setIsLoading(false);
