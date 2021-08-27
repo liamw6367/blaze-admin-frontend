@@ -9,7 +9,7 @@ const StoresInfo = (props) => {
         props.onPass(currentStore);
     };
 
-    const storeStatus = props.store.isActive ? "Active" : "Inactive"; 
+    const storeStatus = props.store.is_active ? "Active" : "Inactive"; 
 
     return (
         <tr>
@@ -23,10 +23,10 @@ const StoresInfo = (props) => {
                 { props.store.area }
             </td>
             <td>
-                { props.store.contactNumber }
+                { props.store.contact_number }
             </td>
             <td>
-                { props.store.storeEmailId }
+                { props.store.store_email_id }
             </td>
             <td>
                 { storeStatus } 

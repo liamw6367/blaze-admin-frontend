@@ -30,7 +30,6 @@ const AddGroup = (props) => {
         inputIsInvalid: groupNameInputIsInvalid,
         changeInputValueHandler: changeGroupNameInputValueHandler,
         blurInputHandler: blurGroupNameInputHandler,
-        resetInputValueHandler: resetGroupNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredQuantity,
@@ -38,7 +37,6 @@ const AddGroup = (props) => {
         inputIsInvalid: quantityInputIsInvalid,
         changeInputValueHandler: changeQuantityInputValueHandler,
         blurInputHandler: blurQuantityInputHandler,
-        resetInputValueHandler: resetQuantityInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
 
     const rewardTypeFieldIsValid = (currentType === "Percentage(%)" || currentType === "Product(Multiple)");
@@ -49,7 +47,6 @@ const AddGroup = (props) => {
         inputIsInvalid: rewardPercentageInputIsInvalid,
         changeInputValueHandler: changeRewardPercentageInputValueHandler,
         blurInputHandler: blurRewardPercentageInputHandler,
-        resetInputValueHandler: resetRewardPercentageInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredTotalAmount,
@@ -57,7 +54,6 @@ const AddGroup = (props) => {
         inputIsInvalid: totalAmountInputIsInvalid,
         changeInputValueHandler: changeTotalAmountInputValueHandler,
         blurInputHandler: blurTotalAmountInputHandler,
-        resetInputValueHandler: resetTotalAmountInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     
     const rewardProductsFieldIsValid = selectedRewardProducts.length !== 0;
@@ -107,14 +103,6 @@ const AddGroup = (props) => {
             totalAmount: enteredTotalAmount,
         };
         props.triggerGroupData(groupData);
-
-        resetGroupNameInputValueHandler();
-        resetQuantityInputValueHandler();
-        setCurrentType("");
-        resetRewardPercentageInputValueHandler();
-        setSelectedRewardProducts([]);
-        resetTotalAmountInputValueHandler();
-        setEnteredRewardProductName("");
 
         history.push('./admin/discounts');
     };

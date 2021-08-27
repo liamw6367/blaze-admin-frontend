@@ -18,7 +18,7 @@ const Dashboard = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://54.184.111.173/test-stores/`)
+        axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
         .then((res) => {
             setStores(res.data);
             setIsLoading(false);

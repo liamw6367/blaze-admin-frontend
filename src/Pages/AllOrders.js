@@ -1,14 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import OrderStatusDropdown from '../Dropdowns/OrderStatusDropdown';
 import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import OrdersInfo from '../Lists/OrdersInfo';
+import axios from 'axios';
 
 const AllOrders = (props) => {
     const justCtx = useContext(JustifyContext);
 
     const [currentStatus, setCurrentStatus] = useState("All");
+    const [stores, setStores] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
+        .then((res) => {
+            setStores(res.data);
+            setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }, []);
 
     let currentYear = new Date().getFullYear(); 
     let currentMonth = new Date().getMonth() + 1;
@@ -34,6 +46,14 @@ const AllOrders = (props) => {
     : (currentStatus === "Order Canceled")
     ? props.orders.filter(order => order.isOrderCanceled)
     : props.orders;
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
     
     return (
         <Blaze
@@ -59,7 +79,7 @@ const AllOrders = (props) => {
                         </div>
                         <div className="names-dropdown-box">
                             <span className="title span-margin">Stores</span>
-                            <StoreNamesDropdown stores={props.stores} />
+                            <StoreNamesDropdown stores={stores} />
                         </div>
                     </div>
                     {

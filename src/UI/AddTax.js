@@ -16,7 +16,6 @@ const AddTax = (props) => {
         inputIsInvalid: nameInputIsInvalid,
         changeInputValueHandler: changeNameInputValueHandler,
         blurInputHandler: blurNameInputHandler,
-        resetInputValueHandler: resetNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
 
     const [enteredTaxPercentage, setEnteredTaxPercentage] = useState("");
@@ -32,9 +31,6 @@ const AddTax = (props) => {
             percentage: enteredTaxPercentage,
         };
         props.triggerTaxData(taxData);
-
-        resetNameInputValueHandler();
-        setEnteredTaxPercentage("");
 
         history.push('./admin/tax');
     };

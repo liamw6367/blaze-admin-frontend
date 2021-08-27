@@ -18,7 +18,6 @@ const AddBanner = (props) => {
         inputIsInvalid: bannerNameInputIsInvalid,
         changeInputValueHandler: changeBannerNameInputValueHandler,
         blurInputHandler: blurBannerNameInputHandler,
-        resetInputValueHandler: resetBannerNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredPosition,
@@ -26,7 +25,6 @@ const AddBanner = (props) => {
         inputIsInvalid: positionInputIsInvalid,
         changeInputValueHandler: changePositionInputValueHandler,
         blurInputHandler: blurPositionInputHandler,
-        resetInputValueHandler: resetPositionInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
 
     const [banner, setBanner] = useState(null);
@@ -51,12 +49,6 @@ const AddBanner = (props) => {
             bannerIsActive, 
         }
         props.triggerBannerData(bannerData);
-
-        resetBannerNameInputValueHandler();
-        resetPositionInputValueHandler();
-        setBanner(null);
-        setBannerIsActive(false);
-        setBannerAreaIsOpen(false);
 
         history.push('/admin/banners');
     };

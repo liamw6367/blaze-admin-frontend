@@ -15,10 +15,6 @@ export const useLoginValidation = (validateInput, checkEmptiness) => {
     const blurInputHandler = () => {
         setInputIsTouched(true);
     };
-    const resetInputValueHandler = () => {
-        setEnteredValue("");
-        setInputIsTouched(false);
-    }
 
     return {
         enteredValue,
@@ -27,7 +23,6 @@ export const useLoginValidation = (validateInput, checkEmptiness) => {
         inputIsInvalid,
         changeInputValueHandler,
         blurInputHandler,
-        resetInputValueHandler
     };
 };
 
@@ -45,10 +40,6 @@ export const useDataValidation = (validateInput) => {
     const blurInputHandler = () => {
         setInputIsTouched(true);
     };
-    const resetInputValueHandler = () => {
-        setEnteredValue("");
-        setInputIsTouched(false);
-    }
 
     return {
         enteredValue,
@@ -56,7 +47,6 @@ export const useDataValidation = (validateInput) => {
         inputIsInvalid,
         changeInputValueHandler,
         blurInputHandler,
-        resetInputValueHandler
     };
 };
 

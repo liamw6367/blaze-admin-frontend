@@ -6,8 +6,9 @@ import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import { useDataValidation } from '../hooks/use-validation';
 import GoogleMapModal from '../Modals/GoogleMapModal';
+import axios from 'axios';
 
-const AddStore = (props) => {
+const AddStore = () => {
     const justCtx = useContext(JustifyContext);
 
     const history = useHistory();
@@ -18,7 +19,6 @@ const AddStore = (props) => {
         inputIsInvalid: nameInputIsInvalid,
         changeInputValueHandler: changeNameInputValueHandler,
         blurInputHandler: blurNameInputHandler,
-        resetInputValueHandler: resetNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" ); 
     const {
         enteredValue: enteredArea,
@@ -26,7 +26,6 @@ const AddStore = (props) => {
         inputIsInvalid: areaInputIsInvalid,
         changeInputValueHandler: changeAreaInputValueHandler,
         blurInputHandler: blurAreaInputHandler,
-        resetInputValueHandler: resetAreaInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredDeliveryRadius,
@@ -34,7 +33,6 @@ const AddStore = (props) => {
         inputIsInvalid: deliveryRadiusInputIsInvalid,
         changeInputValueHandler: changeDeliveryRadiusInputValueHandler,
         blurInputHandler: blurDeliveryRadiusInputHandler,
-        resetInputValueHandler: resetDeliveryRadiusInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredStoreTiming,
@@ -42,7 +40,6 @@ const AddStore = (props) => {
         inputIsInvalid: storeTimingInputIsInvalid,
         changeInputValueHandler: changeStoreTimingInputValueHandler,
         blurInputHandler: blurStoreTimingInputHandler,
-        resetInputValueHandler: resetStoreTimingInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredBlazePersonName,
@@ -50,7 +47,6 @@ const AddStore = (props) => {
         inputIsInvalid: blazePersonNameInputIsInvalid,
         changeInputValueHandler: changeBlazePersonNameInputValueHandler,
         blurInputHandler: blurBlazePersonNameInputHandler,
-        resetInputValueHandler: resetBlazePersonNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredStoreEmailId,
@@ -58,7 +54,6 @@ const AddStore = (props) => {
         inputIsInvalid: storeEmailIdInputIsInvalid,
         changeInputValueHandler: changeStoreEmailIdInputValueHandler,
         blurInputHandler: blurStoreEmailIdInputHandler,
-        resetInputValueHandler: resetStoreEmailIdInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredPassword,
@@ -66,7 +61,6 @@ const AddStore = (props) => {
         inputIsInvalid: passwordInputIsInvalid,
         changeInputValueHandler: changePasswordInputValueHandler,
         blurInputHandler: blurPasswordInputHandler,
-        resetInputValueHandler: resetPasswordInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
 
     const [latitude, setLatitude] = useState(""); 
@@ -75,7 +69,6 @@ const AddStore = (props) => {
     const latitudeInputIsValid = latitude.toString().trim() !== "";
     const longitudeInputIsValid = longitude.toString().trim() !== "";
     
-
     const passCurrPositionHandler = (position) => {
         setLatitude(position.lat);
         setLongitude(position.lng);
@@ -106,40 +99,34 @@ const AddStore = (props) => {
 
     const storeDataHandler = (event) => {
         event.preventDefault();
-        const storeData = {
+
+        if(!storeDataFormIsValid) {
+            return;
+        }
+
+        axios.post(`${process.env.REACT_APP_API_URL}/stores/add`, {
             name: enteredName,
             area: enteredArea,
             latitude: latitude,
             longitude: longitude,
-            deliveryRadius: enteredDeliveryRadius,
-            storeTiming: enteredStoreTiming,
-            contactPersonName: enteredContactPersonName,
-            contactNumber: enteredContactNumber,
-            blazePersonName: enteredBlazePersonName,
-            blazePersonNumber: enteredBlazePersonNumber,
+            delivery_radius: enteredDeliveryRadius,
+            store_timing: enteredStoreTiming,
+            contact_person_name: enteredContactPersonName,
+            contact_number: enteredContactNumber,
+            blaze_person_name: enteredBlazePersonName,
+            blaze_person_number: enteredBlazePersonNumber,
             address: enteredAddress,
-            storeEmailId: enteredStoreEmailId,
+            store_email_id: enteredStoreEmailId,
             password: enteredPassword,
-            isActive,
-        };
-        props.triggerStoreData(storeData);
-        console.log(storeData);
-        resetNameInputValueHandler();
-        resetAreaInputValueHandler();
-        setLatitude("");
-        setLongitude("");
-        resetDeliveryRadiusInputValueHandler();
-        resetStoreTimingInputValueHandler();
-        resetBlazePersonNameInputValueHandler();
-        resetStoreEmailIdInputValueHandler();
-        resetPasswordInputValueHandler();
-        setEnteredContactPersonName("");
-        setEnteredContactNumber("");
-        setEnteredBlazePersonNumber("");
-        setEnteredAddress("");
-        setIsActive(false);
-
-        history.push('./admin/stores');
+            is_active: isActive,
+        })
+        .then((res) => {
+            console.log(res.data, "response");
+            history.push('./stores');
+        })
+        .catch((err) => {
+            console.log(err.message, "error message");
+        });
     };
 
     return (
@@ -393,7 +380,7 @@ const AddStore = (props) => {
                                     <button 
                                         type="submit" 
                                         className="submit-store"
-                                        disabled={!storeDataFormIsValid}    
+                                        // disabled={!storeDataFormIsValid}    
                                     >
                                         Save
                                     </button>

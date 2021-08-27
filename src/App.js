@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './UI/LoginPage';
@@ -32,126 +32,8 @@ import Products from './Pages/Products';
 import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
-import axios from 'axios';
-// import { API_URL } from './configs/config';
-
-
 
 const App = () => {
-  // const [stores, setStores] = useState([
-  //   {
-  //     name: "All",
-  //     area: "Some",
-  //     latitude: "19.546545454545465465612",
-  //     longitude: "72.546545454545465465612",
-  //     deliveryRadius: "2",
-  //     storeTiming: "8am",
-  //     contactPersonName: "Aziz Tinwala",
-  //     contactNumber: "+12345678912778",
-  //     blazePersonName:"Aziz Tinwala",
-  //     blazePersonNumber: "",
-  //     address: "Vasai East",
-  //     storeEmailId: "all@all.com",
-  //     password: "123456",
-  //     isActive: true,
-  // },
-  //   {
-  //       name: "Funny Store",
-  //       area: "Some",
-  //       latitude: "19.546545454545465465612",
-  //       longitude: "72.546545454545465465612",
-  //       deliveryRadius: "2",
-  //       storeTiming: "8am",
-  //       contactPersonName: "Aziz Tinwala",
-  //       contactNumber: "+12345678912778",
-  //       blazePersonName:"Aziz Tinwala",
-  //       blazePersonNumber: "",
-  //       address: "Vasai East",
-  //       storeEmailId: "example@example.com",
-  //       password: "123456",
-  //       isActive: true,
-  //   },
-  //   {
-  //       name: "Cornucopia",
-  //       area: "Place",
-  //       latitude: "19.546545454545465465612",
-  //       longitude: "72.546545454545465465612",
-  //       deliveryRadius: "2",
-  //       storeTiming: "8am",
-  //       contactPersonName: "Aziz Tinwala",
-  //       contactNumber: "+12345555444312",
-  //       blazePersonName:"Aziz Tinwala",
-  //       blazePersonNumber: "",
-  //       address: "Vasai East",
-  //       storeEmailId: "test@test.com",
-  //       password: "123456",
-  //       isActive: true,
-  //   },
-  //   {
-  //       name: "The Corner Store",
-  //       area: "Bandra",
-  //       latitude: "19.546545454545465465612",
-  //       longitude: "72.546545454545465465612",
-  //       deliveryRadius: "2",
-  //       storeTiming: "8am",
-  //       contactPersonName: "Aziz Tinwala",
-  //       contactNumber: "+12366500893123",
-  //       blazePersonName:"Aziz Tinwala",
-  //       blazePersonNumber: "",
-  //       address: "Vasai East",
-  //       storeEmailId: "instance@instance.com",
-  //       password: "123456",
-  //       isActive: false,
-  //   },
-  //   {
-  //     name: "Drinks",
-  //     area: "Something",
-  //     latitude: "19.546545454545465465612",
-  //     longitude: "72.546545454545465465612",
-  //     deliveryRadius: "2",
-  //     storeTiming: "8am",
-  //     contactPersonName: "Aziz Tinwala",
-  //     contactNumber: "+12345678912778",
-  //     blazePersonName:"Aziz Tinwala",
-  //     blazePersonNumber: "",
-  //     address: "Vasai East",
-  //     storeEmailId: "ample@ample.com",
-  //     password: "123456",
-  //     isActive: false,
-  //   },
-  //   {
-  //       name: "The best shop",
-  //       area: "any place",
-  //       latitude: "19.546545454545465465612",
-  //       longitude: "72.546545454545465465612",
-  //       deliveryRadius: "2",
-  //       storeTiming: "8am",
-  //       contactPersonName: "Aziz Tinwala",
-  //       contactNumber: "+12345555444312",
-  //       blazePersonName:"Aziz Tinwala",
-  //       blazePersonNumber: "",
-  //       address: "Vasai East",
-  //       storeEmailId: "task@task.com",
-  //       password: "123456",
-  //       isActive: true,
-  //   },
-  //   {
-  //       name: "The Circle Store",
-  //       area: "Bandra",
-  //       latitude: "19.546545454545465465612",
-  //       longitude: "72.546545454545465465612",
-  //       deliveryRadius: "2",
-  //       storeTiming: "8am",
-  //       contactPersonName: "Aziz Tinwala",
-  //       contactNumber: "+12366500893123",
-  //       blazePersonName:"Aziz Tinwala",
-  //       blazePersonNumber: "",
-  //       address: "Vasai East",
-  //       storeEmailId: "inst@inst.com",
-  //       password: "123456",
-  //       isActive: true,
-  //   },
-  // ]);
   const [categories, setCategories] = useState([
     {
         id: Math.random().toString(),
@@ -476,14 +358,6 @@ const App = () => {
   ]);
   const [stores, setStores] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(`http://54.184.111.173/test-stores/`)
-  //   .then((res) => {
-  //     setStores(res.data);
-  //   })
-  //   .catch(err => console.log(err.message));
-  // }, []);
-
   const removingCtx = useContext(RemovingContext);
 
   const [targetStore, setTargetStore] = useState({});
@@ -494,9 +368,6 @@ const App = () => {
 
   const showStoreHandler = (currentStore) => {
     setTargetStore(currentStore);
-  };
-  const addStoreDataHandler = (newStoreData) => {
-    setStores((prevStoreData) => [newStoreData, ...prevStoreData]);
   };
   const updateStoreDataHandler = (updatedStoreData) => {
     console.log(updatedStoreData);
@@ -631,10 +502,10 @@ const App = () => {
           <Dashboard stores={stores} />
         </Route>
         <Route path="/admin/stores">
-          <Stores stores={stores} showStore={showStoreHandler} />
+          <Stores showStore={showStoreHandler} />
         </Route>
         <Route path="/admin/add-store">
-          <AddStore triggerStoreData={addStoreDataHandler} />
+          <AddStore />
         </Route>
         <Route path="/admin/edit-store">
           <EditStore targetStore={targetStore} onUpdate={updateStoreDataHandler} />

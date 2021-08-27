@@ -13,12 +13,12 @@ const Stores = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://54.184.111.173/test-stores/`)
+        axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
         .then((res) => {
             setStores(res.data);
             setIsLoading(false);
         })
-        .catch(err => console.log(err.message));
+        .catch((err) => console.log(err));
     }, []);
     
     const [searchingText, setSearchingText] = useState("");
@@ -38,13 +38,13 @@ const Stores = (props) => {
     const filteredStoresByData = stores.filter( store => {
         return store.name.toLowerCase().includes(searchingText.toLowerCase()) 
             || store.area.toLowerCase().includes(searchingText.toLowerCase()) 
-            || store.contactNumber.toString().toLowerCase().includes(searchingText.toLowerCase()) 
-            || store.storeEmailId.toLowerCase().includes(searchingText.toLowerCase())
+            || store.contact_number.toString().toLowerCase().includes(searchingText.toLowerCase()) 
+            || store.store_email_id.toLowerCase().includes(searchingText.toLowerCase())
     } );
     const filteredStoresByStatus = (currentStatus === "Active") 
-    ? filteredStoresByData.filter(store => store.isActive)
+    ? filteredStoresByData.filter(store => store.is_active)
     : (currentStatus === "Inactive") 
-    ? filteredStoresByData.filter(store => !store.isActive)
+    ? filteredStoresByData.filter(store => !store.is_active)
     : filteredStoresByData;
 
     if(isLoading) {
@@ -97,7 +97,7 @@ const Stores = (props) => {
                                             <StoresInfo 
                                                 store={store} 
                                                 index={index + 1} 
-                                                key={store.storeEmailId} 
+                                                key={store.store_email_id} 
                                                 onPass={passStoreHandler}
                                             />
                                         );

@@ -44,7 +44,6 @@ const AddDiscount = (props) => {
         inputIsInvalid: nameInputIsInvalid,
         changeInputValueHandler: changeNameInputValueHandler,
         blurInputHandler: blurNameInputHandler,
-        resetInputValueHandler: resetNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredCodeName,
@@ -52,7 +51,6 @@ const AddDiscount = (props) => {
         inputIsInvalid: codeNameInputIsInvalid,
         changeInputValueHandler: changeCodeNameInputValueHandler,
         blurInputHandler: blurCodeNameInputHandler,
-        resetInputValueHandler: resetCodeNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const rewardTypeFieldIsValid = (currentType === "Percentage(%)" || currentType === "Product(Multiple)");
     const {
@@ -61,7 +59,6 @@ const AddDiscount = (props) => {
         inputIsInvalid: rewardPercentageInputIsInvalid,
         changeInputValueHandler: changeRewardPercentageInputValueHandler,
         blurInputHandler: blurRewardPercentageInputHandler,
-        resetInputValueHandler: resetRewardPercentageInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const criteriaFieldIsValid = (currentCriterion === "Min Bill" || currentCriterion === "First Download" || currentCriterion === "Welcome Back" || currentCriterion === "None");
     const {
@@ -70,7 +67,6 @@ const AddDiscount = (props) => {
         inputIsInvalid: minBillInputIsInvalid,
         changeInputValueHandler: changeMinBillInputValueHandler,
         blurInputHandler: blurMinBillInputHandler,
-        resetInputValueHandler: resetMinBillInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredDuration,
@@ -78,7 +74,6 @@ const AddDiscount = (props) => {
         inputIsInvalid: durationInputIsInvalid,
         changeInputValueHandler: changeDurationInputValueHandler,
         blurInputHandler: blurDurationInputHandler,
-        resetInputValueHandler: resetDurationInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const rewardProductsFieldIsValid = selectedRewardProducts.length !== 0;
     const rewardProductsFieldIsInvalid = rewardProductsInputIsTouched && !rewardProductsFieldIsValid;
@@ -183,22 +178,6 @@ const AddDiscount = (props) => {
             discountIsActive,
         };
         props.triggerDiscountData(discountData);
-
-        resetNameInputValueHandler();
-        resetCodeNameInputValueHandler();
-        setCurrentType("");
-        resetRewardPercentageInputValueHandler();
-        setSelectedRewardProducts([]);
-        setCurrentCriterion("");
-        resetMinBillInputValueHandler();
-        resetDurationInputValueHandler();
-        setEnteredCategoryName("");
-        setEnteredProductName("");
-        setEnteredRewardProductName("");
-        setSelectedCategories([]);
-        setDiscountingProducts([]);
-        setAllProductsAreMarked(false);
-        setDiscountIsActive(true);
 
         history.push('./admin/discounts');
     };

@@ -18,7 +18,6 @@ const AddCategory = (props) => {
         inputIsInvalid: categoryNameInputIsInvalid,
         changeInputValueHandler: changeCategoryNameInputValueHandler,
         blurInputHandler: blurCategoryNameInputHandler,
-        resetInputValueHandler: resetCategoryNameInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
     const {
         enteredValue: enteredDescription,
@@ -26,7 +25,6 @@ const AddCategory = (props) => {
         inputIsInvalid: descriptionInputIsInvalid,
         changeInputValueHandler: changeDescriptionInputValueHandler,
         blurInputHandler: blurDescriptionInputHandler,
-        resetInputValueHandler: resetDescriptionInputValueHandler,
     } = useDataValidation( value => value.trim() !== "" );
 
     const [tumbNail, setTumbNail] = useState(null);
@@ -61,14 +59,6 @@ const AddCategory = (props) => {
             categoryIsActive, 
         }
         props.triggerCategoryData(categoryData);
-
-        resetCategoryNameInputValueHandler();
-        resetDescriptionInputValueHandler();
-        setTumbNail(null);
-        setBanner(null);
-        setCategoryIsActive(false);
-        setTumbnailAreaIsOpen(false);
-        setBannerAreaIsOpen(false);
 
         history.push('/admin/categories');
     };

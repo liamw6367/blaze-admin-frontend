@@ -65,9 +65,6 @@ const EditCategory = (props) => {
         }
         props.onUpdate(updatedCategoryData);
 
-        setTumbnailAreaIsOpen(false);
-        setBannerAreaIsOpen(false);
-
         history.push('/admin/categories');
     };
 

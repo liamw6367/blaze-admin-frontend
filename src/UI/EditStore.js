@@ -5,6 +5,7 @@ import { useUpdatingDataValidation } from '../hooks/use-validation';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import GoogleMapModal from '../Modals/GoogleMapModal';
+import axios from 'axios';
 
 const EditStore = (props) => {
     const { targetStore } = props;
@@ -33,21 +34,21 @@ const EditStore = (props) => {
         inputIsInvalid: deliveryRadiusInputIsInvalid,
         changeInputValueHandler: changeDeliveryRadiusInputValueHandler,
         blurInputHandler: blurDeliveryRadiusInputHandler,
-    } = useUpdatingDataValidation( targetStore.deliveryRadius, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetStore.delivery_radius, (value) => value.trim() !== "" );
     const {
         enteredValue: enteredStoreTiming,
         inputIsValid: storeTimingInputIsValid,
         inputIsInvalid: storeTimingInputIsInvalid,
         changeInputValueHandler: changeStoreTimingInputValueHandler,
         blurInputHandler: blurStoreTimingInputHandler,
-    } = useUpdatingDataValidation( targetStore.storeTiming, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetStore.store_timing, (value) => value.trim() !== "" );
     const {
         enteredValue: enteredBlazePersonName,
         inputIsValid: blazePersonNameInputIsValid,
         inputIsInvalid: blazePersonNameInputIsInvalid,
         changeInputValueHandler: changeBlazePersonNameInputValueHandler,
         blurInputHandler: blurBlazePersonNameInputHandler,
-    } = useUpdatingDataValidation( targetStore.blazePersonName, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetStore.blaze_person_name, (value) => value.trim() !== "" );
 
     const [storeEmailIdInputIsBeingChanged, setStoreEmailIdInputIsBeingChanged] = useState(false);
 
@@ -63,7 +64,7 @@ const EditStore = (props) => {
     const [enteredContactNumber, setEnteredContactNumber] = useState("");
     const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState("");
     const [enteredAddress, setEnteredAddress] = useState("");
-    const [isActive, setIsActive] = useState(targetStore.isActive);
+    const [isActive, setIsActive] = useState(targetStore.is_active);
 
     const [googleMapModalIsOpen, setGoogleMapModalIsOpen] = useState(false);
 
@@ -74,12 +75,12 @@ const EditStore = (props) => {
         setGoogleMapModalIsOpen(false);
     };
 
-    const [latitude, setLatitude] = useState(targetStore.latitude); 
-    const [longitude, setLongitude] = useState(targetStore.longitude); 
+    const [enteredLatitude, setEnteredLatitude] = useState(targetStore.latitude); 
+    const [enteredLongitude, setEnteredLongitude] = useState(targetStore.longitude); 
 
     const passCurrPositionHandler = (position) => {
-        setLatitude(position.lat);
-        setLongitude(position.lng);
+        setEnteredLatitude(position.lat);
+        setEnteredLongitude(position.lng);
         console.log(position, "position");
     };
 
@@ -92,26 +93,52 @@ const EditStore = (props) => {
 
     const updateStoreDataHandler = (event) => {
         event.preventDefault();
-        const updatedStoreData = {
-            name: enteredName,
-            area: enteredArea,
-            latitude,
-            longitude,
-            deliveryRadius: enteredDeliveryRadius,
-            storeTiming: enteredStoreTiming,
-            contactPersonName: enteredContactPersonName,
-            contactNumber: enteredContactNumber,
-            blazePersonName: enteredBlazePersonName,
-            blazePersonNumber: enteredBlazePersonNumber,
-            address: enteredAddress,
-            storeEmailId: targetStore.storeEmailId,
-            password: enteredPassword,
-            isActive,
-        };
-        console.log(updatedStoreData, "uppdatedstoredATA");
-        props.onUpdate(updatedStoreData);
+        axios.post(
+            `${process.env.REACT_APP_API_URL}/stores/add`, 
+            {
+                name: enteredName,
+                area: enteredArea,
+                latitude: enteredLatitude,
+                longitude: enteredLongitude,
+                delivery_radius: enteredDeliveryRadius,
+                store_timing: enteredStoreTiming,
+                contact_person_name: enteredContactPersonName,
+                contact_number: enteredContactNumber,
+                blaze_person_name: enteredBlazePersonName,
+                blaze_person_number: enteredBlazePersonNumber,
+                address: enteredAddress,
+                store_email_id: targetStore.storeEmailId,
+                password: enteredPassword,
+                is_active: isActive,
+            }
+        )
+        .then((res) => {
+            history.push('./stores');
+            console.log(res.data, "response");
+        })
+        .catch((err) => {
+            console.log(err.message, "error message");
+        });
+        // const updatedStoreData = {
+        //     name: enteredName,
+        //     area: enteredArea,
+        //     latitude: enteredLatitude,
+        //     longitude: enteredLongitude,
+        //     delivery_radius: enteredDeliveryRadius,
+        //     store_timing: enteredStoreTiming,
+        //     contact_person_name: enteredContactPersonName,
+        //     contact_number: enteredContactNumber,
+        //     blaze_person_name: enteredBlazePersonName,
+        //     blaze_person_number: enteredBlazePersonNumber,
+        //     address: enteredAddress,
+        //     store_email_id: targetStore.storeEmailId,
+        //     password: enteredPassword,
+        //     is_active: isActive,
+        // };
+        // console.log(updatedStoreData, "uppdatedstoredATA");
+        // props.onUpdate(updatedStoreData);
 
-        history.push('./admin/stores');
+        // history.push('./stores');
     };
 
     return (
@@ -175,7 +202,7 @@ const EditStore = (props) => {
                                             type="text" 
                                             name="" 
                                             id="latitude" 
-                                            value={latitude} 
+                                            value={enteredLatitude} 
                                             disabled
                                         />
                                     </div>
@@ -197,7 +224,7 @@ const EditStore = (props) => {
                                             type="text" 
                                             name="" 
                                             id="longitude" 
-                                            value={longitude} 
+                                            value={enteredLongitude} 
                                             disabled
                                         />
                                     </div>
@@ -320,7 +347,7 @@ const EditStore = (props) => {
                                             type="email" 
                                             name="" 
                                             id="store-email-id" 
-                                            value={targetStore.storeEmailId} 
+                                            value={targetStore.store_email_id} 
                                             onChange={()  => setStoreEmailIdInputIsBeingChanged(true) }
                                             onBlur={ () => setStoreEmailIdInputIsBeingChanged(false) } 
                                         />

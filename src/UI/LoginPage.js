@@ -15,7 +15,6 @@ const LoginPage = () => {
         inputIsInvalid: emailInputIsInvalid,
         changeInputValueHandler: changeEmailInputValueHandler,
         blurInputHandler: blurEmailInputHandler,
-        resetInputValueHandler: resetEmailInputValueHandler
     } = useLoginValidation( value => (/\w+(\.|-|_)?\w+@\w+\.\w{2,3}/.test(value)), value => value.trim() === "" );
 
     const {
@@ -25,7 +24,6 @@ const LoginPage = () => {
         inputIsInvalid: passwordInputIsInvalid,
         changeInputValueHandler: changePasswordInputValueHandler,
         blurInputHandler: blurPasswordInputHandler,
-        resetInputValueHandler: resetPasswordInputValueHandler
     } = useLoginValidation( value => value.trim().length >= 8, value => value.trim() === "" );
 
     const loginFormIsValid = emailInputIsValid && passwordInputIsValid;
@@ -36,8 +34,6 @@ const LoginPage = () => {
             return;
         }
         history.push('/admin/dashboard');
-        resetEmailInputValueHandler();
-        resetPasswordInputValueHandler();
     };
     
     return (
