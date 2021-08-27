@@ -32,6 +32,8 @@ import Products from './Pages/Products';
 import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
+import axios from 'axios';
+require('dotenv').config();
 
 const App = () => {
   const [categories, setCategories] = useState([
