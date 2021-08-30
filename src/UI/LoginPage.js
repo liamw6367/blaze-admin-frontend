@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import './LoginPage.css';
 import logo from '../assets/images/logo.png';
 import { useLoginValidation } from '../hooks/use-validation';
+import axios from 'axios';
 
 const LoginPage = () => {
     
@@ -33,7 +34,19 @@ const LoginPage = () => {
         if(!loginFormIsValid) {
             return;
         }
-        history.push('/admin/dashboard');
+        axios.post(
+            `${process.env.REACT_APP_API_URL}/auth/login`,
+            {
+                email: enteredEmail,
+                password: enteredPassword
+            }
+        ).then((res) => {
+            console.log(res);
+            history.push('/admin/dashboard');
+        }).catch((err) => {
+            console.log(err);
+        });
+        // history.push('/admin/dashboard');
     };
     
     return (
