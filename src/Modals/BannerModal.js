@@ -26,7 +26,7 @@ const BannerModalContainer = (props) => {
         }
     };
     const bannerPutHandler = (banner) => {
-        props.onTrigger(banner);
+        props.onTrigger(banner, selectedPicture);
         props.onClick();
     };
 
@@ -44,8 +44,8 @@ const BannerModalContainer = (props) => {
 };
 const BannerModal = (props) => {
     const rootForModals = document.getElementById("file-modals");
-    const triggerHandler = (banner) => {
-        props.onTrigger(banner);
+    const triggerHandler = (banner, urlObj) => {
+        props.onTrigger(banner, urlObj);
     };
 
     return (

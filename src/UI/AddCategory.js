@@ -30,46 +30,45 @@ const AddCategory = (props) => {
 
     const [tumbNail, setTumbNail] = useState(null);
     const [banner, setBanner] = useState(null);
+    const [thumbnailUrlObj, setThumbnailUrlObj] = useState(null);
+    const [bannerUrlObj, setBannerUrlObj] = useState(null);
     const [categoryIsActive, setCategoryIsActive] = useState(false);
 
-    const [tumbnailAreaIsOpen, setTumbnailAreaIsOpen] = useState(false);
-    const [bannerAreaIsOpen, setBannerAreaIsOpen] = useState(false);    
-
-    const addTumbNailHandler = (tumbnail) => {
+    const addTumbNailHandler = (tumbnail, urlObj) => {
         setTumbNail(tumbnail);
-        setTumbnailAreaIsOpen(true);
-        console.log("***");
+        setThumbnailUrlObj(urlObj);
     };
-    const addBannerHandler = (banner) => {
+    const addBannerHandler = (banner, urlObj) => {
         setBanner(banner);
-        setBannerAreaIsOpen(true);
-        console.log("***");
+        setBannerUrlObj(urlObj);
     };
 
     const categoryDataFormIsValid = categoryNameInputIsValid && descriptionInputIsValid;
 
     const categoryDataHandler = (event) => {
         event.preventDefault();
-
-        // const categoryData = {
-        //     id: Math.random().toString(),
-        //     categoryName: enteredCategoryName,
-        //     tumbNail,
-        //     banner,
-        //     description: enteredDescription,
-        //     categoryIsActive, 
-        // }
-        axios.post(
-            `${process.env.REACT_APP_API_URL}/categories/add`,
-            {
-                id: Math.random().toString(),
-                name: enteredCategoryName,
-                thumbnail: tumbNail,
-                banner,
-                description: enteredDescription,
-                is_active: categoryIsActive
+        const categoryData = {
+            name: enteredCategoryName,
+            thumbnail: thumbnailUrlObj,
+            banner: bannerUrlObj,
+            description: enteredDescription,
+            is_active: categoryIsActive
+        };
+        const formData = new FormData();
+        for(let key in categoryData) {
+            if(key === "thumbnail") {
+                formData.append('thumbnail', categoryData[key], categoryData[key].name);
+            } else if(key === "banner") {
+                formData.append('banner', categoryData[key], categoryData[key].name);
+            } else {
+                formData.append(key, categoryData[key]);
             }
-        ).then((res) => {
+        }
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        console.log(categoryData);
+        axios.post(`${process.env.REACT_APP_API_URL}/categories/add`, formData).then((res) => {
             console.log(res);
             history.push('/admin/categories');
         }).catch((err) => {
@@ -118,7 +117,7 @@ const AddCategory = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 150x150
                                         </p>
-                                        { tumbnailAreaIsOpen && (
+                                        { tumbNail && (
                                             <div className="tumbnail">
                                                 <img src={tumbNail} alt="" />    
                                             </div>
@@ -134,7 +133,7 @@ const AddCategory = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 1024x512
                                         </p>
-                                        { bannerAreaIsOpen && (
+                                        { banner && (
                                             <div className="banner">
                                                 <img src={banner} alt="banner" className="banner" />
                                             </div>

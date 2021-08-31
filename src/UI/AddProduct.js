@@ -113,7 +113,7 @@ const AddProduct = (props) => {
 
         for(let key in productData) {
             if(key === "image") {
-                formData.append('image', productData.image, productData.image.name);
+                formData.append('image', productData[key], productData[key].name);
             } else {
                 formData.append(key, productData[key]);
             }
