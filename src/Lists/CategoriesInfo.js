@@ -14,11 +14,11 @@ const CategoriesInfo = (props) => {
                 { props.index }
             </td>
             <td>
-                { props.category.categoryName }
+                { props.category.name }
             </td>
             <td>
                 <img 
-                    src={ props.category.tumbNail } 
+                    src={ props.category.thumbnail }
                     alt="category page tumbnail" 
                 />
             </td>

@@ -35,11 +35,11 @@ const Categories = (props) => {
         props.showCategory(currentCategory);
     };
 
-    const filteredCategoriesByData = categories.filter( category => category.categoryName.toLowerCase().includes(searchingText.toLowerCase()) );
+    const filteredCategoriesByData = categories.filter( category => category.name.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredCategoriesByStatus = (currentCategoryStatus === "Active")
-    ? filteredCategoriesByData.filter(category => category.categoryIsActive)
+    ? filteredCategoriesByData.filter(category => category.is_active)
     : (currentCategoryStatus === "Inactive")
-    ? filteredCategoriesByData.filter(category => !category.categoryIsActive)
+    ? filteredCategoriesByData.filter(category => !category.is_active)
     : filteredCategoriesByData;
 
     return (
