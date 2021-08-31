@@ -8,10 +8,26 @@ import axios from 'axios';
 
 const Products = (props) => {
     const justCtx = useContext(JustifyContext);
+
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     
     const [searchingText, setSearchingText] = useState("");
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
+        .then((res) => {
+            setIsLoading(false);
+            console.log(res);
+            setProducts(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+        })
+    }, []);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
@@ -40,10 +56,18 @@ const Products = (props) => {
         props.onShow(product);
     };   
 
-    const filteredProductsByData = props.products.filter( product => product.productName.toLowerCase().includes(searchingText.toLowerCase()) );
+    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
                                         : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> Loading... </p>
+            </div>
+        );
+    }
 
     return (
         <Blaze

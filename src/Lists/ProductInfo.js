@@ -31,16 +31,16 @@ const ProductInfo = (props) => {
                 <td
                     className="padding-left"
                 >
-                    { props.product.productName }
+                    { props.product.name }
                 </td>
                 <td>
                     <img 
-                        src={ props.product.productImage } 
+                        src={ props.product.image } 
                         alt="product" 
                     />
                 </td>
                 <td>
-                    { props.product.productDescription }
+                    { props.product.description }
                 </td>
                 <td>
                     <div className="icons-container">
@@ -58,7 +58,7 @@ const ProductInfo = (props) => {
                                 onClick={ triggerProduct.bind(null, props.product) } 
                             />
                         </Link>
-                    </div>
+                    </div>  
                 </td>
             </tr>
             { modalIsShown && <ProductInfoModal hideModal={hideModalHandler} currentProduct={currentProduct} /> }

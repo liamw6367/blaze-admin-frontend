@@ -72,50 +72,50 @@ const App = () => {
   //     categoryIsActive: false, 
   //   },
   // ]);
-  const [products, setProducts] = useState([
-    {
-      id: Math.random().toString(),
-      productName: "Kitkat",
-      productSKU: "",
-      productImage: productsPageImages.kitkatImage,
-      productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
-      productPrice: 25,
-      productMRP: "",
-      productProfit: "",
-      productCategory: "Sweet Treats",
-      productSpecification: "",
-      isAgeProofRequired: false,
-      productTax: "",
-      productTag: "",
-      productTagType: {
-        tagTypeTitle: "",
-        tagTypeValue: "",
-      },
-      productIsTrending: false,
-      productIsActive: true,
-    },
-    {
-      id: Math.random().toString(),
-      productName: "Merlot",
-      productSKU: "",
-      productImage: productsPageImages.merlotImage,
-      productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
-      productPrice: 48,
-      productMRP: "",
-      productProfit: "",
-      productCategory: "Beverages",
-      productSpecification: "",
-      isAgeProofRequired: false,
-      productTax: "",
-      productTag: "",
-      productTagType: {
-        tagTypeTitle: "",
-        tagTypeValue: "",
-      },
-      productIsTrending: false,
-      productIsActive: true,
-    },
-  ]);
+  // const [products, setProducts] = useState([
+  //   {
+  //     id: Math.random().toString(),
+  //     productName: "Kitkat",
+  //     productSKU: "",
+  //     productImage: productsPageImages.kitkatImage,
+  //     productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
+  //     productPrice: 25,
+  //     productMRP: "",
+  //     productProfit: "",
+  //     productCategory: "Sweet Treats",
+  //     productSpecification: "",
+  //     isAgeProofRequired: false,
+  //     productTax: "",
+  //     productTag: "",
+  //     productTagType: {
+  //       tagTypeTitle: "",
+  //       tagTypeValue: "",
+  //     },
+  //     productIsTrending: false,
+  //     productIsActive: true,
+  //   },
+  //   {
+  //     id: Math.random().toString(),
+  //     productName: "Merlot",
+  //     productSKU: "",
+  //     productImage: productsPageImages.merlotImage,
+  //     productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
+  //     productPrice: 48,
+  //     productMRP: "",
+  //     productProfit: "",
+  //     productCategory: "Beverages",
+  //     productSpecification: "",
+  //     isAgeProofRequired: false,
+  //     productTax: "",
+  //     productTag: "",
+  //     productTagType: {
+  //       tagTypeTitle: "",
+  //       tagTypeValue: "",
+  //     },
+  //     productIsTrending: false,
+  //     productIsActive: true,
+  //   },
+  // ]);
   const [drivers, setDrivers] = useState([
     {
       driverName: 'Simon',
@@ -360,6 +360,30 @@ const App = () => {
       bannerIsActive: true,
     },
   ]);
+
+  const [products, setProducts] = useState([
+    {
+      id: Math.random().toString(),
+      productName: "Kitkat",
+      productImage: productsPageImages.kitkatImage,
+      productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
+      productSalePrice: 25,
+      productNormalPrice: 20,
+      productCategory: ["Sweet Treats"],
+      productGroup: [],
+    },
+    {
+      id: Math.random().toString(),
+      productName: "Merlot",
+      productImage: productsPageImages.merlotImage,
+      productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
+      productSalePrice: 48,
+      productNormalPrice: 38,
+      productCategory: ["Beverages"],
+      productGroup: [],
+    },
+  ]);
+
   const [stores, setStores] = useState([]);
 
   const removingCtx = useContext(RemovingContext);
@@ -403,6 +427,9 @@ const App = () => {
   // };
   const showProductHandler = (currentProduct) => {
     setTargetProduct(currentProduct);
+  };
+  const addProductDataHandler = (newProductData) => {
+    setProducts((prevProducts) => [newProductData, ...prevProducts]);
   };
 
   const makeDriverActive = (changingDriver) => {
@@ -541,7 +568,7 @@ const App = () => {
           />
         </Route>
         <Route path="/admin/add-product">
-          <AddProduct />
+          <AddProduct triggerProductData={addProductDataHandler} />
         </Route>
         <Route path="/admin/edit-product">
           <EditProduct targetProduct={targetProduct} />

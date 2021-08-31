@@ -46,7 +46,7 @@ const AddCategory = (props) => {
         console.log("***");
     };
 
-    const categoryDataFormIsValid = categoryNameInputIsValid && descriptionInputIsValid && tumbNail && banner;
+    const categoryDataFormIsValid = categoryNameInputIsValid && descriptionInputIsValid;
 
     const categoryDataHandler = (event) => {
         event.preventDefault();

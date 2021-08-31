@@ -33,7 +33,7 @@ const TumbnailModalContainer = (props) => {
         }
     };
     const tumbnailPutHandler = (tumbNail) => {
-        props.onTrigger(tumbNail);
+        props.onTrigger(tumbNail, selectedPicture);
         props.onClick();
     };
 
@@ -51,8 +51,8 @@ const TumbnailModalContainer = (props) => {
 };
 const TumbnailModal = (props) => {
     const rootForModals = document.getElementById("file-modals");
-    const triggerHandler = (tumbnail) => {
-        props.onTrigger(tumbnail);
+    const triggerHandler = (tumbnail, urlObj) => {
+        props.onTrigger(tumbnail, urlObj);
     };
 
     return (

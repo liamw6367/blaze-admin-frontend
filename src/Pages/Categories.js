@@ -12,14 +12,17 @@ const Categories = (props) => {
     const [searchingText, setSearchingText] = useState("");
     const [currentCategoryStatus, setCurrentCategoryStatus] = useState("All");
     const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
         .then((res) => {
+            setIsLoading(false);
             setCategories(res.data);
-            console.log(res);
+            console.log(res.data);
         })
         .catch((err) => {
+            setIsLoading(false);
             console.log(err);
         });
     }, []);
@@ -35,12 +38,20 @@ const Categories = (props) => {
         props.showCategory(currentCategory);
     };
 
-    const filteredCategoriesByData = categories.filter( category => category.categoryName.toLowerCase().includes(searchingText.toLowerCase()) );
+    const filteredCategoriesByData = categories.filter( category => category.name.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredCategoriesByStatus = (currentCategoryStatus === "Active")
-    ? filteredCategoriesByData.filter(category => category.categoryIsActive)
+    ? filteredCategoriesByData.filter(category => category.is_active)
     : (currentCategoryStatus === "Inactive")
-    ? filteredCategoriesByData.filter(category => !category.categoryIsActive)
+    ? filteredCategoriesByData.filter(category => !category.is_active)
     : filteredCategoriesByData;
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
 
     return (
         <Blaze
