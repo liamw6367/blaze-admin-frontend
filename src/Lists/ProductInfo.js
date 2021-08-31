@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import viewIcon from '../assets/icons/main/eye-icon.png';
 import ProductInfoModal from '../Modals/ProductInfoModal';
 import editIcon from '../assets/icons/main/edit-icon.png';
+import {API_URL} from "../configs/config";
 
 const ProductInfo = (props) => {
     const [modalIsShown, setModalIsShown] = useState(false);
@@ -26,42 +27,42 @@ const ProductInfo = (props) => {
                 <td
                     className="padding-left box-width"
                 >
-                    { props.index }
+                    {props.index}
                 </td>
                 <td
                     className="padding-left"
                 >
-                    { props.product.name }
+                    {props.product.name}
                 </td>
                 <td>
-                    <img 
-                        src={ props.product.image } 
-                        alt="product" 
+                    <img width="50"
+                         src={`${process.env.REACT_APP_API_URL}/uploads/category_images/${props.product.image}`}
+                         alt="product"
                     />
                 </td>
                 <td>
-                    { props.product.description }
+                    {props.product.description}
                 </td>
                 <td>
                     <div className="icons-container">
-                        <img 
+                        <img
                             className="view-icon"
-                            src={viewIcon} 
-                            alt="view product" 
-                            onClick={ passProduct.bind(null, props.product) }  
+                            src={viewIcon}
+                            alt="view product"
+                            onClick={passProduct.bind(null, props.product)}
                         />
-                        <Link to="/admin/edit-product"> 
-                            <img 
+                        <Link to="/admin/edit-product">
+                            <img
                                 className="edit-icon"
-                                src={editIcon} 
-                                alt="edit product" 
-                                onClick={ triggerProduct.bind(null, props.product) } 
+                                src={editIcon}
+                                alt="edit product"
+                                onClick={triggerProduct.bind(null, props.product)}
                             />
                         </Link>
-                    </div>  
+                    </div>
                 </td>
             </tr>
-            { modalIsShown && <ProductInfoModal hideModal={hideModalHandler} currentProduct={currentProduct} /> }
+            {modalIsShown && <ProductInfoModal hideModal={hideModalHandler} currentProduct={currentProduct}/>}
         </React.Fragment>
     );
 }
