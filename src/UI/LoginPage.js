@@ -4,6 +4,7 @@ import './LoginPage.css';
 import logo from '../assets/images/logo.png';
 import { useLoginValidation } from '../hooks/use-validation';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const LoginPage = () => {
     
@@ -41,12 +42,14 @@ const LoginPage = () => {
                 password: enteredPassword
             }
         ).then((res) => {
-            console.log(res);
+            const token = res.data.token;
+            const user = jwtDecode(token);
+            localStorage.setItem('token', token);
+            console.log(user);
             history.push('/admin/dashboard');
         }).catch((err) => {
             console.log(err);
         });
-        // history.push('/admin/dashboard');
     };
     
     return (

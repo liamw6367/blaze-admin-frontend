@@ -6,6 +6,7 @@ import Blaze from '../Pages/Blaze';
 import TumbnailButton from '../Buttons/TumbnailButton';
 import BannerButton from '../Buttons/BannerButton';
 import { useDataValidation } from '../hooks/use-validation';
+import axios from 'axios';
 
 const AddCategory = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -50,17 +51,31 @@ const AddCategory = (props) => {
     const categoryDataHandler = (event) => {
         event.preventDefault();
 
-        const categoryData = {
-            id: Math.random().toString(),
-            categoryName: enteredCategoryName,
-            tumbNail,
-            banner,
-            description: enteredDescription,
-            categoryIsActive, 
-        }
-        props.triggerCategoryData(categoryData);
-
-        history.push('/admin/categories');
+        // const categoryData = {
+        //     id: Math.random().toString(),
+        //     categoryName: enteredCategoryName,
+        //     tumbNail,
+        //     banner,
+        //     description: enteredDescription,
+        //     categoryIsActive, 
+        // }
+        axios.post(
+            `${process.env.REACT_APP_API_URL}/categories/add`,
+            {
+                id: Math.random().toString(),
+                name: enteredCategoryName,
+                thumbnail: tumbNail,
+                banner,
+                description: enteredDescription,
+                is_active: categoryIsActive
+            }
+        ).then((res) => {
+            console.log(res);
+            history.push('/admin/categories');
+        }).catch((err) => {
+            console.log(err);
+        });
+        // props.triggerCategoryData(categoryData);
     };
     
     return (

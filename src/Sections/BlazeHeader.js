@@ -11,6 +11,7 @@ const BlazeHeader = () => {
     const  history = useHistory();
 
     const logOutHandler = () => {
+        localStorage.removeItem('token');
         history.push('/');
     };
     return (

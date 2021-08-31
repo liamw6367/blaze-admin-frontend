@@ -33,43 +33,45 @@ import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
 import axios from 'axios';
+import AddProduct from './UI/AddProduct';
+import EditProduct from './UI/EditProduct';
 require('dotenv').config();
 
 const App = () => {
-  const [categories, setCategories] = useState([
-    {
-        id: Math.random().toString(),
-        categoryName: 'Beverages',
-        tumbNail: categoriesPageImages.beveragesImage,
-        banner: categoriesPageImages.drinksBanner,
-        description: 'A soft drink is a drink that typically contains carbonated water, a sweetener and a natural or artificial flavoring. The sweetener may be sugar,            high-fructose corn syrup, fruit juice, sugar substitutes or some combination of these',
-        categoryIsActive: false, 
-    },
-    {
-        id: Math.random().toString(),
-        categoryName: 'Wine',
-        tumbNail: categoriesPageImages.wineImage,
-        banner: categoriesPageImages.drinksBanner,
-        description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-        categoryIsActive: true, 
-    },
-    {
-        id: Math.random().toString(),
-        categoryName: 'Cigarettes',
-        tumbNail: categoriesPageImages.cigarettesImage,
-        banner: categoriesPageImages.drinksBanner,
-        description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-        categoryIsActive: false, 
-    },
-    {
-      id: Math.random().toString(),
-      categoryName: "Sweet Treats",
-      tumbNail: productsPageImages.kitkatImage,
-      banner: categoriesPageImages.drinksBanner,
-      description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-      categoryIsActive: false, 
-  },
-  ]);
+  // const [categories, setCategories] = useState([
+  //   {
+  //       id: Math.random().toString(),
+  //       categoryName: 'Beverages',
+  //       tumbNail: categoriesPageImages.beveragesImage,
+  //       banner: categoriesPageImages.drinksBanner,
+  //       description: 'A soft drink is a drink that typically contains carbonated water, a sweetener and a natural or artificial flavoring. The sweetener may be sugar,            high-fructose corn syrup, fruit juice, sugar substitutes or some combination of these',
+  //       categoryIsActive: false, 
+  //   },
+  //   {
+  //       id: Math.random().toString(),
+  //       categoryName: 'Wine',
+  //       tumbNail: categoriesPageImages.wineImage,
+  //       banner: categoriesPageImages.drinksBanner,
+  //       description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
+  //       categoryIsActive: true, 
+  //   },
+  //   {
+  //       id: Math.random().toString(),
+  //       categoryName: 'Cigarettes',
+  //       tumbNail: categoriesPageImages.cigarettesImage,
+  //       banner: categoriesPageImages.drinksBanner,
+  //       description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
+  //       categoryIsActive: false, 
+  //   },
+  //   {
+  //     id: Math.random().toString(),
+  //     categoryName: "Sweet Treats",
+  //     tumbNail: productsPageImages.kitkatImage,
+  //     banner: categoriesPageImages.drinksBanner,
+  //     description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
+  //     categoryIsActive: false, 
+  //   },
+  // ]);
   const [products, setProducts] = useState([
     {
       id: Math.random().toString(),
@@ -364,6 +366,7 @@ const App = () => {
 
   const [targetStore, setTargetStore] = useState({});
   const [targetCategory, setTargetCategory] = useState({});
+  const [targetProduct, setTargetProduct] = useState({});
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
   const [targetBanner, setTargetBanner] = useState({});
@@ -385,18 +388,21 @@ const App = () => {
   const showCategoryHandler = (currentCategory) => {
     setTargetCategory(currentCategory);
   };
-  const addCategoryDataHandler = (newCategoryData) => {
-    setCategories((prevCategories) => [newCategoryData, ...prevCategories]);
-  };
-  const updateCategoryDataHandler = (updatedCategoryData) => {
-    console.log(updatedCategoryData);
-    const updatedCategories = [...categories];
-    updatedCategories.forEach((category, index, array) => {
-      if(category.id === updatedCategoryData.id) {
-        array[index] = updatedCategoryData;
-      }
-    });
-    setCategories(updatedCategories);
+  // const addCategoryDataHandler = (newCategoryData) => {
+  //   setCategories((prevCategories) => [newCategoryData, ...prevCategories]);
+  // };
+  // const updateCategoryDataHandler = (updatedCategoryData) => {
+  //   console.log(updatedCategoryData);
+  //   const updatedCategories = [...categories];
+  //   updatedCategories.forEach((category, index, array) => {
+  //     if(category.id === updatedCategoryData.id) {
+  //       array[index] = updatedCategoryData;
+  //     }
+  //   });
+  //   setCategories(updatedCategories);
+  // };
+  const showProductHandler = (currentProduct) => {
+    setTargetProduct(currentProduct);
   };
 
   const makeDriverActive = (changingDriver) => {
@@ -513,16 +519,32 @@ const App = () => {
           <EditStore targetStore={targetStore} onUpdate={updateStoreDataHandler} />
         </Route>
         <Route path="/admin/categories">
-          <Categories categories={categories} showCategory={showCategoryHandler} />
+          <Categories 
+            // categories={categories} 
+            showCategory={showCategoryHandler} 
+          />
         </Route>
         <Route path="/admin/add-category">
-          <AddCategory triggerCategoryData={addCategoryDataHandler} />
+          <AddCategory 
+            // triggerCategoryData={addCategoryDataHandler} 
+          />
         </Route>
         <Route path="/admin/edit-category">
-          <EditCategory targetCategory={targetCategory} onUpdate={updateCategoryDataHandler} />
+          <EditCategory targetCategory={targetCategory} 
+            // onUpdate={updateCategoryDataHandler} 
+          />
         </Route>
         <Route path="/admin/products">
-          <Products products={products} categories={categories} />
+          <Products products={products} 
+            // categories={categories} 
+            onShow={showProductHandler}
+          />
+        </Route>
+        <Route path="/admin/add-product">
+          <AddProduct />
+        </Route>
+        <Route path="/admin/edit-product">
+          <EditProduct targetProduct={targetProduct} />
         </Route>
         <Route path="/admin/drivers">
           <Drivers drivers={drivers} onReject={rejectDriverHandler} />
@@ -548,10 +570,14 @@ const App = () => {
           <Discounts discounts={discounts} showDiscount={showDiscountHandler} groups={groups} showGroup={showGroupHandler} />
         </Route>
         <Route path="/admin/add-discount">
-            <AddDiscount categories={categories} products={products} triggerDiscountData={addDiscountDataHandler} />
+            <AddDiscount 
+              // categories={categories} 
+            products={products} triggerDiscountData={addDiscountDataHandler} />
         </Route>
         <Route path="/admin/edit-discount">
-            <EditDiscount targetDiscount={targetDiscount} categories={categories} products={products} onUpdate={updateDiscountDataHandler} />
+            <EditDiscount targetDiscount={targetDiscount} 
+              // categories={categories} 
+            products={products} onUpdate={updateDiscountDataHandler} />
         </Route>
         <Route path="/admin/add-group">
             <AddGroup products={products} triggerGroupData={addGroupDataHandler} />

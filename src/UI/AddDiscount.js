@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
@@ -6,10 +6,24 @@ import Blaze from '../Pages/Blaze';
 import { useDataValidation } from '../hooks/use-validation';
 import RewardTypeDropdown from '../Dropdowns/RewardTypeDropdown';
 import CriteriaDropdown from '../Dropdowns/CriteriaDropdown';
+import axios from 'axios';
 
 const AddDiscount = (props) => {
-    const { categories, products } = props;
+    const { products } = props;
     const justCtx = useContext(JustifyContext);
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
+        .then((res) => {
+            console.log(res);
+            setCategories(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const history = useHistory();
 
@@ -135,8 +149,6 @@ const AddDiscount = (props) => {
         setEnteredRewardProductName("");
 
     };
-
-
 
     const removeSelectedRewardProductHandler = (selectedRewardPoduct) => {
         rewardProductInputRef.current.focus();

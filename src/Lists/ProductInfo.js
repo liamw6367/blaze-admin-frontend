@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import viewIcon from '../assets/icons/main/eye-icon.png';
 import ProductInfoModal from '../Modals/ProductInfoModal';
+import editIcon from '../assets/icons/main/edit-icon.png';
 
 const ProductInfo = (props) => {
     const [modalIsShown, setModalIsShown] = useState(false);
@@ -13,6 +15,9 @@ const ProductInfo = (props) => {
     };
     const hideModalHandler = () => {
         setModalIsShown(false);
+    };
+    const triggerProduct = (product) => {
+        props.onTrigger(product);
     };
 
     return (
@@ -38,12 +43,22 @@ const ProductInfo = (props) => {
                     { props.product.productDescription }
                 </td>
                 <td>
-                    <img 
-                        className="view-icon"
-                        src={viewIcon} 
-                        alt="view product" 
-                        onClick={ passProduct.bind(null, props.product) }  
-                    />
+                    <div className="icons-container">
+                        <img 
+                            className="view-icon"
+                            src={viewIcon} 
+                            alt="view product" 
+                            onClick={ passProduct.bind(null, props.product) }  
+                        />
+                        <Link to="/admin/edit-product"> 
+                            <img 
+                                className="edit-icon"
+                                src={editIcon} 
+                                alt="edit product" 
+                                onClick={ triggerProduct.bind(null, props.product) } 
+                            />
+                        </Link>
+                    </div>
                 </td>
             </tr>
             { modalIsShown && <ProductInfoModal hideModal={hideModalHandler} currentProduct={currentProduct} /> }

@@ -1,14 +1,28 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import ProductInfo from '../Lists/ProductInfo';
+import axios from 'axios';
 
 const Products = (props) => {
     const justCtx = useContext(JustifyContext);
     
     const [searchingText, setSearchingText] = useState("");
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
+        .then((res) => {
+            console.log(res);
+            setCategories(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
@@ -22,9 +36,9 @@ const Products = (props) => {
         setChosenCategoryName(allCategories);
         console.log(allCategories);
     };
-    // const passProductHandler = (currentProduct) => {
-    //     props.showProduct(currentProduct);
-    // };   
+    const passProductHandler = (product) => {
+        props.onShow(product);
+    };   
 
     const filteredProductsByData = props.products.filter( product => product.productName.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") 
@@ -50,11 +64,14 @@ const Products = (props) => {
                         </div>
                         <span className="text"> Category: </span>
                         <CategoryNamesDropdown 
-                            categories={props.categories} 
+                            categories={categories} 
                             onPass={passCategoryNameHandler} 
                             onChange={changeCategoryNameHandler} 
                             chosenCategoryName={chosenCategoryName} 
                         />
+                        <div className="add-store-button">
+                            <Link to="/admin/add-product">Add New</Link>
+                        </div>
                     </div>
                     {
                         (filteredProductsByCategory.length === 0) 
@@ -83,7 +100,7 @@ const Products = (props) => {
                                                         product={product} 
                                                         index={index + 1} 
                                                         key={product.id} 
-                                                        // onPass={passProductHandler}
+                                                        onTrigger={passProductHandler}
                                                     />
                                                 );
                                             }) 
