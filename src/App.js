@@ -432,6 +432,14 @@ const App = () => {
     setProducts((prevProducts) => [newProductData, ...prevProducts]);
   };
 
+  const [addedProducts, setAddedProducts] = useState([]);
+  const [isFromAddedProduct, setIsFromAddedProduct] = useState(false);
+
+  const triggerProductsHandler = (products, isFromAdded) => {
+    setAddedProducts(products);
+    setIsFromAddedProduct(isFromAdded);
+  };
+
   const makeDriverActive = (changingDriver) => {
     console.log(changingDriver);
     const sameDrivers = drivers.slice();
@@ -565,10 +573,12 @@ const App = () => {
           <Products products={products} 
             // categories={categories} 
             onShow={showProductHandler}
+            addedProducts={addedProducts}
+            isFromAddedProduct={isFromAddedProduct}
           />
         </Route>
         <Route path="/admin/add-product">
-          <AddProduct triggerProductData={addProductDataHandler} />
+          <AddProduct triggerProductData={addProductDataHandler} onTrigger={triggerProductsHandler} />
         </Route>
         <Route path="/admin/edit-product">
           <EditProduct targetProduct={targetProduct} />

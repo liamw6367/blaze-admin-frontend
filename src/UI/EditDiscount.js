@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
@@ -6,11 +6,25 @@ import Blaze from '../Pages/Blaze';
 import { useUpdatingDataValidation } from '../hooks/use-validation';
 import RewardTypeDropdown from '../Dropdowns/RewardTypeDropdown';
 import CriteriaDropdown from '../Dropdowns/CriteriaDropdown';
+import axios from "axios";
 
 const EditDiscount = (props) => {
-    const { categories, products, targetDiscount } = props;
+    const { products, targetDiscount } = props;
     
     const justCtx = useContext(JustifyContext);
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
+            .then((res) => {
+                console.log(res);
+                setCategories(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     const history = useHistory();
 
@@ -32,7 +46,6 @@ const EditDiscount = (props) => {
     const [allProductsAreMarked, setAllProductsAreMarked] = useState(targetDiscount.allProductsAreMarked);
     const [discountIsActive, setDiscountIsActive] = useState(targetDiscount.discountIsActive);
 
-    const [rewardCategories, setRewardCategories] = useState(categories);
     const [selectedCategories, setSelectedCategories] = useState(targetDiscount.categories);
     const [currentType, setCurrentType] = useState(targetDiscount.rewardType);
     const [currentCriterion, setCurrentCriterion] = useState(targetDiscount.criteria);
@@ -90,7 +103,7 @@ const EditDiscount = (props) => {
     const discountingProductsFieldIsValid = selectedDiscountingProducts.length !== 0;
     const discountingProductsFieldIsInvalid = discountingProductsInputIsTouched && !discountingProductsFieldIsValid;
 
-    const filteredCategoriesByName = rewardCategories.filter(category => category.categoryName.toLowerCase().includes(enteredCategoryName.toLowerCase()));
+    const filteredCategoriesByName = categories.filter(category => category.name.toLowerCase().includes(enteredCategoryName.toLowerCase()));
     const filteredRewardProductsByName = rewardProducts.filter(rewardProduct => rewardProduct.productName.toLowerCase().includes(enteredRewardProductName.toLowerCase()));
     const filteredDiscountingProductsByName = discountingProducts.filter(discountingProduct => discountingProduct.productName.toLowerCase().includes(enteredProductName.toLowerCase()));
 
@@ -127,13 +140,13 @@ const EditDiscount = (props) => {
     const addSelectedCategoryHandler = (event, selectedCategory) => {
         event.stopPropagation();
         categoryInputRef.current.focus();
-        setRewardCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
+        setCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
         setSelectedCategories(prevCategories => [...prevCategories, selectedCategory]);
         setEnteredCategoryName("");
     };
     const removeSelectedCategoryHandler = (selectedCategory) => {
         categoryInputRef.current.focus();
-        setRewardCategories(prevCategories => [selectedCategory, ...prevCategories]);
+        setCategories(prevCategories => [selectedCategory, ...prevCategories]);
         setSelectedCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
     };
 

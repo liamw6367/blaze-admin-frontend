@@ -17,6 +17,8 @@ const Products = (props) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        if(!props.isFromAddProduct) {
+
         axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
         .then((res) => {
             setIsLoading(false);
@@ -27,7 +29,8 @@ const Products = (props) => {
             console.log(err);
             setIsLoading(false);
         })
-    }, []);
+        }
+    }, [props]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
