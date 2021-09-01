@@ -109,7 +109,7 @@ const AddProduct = (props) => {
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
-            product_category: selectedCategories.map(category => category.id),
+            category_id: selectedCategories.map(category => category.id),
             folder: '/product_images/'
         };
         const formData = new FormData();
