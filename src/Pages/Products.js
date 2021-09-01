@@ -57,6 +57,7 @@ const Products = (props) => {
     };
     const passProductHandler = (product) => {
         props.onShow(product);
+        console.log(product);
     };   
 
     const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );

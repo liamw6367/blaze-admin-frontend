@@ -19,6 +19,7 @@ const ProductInfo = (props) => {
     };
     const triggerProduct = (product) => {
         props.onTrigger(product);
+        console.log(product);
     };
 
     return (
@@ -36,8 +37,8 @@ const ProductInfo = (props) => {
                 </td>
                 <td>
                     <img width="50"
-                         src={`${process.env.REACT_APP_API_URL}/uploads/category_images/${props.product.image}`}
-                         alt="product"
+                        src={`${process.env.REACT_APP_API_URL}/uploads/category_images/${props.product.image}`}
+                        alt="product"
                     />
                 </td>
                 <td>
@@ -49,14 +50,14 @@ const ProductInfo = (props) => {
                             className="view-icon"
                             src={viewIcon}
                             alt="view product"
-                            onClick={passProduct.bind(null, props.product)}
+                            onClick={ passProduct.bind(null, props.product) }
                         />
                         <Link to="/admin/edit-product">
                             <img
                                 className="edit-icon"
                                 src={editIcon}
                                 alt="edit product"
-                                onClick={triggerProduct.bind(null, props.product)}
+                                onClick={ triggerProduct.bind(null, props.product) }
                             />
                         </Link>
                     </div>

@@ -361,28 +361,28 @@ const App = () => {
     },
   ]);
 
-  const [products, setProducts] = useState([
-    {
-      id: Math.random().toString(),
-      productName: "Kitkat",
-      productImage: productsPageImages.kitkatImage,
-      productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
-      productSalePrice: 25,
-      productNormalPrice: 20,
-      productCategory: ["Sweet Treats"],
-      productGroup: [],
-    },
-    {
-      id: Math.random().toString(),
-      productName: "Merlot",
-      productImage: productsPageImages.merlotImage,
-      productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
-      productSalePrice: 48,
-      productNormalPrice: 38,
-      productCategory: ["Beverages"],
-      productGroup: [],
-    },
-  ]);
+  // const [products, setProducts] = useState([
+  //   {
+  //     id: Math.random().toString(),
+  //     productName: "Kitkat",
+  //     productImage: productsPageImages.kitkatImage,
+  //     productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
+  //     productSalePrice: 25,
+  //     productNormalPrice: 20,
+  //     productCategory: ["Sweet Treats"],
+  //     productGroup: [],
+  //   },
+  //   {
+  //     id: Math.random().toString(),
+  //     productName: "Merlot",
+  //     productImage: productsPageImages.merlotImage,
+  //     productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
+  //     productSalePrice: 48,
+  //     productNormalPrice: 38,
+  //     productCategory: ["Beverages"],
+  //     productGroup: [],
+  //   },
+  // ]);
 
   const [stores, setStores] = useState([]);
 
@@ -427,17 +427,18 @@ const App = () => {
   // };
   const showProductHandler = (currentProduct) => {
     setTargetProduct(currentProduct);
+    console.log(currentProduct);
   };
-  const addProductDataHandler = (newProductData) => {
-    setProducts((prevProducts) => [newProductData, ...prevProducts]);
-  };
+  // const addProductDataHandler = (newProductData) => {
+  //   setProducts((prevProducts) => [newProductData, ...prevProducts]);
+  // };
 
   const [addedProducts, setAddedProducts] = useState([]);
-  const [isFromAddedProduct, setIsFromAddedProduct] = useState(false);
+  const [isFromAddProduct, setIsFromAddProduct] = useState(false);
 
-  const triggerProductsHandler = (products, isFromAdded) => {
+  const triggerProductsHandler = (products, isFromAdd) => {
     setAddedProducts(products);
-    setIsFromAddedProduct(isFromAdded);
+    setIsFromAddProduct(isFromAdd);
   };
 
   const makeDriverActive = (changingDriver) => {
@@ -570,18 +571,22 @@ const App = () => {
           />
         </Route>
         <Route path="/admin/products">
-          <Products products={products} 
-            // categories={categories} 
+          <Products 
             onShow={showProductHandler}
             addedProducts={addedProducts}
-            isFromAddedProduct={isFromAddedProduct}
+            isFromAddedProduct={isFromAddProduct}
           />
         </Route>
         <Route path="/admin/add-product">
-          <AddProduct triggerProductData={addProductDataHandler} onTrigger={triggerProductsHandler} />
+          <AddProduct 
+            onTrigger={triggerProductsHandler} 
+          />
         </Route>
         <Route path="/admin/edit-product">
-          <EditProduct targetProduct={targetProduct} />
+          <EditProduct 
+            targetProduct={targetProduct} 
+            onTrigger={triggerProductsHandler}
+          />
         </Route>
         <Route path="/admin/drivers">
           <Drivers drivers={drivers} onReject={rejectDriverHandler} />
@@ -608,19 +613,25 @@ const App = () => {
         </Route>
         <Route path="/admin/add-discount">
             <AddDiscount 
-              // categories={categories} 
-            products={products} triggerDiscountData={addDiscountDataHandler} />
+              triggerDiscountData={addDiscountDataHandler} 
+            />
         </Route>
         <Route path="/admin/edit-discount">
-            <EditDiscount targetDiscount={targetDiscount} 
-              // categories={categories} 
-            products={products} onUpdate={updateDiscountDataHandler} />
+            <EditDiscount 
+              targetDiscount={targetDiscount} 
+              onUpdate={updateDiscountDataHandler} 
+            />
         </Route>
         <Route path="/admin/add-group">
-            <AddGroup products={products} triggerGroupData={addGroupDataHandler} />
+            <AddGroup 
+              triggerGroupData={addGroupDataHandler} 
+            />
         </Route>
         <Route path="/admin/edit-group">
-            <EditGroup targetGroup={targetGroup} products={products} onUpdate={updateGroupDataHandler} />
+            <EditGroup 
+              targetGroup={targetGroup} 
+              onUpdate={updateGroupDataHandler} 
+            />
         </Route>
         <Route path="/admin/tax"> 
           <Tax taxes={taxes} />

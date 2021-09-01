@@ -33,22 +33,11 @@ const EditCategory = (props) => {
     const [banner, setBanner] = useState(targetCategory.banner);
     const [categoryIsActive, setCategoryIsActive] = useState(targetCategory.categoryIsActive);
 
-    const [tumbnailAreaIsOpen, setTumbnailAreaIsOpen] = useState(false);
-    const [bannerAreaIsOpen, setBannerAreaIsOpen] = useState(false);    
-
-    useEffect(() => {
-        setTumbnailAreaIsOpen(true);
-        setBannerAreaIsOpen(true);
-        console.log("useEffect run!!!");
-    }, []);
-    
     const addTumbNailHandler = (tumbnail) => {
         setTumbNail(tumbnail);
-        setTumbnailAreaIsOpen(true);
     };
     const addBannerHandler = (banner) => {
         setBanner(banner);
-        setBannerAreaIsOpen(true);
     };
 
     const updatedCategoryDataFormIsValid = categoryNameInputIsValid && descriptionInputIsValid && tumbNail && banner;
@@ -108,7 +97,7 @@ const EditCategory = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 150x150
                                         </p>
-                                        { tumbnailAreaIsOpen && (
+                                        { tumbNail && (
                                             <div className="tumbnail">
                                                 <img src={tumbNail} alt="" />    
                                             </div>
@@ -124,7 +113,7 @@ const EditCategory = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 1024x512
                                         </p>
-                                        { bannerAreaIsOpen && (
+                                        { banner && (
                                             <div className="banner">
                                                 <img src={banner} alt="banner" className="banner" />
                                             </div>

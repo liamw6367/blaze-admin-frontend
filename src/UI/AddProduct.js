@@ -99,15 +99,16 @@ const AddProduct = (props) => {
 
     const productDataFormIsValid = productNameInputIsValid && descriptionInputIsValid && productImage && salePriceInputIsValid && normalPriceInputIsValid && categoriesFieldIsValid;
 
-    const [isFromAddedProduct, setIsFromAddedProduct] = useState(false);
+    const [isFromAddProduct, setIsFromAddProduct] = useState(false);
 
-    const productDataHandler = (event) => {
+    const addProductDataHandler = (event) => {
         event.preventDefault();
         const productData = {
             name: enteredProductName,
             image_file: urlObj,
-            image: urlObj.name,
-            sale_price: enteredSalePrice,
+            // image: urlObj.name,
+            image: productImage,
+            sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
             product_category: selectedCategories.map(category => category.id),
@@ -115,15 +116,8 @@ const AddProduct = (props) => {
         };
         const formData = new FormData();
 
-<<<<<<< HEAD
-        for(let key in productData) {
-            if(key === "image") {
-                formData.append('image', productData[key], productData[key].name);
-            } else {
-=======
         for (let key in productData) {
             if (key !== "image_file") {
->>>>>>> eafb2118dadd748d7667d029dd53d73db2cd4037
                 formData.append(key, productData[key]);
             }
         }
@@ -135,15 +129,13 @@ const AddProduct = (props) => {
         console.log(productData);
         axios.post(`${process.env.REACT_APP_API_URL}/products/add`, formData)
             .then((res) => {
-                props.onTrigger(res.data, isFromAddedProduct);
-                setIsFromAddedProduct(true);
+                props.onTrigger(res.data, isFromAddProduct);
+                setIsFromAddProduct(true);
                 history.push('/admin/products');
             })
             .catch((err) => {
                 console.log(err);
             });
-        props.triggerProductData(productData);
-        history.push('/admin/products');
     };
 
     return (
@@ -162,9 +154,8 @@ const AddProduct = (props) => {
             }
             main={
                 <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
-                    <div className="store-info-box info-box-margin"
-                         onClick={(event) => hideCategoryNamesDropdownHandler(event)}>
-                        <form action="#" name="productForm" id="product-form" onSubmit={productDataHandler}>
+                    <div className="store-info-box info-box-margin" onClick={ (event) => hideCategoryNamesDropdownHandler(event) }>
+                        <form action="#" name="productForm" id="product-form" onSubmit={addProductDataHandler}>
                             <div className="user-inputs">
                                 <div className="user-inputs__container">
                                     <label htmlFor="product-name" className="label">Name *</label>
@@ -177,6 +168,7 @@ const AddProduct = (props) => {
                                             value={enteredProductName}
                                             onChange={changeProductNameInputValueHandler}
                                             onBlur={blurProductNameInputHandler}
+                                            autoComplete="off"
                                         />
                                         {
                                             productNameInputIsInvalid &&
@@ -214,6 +206,7 @@ const AddProduct = (props) => {
                                             value={enteredSalePrice}
                                             onChange={changeSalePriceInputValueHandler}
                                             onBlur={blurSalePriceInputHandler}
+                                            autoComplete="off"
                                         />
                                         {
                                             salePriceInputIsInvalid &&
@@ -234,6 +227,7 @@ const AddProduct = (props) => {
                                             value={enteredNormalPrice}
                                             onChange={changeNormalPriceInputValueHandler}
                                             onBlur={blurNormalPriceInputHandler}
+                                            autoComplete="off"
                                         />
                                         {
                                             normalPriceInputIsInvalid &&
@@ -271,8 +265,10 @@ const AddProduct = (props) => {
                                             {
                                                 selectedCategories.map(selectedCategory => {
                                                     return (
-                                                        <div className="selected-categories-box"
-                                                             key={selectedCategory.id}>
+                                                        <div 
+                                                            className="selected-categories-box"
+                                                            key={selectedCategory.id}
+                                                        >
                                                             <p className="selected-category-name"> {selectedCategory.name} </p>
                                                             <span
                                                                 className="remove-sel-category-icon"
