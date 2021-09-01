@@ -37,7 +37,7 @@ const ProductInfo = (props) => {
                 </td>
                 <td>
                     <img width="50"
-                        src={`${process.env.REACT_APP_API_URL}/uploads/category_images/${props.product.image}`}
+                        src={`${process.env.REACT_APP_API_URL}/uploads/product_images/${props.product.image}`}
                         alt="product"
                     />
                 </td>

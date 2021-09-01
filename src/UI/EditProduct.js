@@ -112,7 +112,7 @@ const EditProduct = (props) => {
             normal_price: enteredNormalPrice,
             description: enteredDescription,
             product_category: selectedCategories.map(category => category.id),
-            folder: '/category_images/'
+            folder: '/product_images/'
         };
         const formData = new FormData();
 

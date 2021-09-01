@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import editIcon from '../assets/icons/main/edit-icon.png';
+import {API_URL} from "../configs/config";
 
 const CategoriesInfo = (props) => {
 
@@ -17,8 +18,8 @@ const CategoriesInfo = (props) => {
                 { props.category.name }
             </td>
             <td>
-                <img 
-                    src={ props.category.thumbnail } 
+                <img width="50"
+                    src={ `${process.env.REACT_APP_API_URL}/uploads/category_thumbs/${props.category.thumbnail}` }
                     alt="category page tumbnail" 
                 />
             </td>
