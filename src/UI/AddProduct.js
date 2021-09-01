@@ -105,9 +105,7 @@ const AddProduct = (props) => {
         event.preventDefault();
         const productData = {
             name: enteredProductName,
-            image_file: urlObj,
-            // image: urlObj.name,
-            image: productImage,
+            image: urlObj.name,
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
@@ -117,12 +115,10 @@ const AddProduct = (props) => {
         const formData = new FormData();
 
         for (let key in productData) {
-            if (key !== "image_file") {
-                formData.append(key, productData[key]);
-            }
+            formData.append(key, productData[key]);
         }
 
-        formData.append('image_file', productData.image_file, productData.image_file.name);
+        formData.append('image_file', urlObj, urlObj.name);
         for (let value of formData.values()) {
             console.log(value);
         }
