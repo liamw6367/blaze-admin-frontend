@@ -15,6 +15,7 @@ const Stores = (props) => {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
         .then((res) => {
+            console.log(res.data);
             setStores(res.data);
             setIsLoading(false);
         })
@@ -34,7 +35,6 @@ const Stores = (props) => {
     const passStoreHandler = (currentStore) => {
         props.showStore(currentStore);
     };
-
     const filteredStoresByData = stores.filter( store => {
         return store.name.toLowerCase().includes(searchingText.toLowerCase()) 
             || store.area.toLowerCase().includes(searchingText.toLowerCase()) 

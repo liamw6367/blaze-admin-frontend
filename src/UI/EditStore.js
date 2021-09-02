@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import { useUpdatingDataValidation } from '../hooks/use-validation';
 import JustifyContext from '../Contexts/JustifyingContext';
@@ -8,9 +8,21 @@ import GoogleMapModal from '../Modals/GoogleMapModal';
 import axios from 'axios';
 
 const EditStore = (props) => {
+    // const { id } = useParams();
     const { targetStore } = props;
-
+    console.log(targetStore)
     const justCtx = useContext(JustifyContext);
+// console.log(id)
+//     useEffect(() => {
+//         axios.get(`${process.env.REACT_APP_API_URL}/stores/get-one?id=${id}`)
+//             .then((res) => {
+//                 console.log(res);
+//                 // setTargetStore(res.data);
+//             })
+//             .catch((err) => {
+//                 console.log(err);
+//             })
+//     }, [id]);
 
     const history = useHistory();
 
@@ -93,8 +105,8 @@ const EditStore = (props) => {
 
     const updateStoreDataHandler = (event) => {
         event.preventDefault();
-        axios.post(
-            `${process.env.REACT_APP_API_URL}/stores/add`, 
+        axios.put(
+            `${process.env.REACT_APP_API_URL}/stores/update`,
             {
                 name: enteredName,
                 area: enteredArea,
