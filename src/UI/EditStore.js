@@ -10,7 +10,7 @@ import axios from 'axios';
 const EditStore = (props) => {
     // const { id } = useParams();
     const { targetStore } = props;
-    console.log(targetStore)
+    console.log(targetStore);
     const justCtx = useContext(JustifyContext);
 // console.log(id)
 //     useEffect(() => {
@@ -72,10 +72,10 @@ const EditStore = (props) => {
         blurInputHandler: blurPasswordInputHandler,
     } = useUpdatingDataValidation( targetStore.password, (value) => value.trim() !== "" );
 
-    const [enteredContactPersonName, setEnteredContactPersonName] = useState("");
-    const [enteredContactNumber, setEnteredContactNumber] = useState("");
-    const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState("");
-    const [enteredAddress, setEnteredAddress] = useState("");
+    const [enteredContactPersonName, setEnteredContactPersonName] = useState(targetStore.contact_person_name);
+    const [enteredContactNumber, setEnteredContactNumber] = useState(targetStore.contact_number);
+    const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState(targetStore.blaze_person_number);
+    const [enteredAddress, setEnteredAddress] = useState(targetStore.address);
     const [isActive, setIsActive] = useState(targetStore.is_active);
 
     const [googleMapModalIsOpen, setGoogleMapModalIsOpen] = useState(false);
