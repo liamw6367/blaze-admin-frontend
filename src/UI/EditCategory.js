@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useUpdatingDataValidation } from '../hooks/use-validation';
@@ -6,6 +6,7 @@ import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import TumbnailButton from '../Buttons/TumbnailButton';
 import BannerButton from '../Buttons/BannerButton';
+import axios from "axios";
 
 const EditCategory = (props) => {
     const { targetCategory } = props;
@@ -20,7 +21,7 @@ const EditCategory = (props) => {
         inputIsInvalid: categoryNameInputIsInvalid,
         changeInputValueHandler: changeCategoryNameInputValueHandler,
         blurInputHandler: blurCategoryNameInputHandler,
-    } = useUpdatingDataValidation( targetCategory.categoryName, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetCategory.name, (value) => value.trim() !== "" );
     const {
         enteredValue: enteredDescription,
         inputIsValid: descriptionInputIsValid,
@@ -29,29 +30,54 @@ const EditCategory = (props) => {
         blurInputHandler: blurDescriptionInputHandler,
     } = useUpdatingDataValidation( targetCategory.description, (value) => value.trim() !== "" );
 
-    const [tumbNail, setTumbNail] = useState(targetCategory.tumbNail);
+    const [tumbNail, setTumbNail] = useState(targetCategory.thumbnail);
     const [banner, setBanner] = useState(targetCategory.banner);
-    const [categoryIsActive, setCategoryIsActive] = useState(targetCategory.categoryIsActive);
+    const [thumbnailUrlObj, setThumbnailUrlObj] = useState(null);
+    const [bannerUrlObj, setBannerUrlObj] = useState(null);
+    const [categoryIsActive, setCategoryIsActive] = useState(targetCategory.is_active);
 
-    const addTumbNailHandler = (tumbnail) => {
+    const addTumbNailHandler = (tumbnail, urlObj) => {
         setTumbNail(tumbnail);
+        setThumbnailUrlObj(urlObj);
     };
-    const addBannerHandler = (banner) => {
+    const addBannerHandler = (banner, urlObj) => {
         setBanner(banner);
+        setBannerUrlObj(urlObj);
     };
 
     const updatedCategoryDataFormIsValid = categoryNameInputIsValid && descriptionInputIsValid && tumbNail && banner;
 
     const updateCategoryDataHandler = (event) => {
         event.preventDefault();
+
         const updatedCategoryData = {
             id: targetCategory.id,
-            categoryName: enteredCategoryName,
-            tumbNail,
-            banner,
+            name: enteredCategoryName,
+            thumbnail: thumbnailUrlObj.name,
+            banner: bannerUrlObj.name,
             description: enteredDescription,
-            categoryIsActive, 
+            is_active: +categoryIsActive
         }
+
+        const formData = new FormData();
+        for (let key in updatedCategoryData) {
+            formData.append(key, updatedCategoryData[key]);
+        }
+        formData.append('thumbnail_file', thumbnailUrlObj, thumbnailUrlObj.name);
+        formData.append('banner_file', bannerUrlObj, bannerUrlObj.name);
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        console.log(updatedCategoryData);
+        axios.post(`${process.env.REACT_APP_API_URL}/categories/update`, formData).then((res) => {
+            console.log(res);
+            history.push('/admin/categories');
+        }).catch((err) => {
+            console.log(err);
+        });
+
+
+
         props.onUpdate(updatedCategoryData);
 
         history.push('/admin/categories');
@@ -99,7 +125,10 @@ const EditCategory = (props) => {
                                         </p>
                                         { tumbNail && (
                                             <div className="tumbnail">
-                                                <img src={tumbNail} alt="" />    
+                                                <img
+                                                    src={ `${process.env.REACT_APP_API_URL}/uploads/category_thumbs/${tumbNail}` }
+                                                    alt={`thumbnail ${props.targetCategory.thumbnail}`}
+                                                />
                                             </div>
                                         ) }
                                     </div>
@@ -115,7 +144,11 @@ const EditCategory = (props) => {
                                         </p>
                                         { banner && (
                                             <div className="banner">
-                                                <img src={banner} alt="banner" className="banner" />
+                                                <img
+                                                    src={ `${process.env.REACT_APP_API_URL}/uploads/category_banners/${props.targetCategory.banner}` }
+                                                    alt={`banner ${props.targetCategory.banner}`}
+                                                    className="banner"
+                                                />
                                             </div>
                                         ) }
                                     </div>

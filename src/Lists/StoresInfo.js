@@ -32,12 +32,12 @@ const StoresInfo = (props) => {
                 { storeStatus } 
             </td>
             <td>
-                <Link to="/admin/edit-store"> 
-                    <img 
+                <Link to={`/admin/edit-store`}>
+                    <img
                         className="edit-icon" 
                         src={editIcon} 
                         alt="edit store" 
-                        onClick={ passStore.bind(null, props.store) } 
+                        onClick={ passStore.bind(null, props.store) }
                     />
                 </Link>
             </td>

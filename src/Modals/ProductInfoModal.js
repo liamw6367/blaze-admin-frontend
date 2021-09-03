@@ -17,7 +17,10 @@ const ProductInfoContainer = (props) => {
             <p className="file-modal__closer" onClick={props.hideModal}>&times;</p>
             <div className="driver-profile-and-info-box">
                 <div className="driver-profile">
-                    <img src={props.currentProduct.image} alt={`product ${props.currentProduct.name}`} />
+                    <img
+                        src={`${process.env.REACT_APP_API_URL}/uploads/product_images/${props.currentProduct.image}`}
+                        alt={`product ${props.currentProduct.name}`}
+                    />
                 </div>
                 <div className="product-info">
                     <h2>{props.currentProduct.name}</h2>
