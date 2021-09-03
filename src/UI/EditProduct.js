@@ -12,17 +12,17 @@ const EditProduct = (props) => {
 
     const justCtx = useContext(JustifyContext);
 
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
-            .then((res) => {
-                setCategories(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
+    //         .then((res) => {
+    //             setCategories(res.data);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
 
     const history = useHistory();
 
@@ -33,13 +33,13 @@ const EditProduct = (props) => {
         changeInputValueHandler: changeProductNameInputValueHandler,
         blurInputHandler: blurProductNameInputHandler,
     } = useUpdatingDataValidation(targetProduct.name, (value) => value.trim() !== "");
-    const {
-        enteredValue: enteredSalePrice,
-        inputIsValid: salePriceInputIsValid,
-        inputIsInvalid: salePriceInputIsInvalid,
-        changeInputValueHandler: changeSalePriceInputValueHandler,
-        blurInputHandler: blurSalePriceInputHandler,
-    } = useUpdatingDataValidation(targetProduct.sales_price, (value) => value.trim() !== "");
+    // const {
+    //     enteredValue: enteredSalePrice,
+    //     inputIsValid: salePriceInputIsValid,
+    //     inputIsInvalid: salePriceInputIsInvalid,
+    //     changeInputValueHandler: changeSalePriceInputValueHandler,
+    //     blurInputHandler: blurSalePriceInputHandler,
+    // } = useUpdatingDataValidation(targetProduct.sales_price, (value) => value.trim() !== "");
     const {
         enteredValue: enteredNormalPrice,
         inputIsValid: normalPriceInputIsValid,
@@ -66,22 +66,22 @@ const EditProduct = (props) => {
     const categoryInputRef = useRef();
 
     const [enteredCategoryName, setEnteredCategoryName] = useState("");
-    const [selectedCategories, setSelectedCategories] = useState(targetProduct.product_category);
+    // const [selectedCategories, setSelectedCategories] = useState(targetProduct.product_category);
     const [categoryDropdownIsShown, setCategoryDropdownIsShown] = useState(false);
     const [categoriesFieldIsTouched, setCategoriesFieldIsTouched] = useState(false);
 
-    const addSelectedCategoryHandler = (event, selectedCategory) => {
-        event.stopPropagation();
-        categoryInputRef.current.focus();
-        setCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
-        setSelectedCategories(prevCategories => [...prevCategories, selectedCategory]);
-        setEnteredCategoryName("");
-    };
-    const removeSelectedCategoryHandler = (selectedCategory) => {
-        categoryInputRef.current.focus();
-        setCategories(prevCategories => [selectedCategory, ...prevCategories]);
-        setSelectedCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
-    };
+    // const addSelectedCategoryHandler = (event, selectedCategory) => {
+    //     event.stopPropagation();
+    //     categoryInputRef.current.focus();
+    //     setCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
+    //     setSelectedCategories(prevCategories => [...prevCategories, selectedCategory]);
+    //     setEnteredCategoryName("");
+    // };
+    // const removeSelectedCategoryHandler = (selectedCategory) => {
+    //     categoryInputRef.current.focus();
+    //     setCategories(prevCategories => [selectedCategory, ...prevCategories]);
+    //     setSelectedCategories(prevCategories => prevCategories.filter(category => category.id !== selectedCategory.id));
+    // };
 
     const showCategoryNamesDropdownHandler = (event) => {
         event.stopPropagation();
@@ -92,12 +92,15 @@ const EditProduct = (props) => {
         setCategoryDropdownIsShown(false);
     };
 
-    const categoriesFieldIsValid = selectedCategories.length !== 0;
-    const categoriesFieldIsInvalid = categoriesFieldIsTouched && !categoriesFieldIsValid;
+    // const categoriesFieldIsValid = selectedCategories.length !== 0;
+    // const categoriesFieldIsInvalid = categoriesFieldIsTouched && !categoriesFieldIsValid;
 
-    const filteredCategoriesByName = categories.filter(category => category.name.toLowerCase().includes(enteredCategoryName.toLowerCase()));
+    // const filteredCategoriesByName = categories.filter(category => category.name.toLowerCase().includes(enteredCategoryName.toLowerCase()));
 
-    const productDataFormIsValid = productNameInputIsValid && descriptionInputIsValid && productImage && salePriceInputIsValid && normalPriceInputIsValid && categoriesFieldIsValid;
+    const productDataFormIsValid = productNameInputIsValid && descriptionInputIsValid && productImage && 
+    // salePriceInputIsValid &&
+    normalPriceInputIsValid 
+    // && categoriesFieldIsValid;
 
     const [isFromAddProduct, setIsFromAddProduct] = useState(false);
 
@@ -108,10 +111,10 @@ const EditProduct = (props) => {
             image_file: urlObj,
             // image: urlObj.name,
             image: productImage,
-            sales_price: enteredSalePrice,
+            // sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
-            product_category: selectedCategories.map(category => category.id),
+            // product_category: selectedCategories.map(category => category.id),
             folder: '/category_images/'
         };
         const formData = new FormData();
@@ -194,7 +197,7 @@ const EditProduct = (props) => {
                                     <TumbnailButton onAdd={editImageHandler}/>
                                 </div>
                             </div>
-                            <div className="user-inputs">
+                            {/* <div className="user-inputs">
                                 <div className="user-inputs__container">
                                     <label htmlFor="sale-price" className="label">Sale Price *</label>
                                     <div>
@@ -214,7 +217,7 @@ const EditProduct = (props) => {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="user-inputs">
                                 <div className="user-inputs__container">
                                     <label htmlFor="normal-price" className="label">Normal Price *</label>
@@ -256,7 +259,7 @@ const EditProduct = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="user-inputs">
+                            {/* <div className="user-inputs">
                                 <div className="user-inputs__container">
                                     <label htmlFor="categories" className="label">Categories *</label>
                                     <div
@@ -329,7 +332,7 @@ const EditProduct = (props) => {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="user-inputs">
                                 <div className="user-inputs__container">
                                     <button

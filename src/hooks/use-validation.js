@@ -51,7 +51,7 @@ export const useDataValidation = (validateInput) => {
 };
 
 export const useUpdatingDataValidation = (inputValue, validateInput) => {
-    const [enteredValue, setEnteredValue] = useState(inputValue);
+    const [enteredValue, setEnteredValue] = useState(inputValue.toString());
     const [inputIsTouched, setInputIsTouched] = useState(false);
 
     const inputIsValid = validateInput(enteredValue);
