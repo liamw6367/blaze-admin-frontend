@@ -105,9 +105,7 @@ const EditProduct = (props) => {
         event.preventDefault();
         const productData = {
             name: enteredProductName,
-            image_file: urlObj,
-            // image: urlObj.name,
-            image: productImage,
+            image: urlObj.name,
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
