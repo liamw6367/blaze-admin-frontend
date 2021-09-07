@@ -14,6 +14,8 @@ const BannerModalContainer = (props) => {
     const [selectedPicture, setSelectedPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
 
+    const [bannerIsBeingChanged, setBannerIsBeingChanged] = useState(false);
+
     const imageChangeHandler = (event) => {
         if(event.target.files[0]) {
             setSelectedPicture(event.target.files[0]);
@@ -23,10 +25,11 @@ const BannerModalContainer = (props) => {
                 setImgData(reader.result);
             });
             reader.readAsDataURL(event.target.files[0]);
+            setBannerIsBeingChanged(true);
         }
     };
     const bannerPutHandler = (banner) => {
-        props.onTrigger(banner, selectedPicture);
+        props.onTrigger(banner, selectedPicture, bannerIsBeingChanged);
         props.onClick();
     };
 
@@ -44,8 +47,8 @@ const BannerModalContainer = (props) => {
 };
 const BannerModal = (props) => {
     const rootForModals = document.getElementById("file-modals");
-    const triggerHandler = (banner, urlObj) => {
-        props.onTrigger(banner, urlObj);
+    const triggerHandler = (banner, urlObj, isBeingChanged) => {
+        props.onTrigger(banner, urlObj, isBeingChanged);
     };
 
     return (

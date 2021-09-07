@@ -16,6 +16,8 @@ const TumbnailModalContainer = (props) => {
     const [selectedPicture, setSelectedPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
 
+    const [thumbnailIsBeingChanged, setThumbnailIsBeingChanged] = useState(false);
+
     const imageChangeHandler = (event) => {
         if(event.target.files[0]) {
             setSelectedPicture(event.target.files[0]);
@@ -30,10 +32,11 @@ const TumbnailModalContainer = (props) => {
                 setImgData(reader.result);
             });
             reader.readAsDataURL(event.target.files[0]);
+            setThumbnailIsBeingChanged(true);
         }
     };
-    const tumbnailPutHandler = (tumbNail) => {
-        props.onTrigger(tumbNail, selectedPicture);
+    const tumbnailPutHandler = (tumbNail, urlObj) => {
+        props.onTrigger(tumbNail, urlObj, thumbnailIsBeingChanged);
         props.onClick();
     };
 
@@ -45,14 +48,14 @@ const TumbnailModalContainer = (props) => {
             </div>
             <label htmlFor="categoryTumbnail">Crop Thumbnail</label>
             <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
-            <button type="button" className="submit-image-button" onClick={() => tumbnailPutHandler(imgData)}>Done</button>
+            <button type="button" className="submit-image-button" onClick={() => tumbnailPutHandler(imgData, selectedPicture)}>Done</button>
         </div>
     );
 };
 const TumbnailModal = (props) => {
     const rootForModals = document.getElementById("file-modals");
-    const triggerHandler = (tumbnail, urlObj) => {
-        props.onTrigger(tumbnail, urlObj);
+    const triggerHandler = (tumbnail, urlObj, isBeingChanged) => {
+        props.onTrigger(tumbnail, urlObj, isBeingChanged);
     };
 
     return (

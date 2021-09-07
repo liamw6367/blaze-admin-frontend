@@ -12,10 +12,10 @@ const BannerButton = (props) => {
     const closeFileModalHandler = () => {
         setFileModalIsOpen(false);
     };
-    const triggerBannerHandler = (banner, urlObj) => {
-        setImg(banner, urlObj);
+    const triggerBannerHandler = (banner, urlObj, isBeingChanged) => {
+        setImg(banner);
         if(banner) {
-            props.onAdd(banner, urlObj);
+            props.onAdd(banner, urlObj, isBeingChanged);
         }
     };
 

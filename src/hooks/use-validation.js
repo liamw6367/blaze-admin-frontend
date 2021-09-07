@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useLoginValidation = (validateInput, checkEmptiness) => {
     const [enteredValue, setEnteredValue] = useState("");
@@ -41,6 +41,7 @@ export const useDataValidation = (validateInput) => {
         setInputIsTouched(true);
     };
 
+
     return {
         enteredValue,
         inputIsValid,
@@ -54,6 +55,10 @@ export const useUpdatingDataValidation = (inputValue, validateInput) => {
     const [enteredValue, setEnteredValue] = useState(inputValue);
     const [inputIsTouched, setInputIsTouched] = useState(false);
 
+    useEffect(() => {
+        setEnteredValue(inputValue);
+    }, [inputValue]);
+
     const inputIsValid = validateInput(enteredValue);
     const inputIsInvalid = inputIsTouched && !inputIsValid;
 
@@ -64,6 +69,7 @@ export const useUpdatingDataValidation = (inputValue, validateInput) => {
     const blurInputHandler = () => {
         setInputIsTouched(true);
     };
+    // console.log("work updating validation function", enteredValue)
 
     return {
         enteredValue,

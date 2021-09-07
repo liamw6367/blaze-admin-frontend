@@ -12,10 +12,10 @@ const TumbnailButton = (props) => {
     const closeFileModalHandler = () => {
         setFileModalIsOpen(false);
     };
-    const triggerTumbnailHandler = (tumbnail, urlObj) => {
+    const triggerTumbnailHandler = (tumbnail, urlObj, isBeingChanged) => {
         setImg(tumbnail);
         if(tumbnail) {
-            props.onAdd(tumbnail, urlObj);
+            props.onAdd(tumbnail, urlObj, isBeingChanged);
         }
     };
 

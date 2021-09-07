@@ -565,7 +565,7 @@ const App = () => {
             // triggerCategoryData={addCategoryDataHandler} 
           />
         </Route>
-        <Route path="/admin/edit-category">
+        <Route path="/admin/edit-category/:id">
           <EditCategory targetCategory={targetCategory} 
             // onUpdate={updateCategoryDataHandler} 
           />
