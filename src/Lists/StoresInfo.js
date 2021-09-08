@@ -1,15 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import './StoresInfo.css';
 import editIcon from '../assets/icons/main/edit-icon.png';
 
 const StoresInfo = (props) => {
 
-    const passStore = (currentStore) => {
-        props.onPass(currentStore);
-    };
+    const history = useHistory();
 
-    const storeStatus = props.store.is_active ? "Active" : "Inactive"; 
+    const storeStatus = props.store.is_active ? "Active" : "Inactive";
 
     return (
         <tr>
@@ -32,14 +30,13 @@ const StoresInfo = (props) => {
                 { storeStatus } 
             </td>
             <td>
-                <Link to={`/admin/edit-store`}>
-                    <img
-                        className="edit-icon" 
-                        src={editIcon} 
-                        alt="edit store" 
-                        onClick={ passStore.bind(null, props.store) }
-                    />
-                </Link>
+                <img
+                    style={{cursor: "pointer"}}
+                    className="edit-icon"
+                    src={editIcon}
+                    alt="edit store"
+                    onClick={ () => history.push(`/admin/edit-store/${props.store.id}`) }
+                />
             </td>
         </tr>
     );

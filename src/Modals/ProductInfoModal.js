@@ -24,8 +24,8 @@ const ProductInfoContainer = (props) => {
                 </div>
                 <div className="product-info">
                     <h2>{props.currentProduct.name}</h2>
-                    <p className="price-title"> Sale Price - <span className="product-price"> { `$${props.currentProduct.sales_price}` } </span> </p>
-                    <p className="price-title"> Normal Price - <span className="product-price"> { `$${props.currentProduct.normal_price}` } </span> </p>
+                    <p className="price-title"> Sale Price - <span className="product-price"> { `$${+props.currentProduct.sales_price}` } </span> </p>
+                    <p className="price-title"> Normal Price - <span className="product-price"> { `$${+props.currentProduct.normal_price}` } </span> </p>
                 </div>
             </div>
             <div className="product-description-box">

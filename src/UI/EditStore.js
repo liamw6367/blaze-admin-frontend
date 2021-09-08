@@ -7,22 +7,36 @@ import Blaze from '../Pages/Blaze';
 import GoogleMapModal from '../Modals/GoogleMapModal';
 import axios from 'axios';
 
-const EditStore = (props) => {
-    // const { id } = useParams();
-    const {targetStore} = props;
-    console.log(targetStore);
+const EditStore = () => {
+    const { id } = useParams();
     const justCtx = useContext(JustifyContext);
-// console.log(id)
-//     useEffect(() => {
-//         axios.get(`${process.env.REACT_APP_API_URL}/stores/get-one?id=${id}`)
-//             .then((res) => {
-//                 console.log(res);
-//                 // setTargetStore(res.data);
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//             })
-//     }, [id]);
+    const [targetStore, setTargetStore] = useState({});
+    const [storeEmailIdInputIsBeingChanged, setStoreEmailIdInputIsBeingChanged] = useState(false);
+    const [enteredContactPersonName, setEnteredContactPersonName] = useState();
+    const [enteredContactNumber, setEnteredContactNumber] = useState();
+    const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState();
+    const [enteredAddress, setEnteredAddress] = useState();
+    const [isActive, setIsActive] = useState();
+    const [enteredLatitude, setEnteredLatitude] = useState();
+    const [enteredLongitude, setEnteredLongitude] = useState();
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/stores/get-one?id=${id}`)
+            .then((res) => {
+                console.log(res.data);
+                setTargetStore(res.data);
+                setEnteredContactPersonName(res.data.contact_person_name);
+                setEnteredContactNumber(res.data.contact_number);
+                setEnteredBlazePersonNumber(res.data.blaze_person_number);
+                setEnteredAddress(res.data.address);
+                setIsActive(res.data.is_active);
+                setEnteredLatitude(res.data.latitude);
+                setEnteredLongitude(res.data.longitude);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            })
+    }, []);
 
     const history = useHistory();
 
@@ -32,51 +46,42 @@ const EditStore = (props) => {
         inputIsInvalid: nameInputIsInvalid,
         changeInputValueHandler: changeNameInputValueHandler,
         blurInputHandler: blurNameInputHandler,
-    } = useUpdatingDataValidation(targetStore.name, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetStore.name, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredArea,
         inputIsValid: areaInputIsValid,
         inputIsInvalid: areaInputIsInvalid,
         changeInputValueHandler: changeAreaInputValueHandler,
         blurInputHandler: blurAreaInputHandler,
-    } = useUpdatingDataValidation(targetStore.area, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetStore.area, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredDeliveryRadius,
         inputIsValid: deliveryRadiusInputIsValid,
         inputIsInvalid: deliveryRadiusInputIsInvalid,
         changeInputValueHandler: changeDeliveryRadiusInputValueHandler,
         blurInputHandler: blurDeliveryRadiusInputHandler,
-    } = useUpdatingDataValidation(targetStore.delivery_radius, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetStore.delivery_radius, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredStoreTiming,
         inputIsValid: storeTimingInputIsValid,
         inputIsInvalid: storeTimingInputIsInvalid,
         changeInputValueHandler: changeStoreTimingInputValueHandler,
         blurInputHandler: blurStoreTimingInputHandler,
-    } = useUpdatingDataValidation(targetStore.store_timing, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetStore.store_timing, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredBlazePersonName,
         inputIsValid: blazePersonNameInputIsValid,
         inputIsInvalid: blazePersonNameInputIsInvalid,
         changeInputValueHandler: changeBlazePersonNameInputValueHandler,
         blurInputHandler: blurBlazePersonNameInputHandler,
-    } = useUpdatingDataValidation(targetStore.blaze_person_name, (value) => value.trim() !== "");
-
-    const [storeEmailIdInputIsBeingChanged, setStoreEmailIdInputIsBeingChanged] = useState(false);
-
+    } = useUpdatingDataValidation(targetStore.blaze_person_name, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredPassword,
         inputIsValid: passwordInputIsValid,
         inputIsInvalid: passwordInputIsInvalid,
         changeInputValueHandler: changePasswordInputValueHandler,
         blurInputHandler: blurPasswordInputHandler,
-    } = useUpdatingDataValidation(targetStore.password, (value) => value.trim() !== "");
-
-    const [enteredContactPersonName, setEnteredContactPersonName] = useState(targetStore.contact_person_name);
-    const [enteredContactNumber, setEnteredContactNumber] = useState(targetStore.contact_number);
-    const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState(targetStore.blaze_person_number);
-    const [enteredAddress, setEnteredAddress] = useState(targetStore.address);
-    const [isActive, setIsActive] = useState(targetStore.is_active);
+    } = useUpdatingDataValidation(targetStore.password, (value) => value?.trim() !== "");
 
     const [googleMapModalIsOpen, setGoogleMapModalIsOpen] = useState(false);
 
@@ -87,19 +92,16 @@ const EditStore = (props) => {
         setGoogleMapModalIsOpen(false);
     };
 
-    const [enteredLatitude, setEnteredLatitude] = useState(targetStore.latitude);
-    const [enteredLongitude, setEnteredLongitude] = useState(targetStore.longitude);
-
     const passCurrPositionHandler = (position) => {
         setEnteredLatitude(position.lat);
         setEnteredLongitude(position.lng);
         console.log(position, "position");
     };
 
-    const contactPersonNameInputIsNotEmpty = enteredContactPersonName.trim() !== "";
-    const contactNumberInputIsNotEmpty = enteredContactNumber.trim() !== "";
-    const blazePersonNumberIsNotEmpty = enteredBlazePersonNumber.trim() !== "";
-    const addressInputIsNotEmpty = enteredAddress.trim() !== "";
+    const contactPersonNameInputIsNotEmpty = enteredContactPersonName?.trim() !== "";
+    const contactNumberInputIsNotEmpty = enteredContactNumber?.trim() !== "";
+    const blazePersonNumberIsNotEmpty = enteredBlazePersonNumber?.trim() !== "";
+    const addressInputIsNotEmpty = enteredAddress?.trim() !== "";
 
     const updatedStoreDataFormIsValid = nameInputIsValid && areaInputIsValid && deliveryRadiusInputIsValid && storeTimingInputIsValid && blazePersonNameInputIsValid && passwordInputIsValid;
 
@@ -125,33 +127,13 @@ const EditStore = (props) => {
                 is_active: isActive,
             }
         )
-            .then((res) => {
-                history.push('./stores');
-                console.log(res.data, "response");
-            })
-            .catch((err) => {
-                console.log(err.message, "error message");
-            });
-        // const updatedStoreData = {
-        //     name: enteredName,
-        //     area: enteredArea,
-        //     latitude: enteredLatitude,
-        //     longitude: enteredLongitude,
-        //     delivery_radius: enteredDeliveryRadius,
-        //     store_timing: enteredStoreTiming,
-        //     contact_person_name: enteredContactPersonName,
-        //     contact_number: enteredContactNumber,
-        //     blaze_person_name: enteredBlazePersonName,
-        //     blaze_person_number: enteredBlazePersonNumber,
-        //     address: enteredAddress,
-        //     store_email_id: targetStore.storeEmailId,
-        //     password: enteredPassword,
-        //     is_active: isActive,
-        // };
-        // console.log(updatedStoreData, "uppdatedstoredATA");
-        // props.onUpdate(updatedStoreData);
-
-        // history.push('./stores');
+        .then((res) => {
+            history.push('/admin/stores');
+            console.log(res.data, "response");
+        })
+        .catch((err) => {
+            console.log(err.message, "error message");
+        });
     };
 
     return (

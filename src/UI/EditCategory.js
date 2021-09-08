@@ -22,6 +22,8 @@ const EditCategory = (props) => {
     const [tumbNail, setTumbNail] = useState(null);
     const [banner, setBanner] = useState(null);
 
+    const [error, setError] = useState();
+
     const justCtx = useContext(JustifyContext);
 
     useEffect(() => {
@@ -111,7 +113,9 @@ const EditCategory = (props) => {
             console.log(res);
             history.push('/admin/categories');
         }).catch((err) => {
-            console.log(err);
+            setError(err.response.data.msg);
+            console.log(err.response.data.msg);
+            console.log(new Error());
         });
 
 
@@ -119,6 +123,14 @@ const EditCategory = (props) => {
         //
         // history.push('/admin/categories');
     };
+
+    if(error) {
+        return (
+            <div style={{textAlign: "center"}}>
+                <h1> {error} </h1>
+            </div>
+        );
+    }
 
     return (
         <Blaze

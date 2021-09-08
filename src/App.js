@@ -38,84 +38,6 @@ import EditProduct from './UI/EditProduct';
 require('dotenv').config();
 
 const App = () => {
-  // const [categories, setCategories] = useState([
-  //   {
-  //       id: Math.random().toString(),
-  //       categoryName: 'Beverages',
-  //       tumbNail: categoriesPageImages.beveragesImage,
-  //       banner: categoriesPageImages.drinksBanner,
-  //       description: 'A soft drink is a drink that typically contains carbonated water, a sweetener and a natural or artificial flavoring. The sweetener may be sugar,            high-fructose corn syrup, fruit juice, sugar substitutes or some combination of these',
-  //       categoryIsActive: false, 
-  //   },
-  //   {
-  //       id: Math.random().toString(),
-  //       categoryName: 'Wine',
-  //       tumbNail: categoriesPageImages.wineImage,
-  //       banner: categoriesPageImages.drinksBanner,
-  //       description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-  //       categoryIsActive: true, 
-  //   },
-  //   {
-  //       id: Math.random().toString(),
-  //       categoryName: 'Cigarettes',
-  //       tumbNail: categoriesPageImages.cigarettesImage,
-  //       banner: categoriesPageImages.drinksBanner,
-  //       description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-  //       categoryIsActive: false, 
-  //   },
-  //   {
-  //     id: Math.random().toString(),
-  //     categoryName: "Sweet Treats",
-  //     tumbNail: productsPageImages.kitkatImage,
-  //     banner: categoriesPageImages.drinksBanner,
-  //     description: 'Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of sugars, acids, enzymes, water, or other nutrients.',
-  //     categoryIsActive: false, 
-  //   },
-  // ]);
-  // const [products, setProducts] = useState([
-  //   {
-  //     id: Math.random().toString(),
-  //     productName: "Kitkat",
-  //     productSKU: "",
-  //     productImage: productsPageImages.kitkatImage,
-  //     productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
-  //     productPrice: 25,
-  //     productMRP: "",
-  //     productProfit: "",
-  //     productCategory: "Sweet Treats",
-  //     productSpecification: "",
-  //     isAgeProofRequired: false,
-  //     productTax: "",
-  //     productTag: "",
-  //     productTagType: {
-  //       tagTypeTitle: "",
-  //       tagTypeValue: "",
-  //     },
-  //     productIsTrending: false,
-  //     productIsActive: true,
-  //   },
-  //   {
-  //     id: Math.random().toString(),
-  //     productName: "Merlot",
-  //     productSKU: "",
-  //     productImage: productsPageImages.merlotImage,
-  //     productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
-  //     productPrice: 48,
-  //     productMRP: "",
-  //     productProfit: "",
-  //     productCategory: "Beverages",
-  //     productSpecification: "",
-  //     isAgeProofRequired: false,
-  //     productTax: "",
-  //     productTag: "",
-  //     productTagType: {
-  //       tagTypeTitle: "",
-  //       tagTypeValue: "",
-  //     },
-  //     productIsTrending: false,
-  //     productIsActive: true,
-  //   },
-  // ]);
   const [drivers, setDrivers] = useState([
     {
       driverName: 'Simon',
@@ -384,47 +306,13 @@ const App = () => {
   //   },
   // ]);
 
-  const [stores, setStores] = useState([]);
-
   const removingCtx = useContext(RemovingContext);
 
-  const [targetStore, setTargetStore] = useState({});
-  const [targetCategory, setTargetCategory] = useState({});
   const [targetProduct, setTargetProduct] = useState({});
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
   const [targetBanner, setTargetBanner] = useState({});
 
-  const showStoreHandler = (currentStore) => {
-    setTargetStore(currentStore);
-  };
-  const updateStoreDataHandler = (updatedStoreData) => {
-    console.log(updatedStoreData);
-    const updatedStores = [...stores];
-    updatedStores.forEach((store, index, array) => {
-      if(store.storeEmailId === updatedStoreData.storeEmailId) {
-        array[index] = updatedStoreData;
-      }
-    });
-    setStores(updatedStores);
-  };
-
-  const showCategoryHandler = (currentCategory) => {
-    setTargetCategory(currentCategory);
-  };
-  // const addCategoryDataHandler = (newCategoryData) => {
-  //   setCategories((prevCategories) => [newCategoryData, ...prevCategories]);
-  // };
-  // const updateCategoryDataHandler = (updatedCategoryData) => {
-  //   console.log(updatedCategoryData);
-  //   const updatedCategories = [...categories];
-  //   updatedCategories.forEach((category, index, array) => {
-  //     if(category.id === updatedCategoryData.id) {
-  //       array[index] = updatedCategoryData;
-  //     }
-  //   });
-  //   setCategories(updatedCategories);
-  // };
   const showProductHandler = (currentProduct) => {
     setTargetProduct(currentProduct);
     console.log(currentProduct);
@@ -543,32 +431,25 @@ const App = () => {
           <LoginPage />
         </Route>
         <Route path="/admin/dashboard">
-          <Dashboard stores={stores} />
+          <Dashboard />
         </Route>
         <Route path="/admin/stores">
-          <Stores showStore={showStoreHandler} />
+          <Stores />
         </Route>
         <Route path="/admin/add-store">
           <AddStore />
         </Route>
-        <Route path="/admin/edit-store">
-          <EditStore targetStore={targetStore} onUpdate={updateStoreDataHandler} />
+        <Route path="/admin/edit-store/:id">
+          <EditStore />
         </Route>
         <Route path="/admin/categories">
-          <Categories 
-            // categories={categories} 
-            showCategory={showCategoryHandler} 
-          />
+          <Categories />
         </Route>
         <Route path="/admin/add-category">
-          <AddCategory 
-            // triggerCategoryData={addCategoryDataHandler} 
-          />
+          <AddCategory />
         </Route>
         <Route path="/admin/edit-category/:id">
-          <EditCategory targetCategory={targetCategory} 
-            // onUpdate={updateCategoryDataHandler} 
-          />
+          <EditCategory />
         </Route>
         <Route path="/admin/products">
           <Products 
@@ -584,7 +465,7 @@ const App = () => {
         </Route>
         <Route path="/admin/edit-product">
           <EditProduct 
-            targetProduct={targetProduct} 
+            targetProduct={targetProduct}
             onTrigger={triggerProductsHandler}
           />
         </Route>
@@ -601,7 +482,7 @@ const App = () => {
           <PromotionalMessage />
         </Route>
         <Route path="/admin/all-orders">
-          <AllOrders stores={stores} orders={orders} />
+          <AllOrders orders={orders} />
         </Route>
         <Route path="/admin/cancel-transaction">
           <CancelTransaction orders={orders} 
