@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import viewIcon from '../assets/icons/main/eye-icon.png';
 import ProductInfoModal from '../Modals/ProductInfoModal';
 import editIcon from '../assets/icons/main/edit-icon.png';
@@ -8,6 +8,8 @@ import {API_URL} from "../configs/config";
 const ProductInfo = (props) => {
     const [modalIsShown, setModalIsShown] = useState(false);
     const [currentProduct, setCurrentProduct] = useState({});
+
+    const history = useHistory();
 
     const passProduct = (currentProduct) => {
         setModalIsShown(true);
@@ -52,14 +54,13 @@ const ProductInfo = (props) => {
                             alt="view product"
                             onClick={ passProduct.bind(null, props.product) }
                         />
-                        <Link to="/admin/edit-product">
-                            <img
-                                className="edit-icon"
-                                src={editIcon}
-                                alt="edit product"
-                                onClick={ triggerProduct.bind(null, props.product) }
-                            />
-                        </Link>
+                        <img
+                            style={{cursor: 'pointer'}}
+                            className="edit-icon"
+                            src={editIcon}
+                            alt="edit product"
+                            onClick={ () => history.push(`/admin/edit-product/${props.product.id}`) }
+                        />
                     </div>
                 </td>
             </tr>

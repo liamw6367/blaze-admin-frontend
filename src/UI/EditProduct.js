@@ -1,18 +1,39 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, {useContext, useState, useRef, useEffect} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import TumbnailButton from '../Buttons/TumbnailButton';
-import { useUpdatingDataValidation } from '../hooks/use-validation';
+import {useUpdatingDataValidation} from '../hooks/use-validation';
 import axios from 'axios';
 
 const EditProduct = (props) => {
-    const { targetProduct } = props;
+    const {id} = useParams();
 
     const justCtx = useContext(JustifyContext);
 
+    const [targetProduct, setTargetProduct] = useState({});
     const [categories, setCategories] = useState([]);
+    const [productImage, setProductImage] = useState(null);
+    const [urlObj, setUrlObj] = useState(null);
+    const [enteredCategoryName, setEnteredCategoryName] = useState("");
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [categoryDropdownIsShown, setCategoryDropdownIsShown] = useState(false);
+    const [categoriesFieldIsTouched, setCategoriesFieldIsTouched] = useState(false);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/products/get-one?id=${id}`)
+            .then((res) => {
+                // console.log(res.data);
+                setTargetProduct(res.data);
+                setProductImage(res.data.image);
+                setUrlObj(res.data.image_file);
+                setSelectedCategories(res.data.product_category);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            })
+    }, []);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
@@ -24,6 +45,8 @@ const EditProduct = (props) => {
             });
     }, []);
 
+    console.log(targetProduct);
+
     const history = useHistory();
 
     const {
@@ -32,43 +55,38 @@ const EditProduct = (props) => {
         inputIsInvalid: productNameInputIsInvalid,
         changeInputValueHandler: changeProductNameInputValueHandler,
         blurInputHandler: blurProductNameInputHandler,
-    } = useUpdatingDataValidation(targetProduct.name, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetProduct.name, (value) => value?.trim() !== "");
     const {
         enteredValue: enteredSalePrice,
         inputIsValid: salePriceInputIsValid,
         inputIsInvalid: salePriceInputIsInvalid,
         changeInputValueHandler: changeSalePriceInputValueHandler,
         blurInputHandler: blurSalePriceInputHandler,
-    } = useUpdatingDataValidation(targetProduct.sales_price, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetProduct.sales_price, (value) => value?.toString().trim() !== "");
     const {
         enteredValue: enteredNormalPrice,
         inputIsValid: normalPriceInputIsValid,
         inputIsInvalid: normalPriceInputIsInvalid,
         changeInputValueHandler: changeNormalPriceInputValueHandler,
         blurInputHandler: blurNormalPriceInputHandler,
-    } = useUpdatingDataValidation(targetProduct.normal_price, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetProduct.normal_price, (value) => value?.toString().trim() !== "");
     const {
         enteredValue: enteredDescription,
         inputIsValid: descriptionInputIsValid,
         inputIsInvalid: descriptionInputIsInvalid,
         changeInputValueHandler: changeDescriptionInputValueHandler,
         blurInputHandler: blurDescriptionInputHandler,
-    } = useUpdatingDataValidation(targetProduct.description, (value) => value.trim() !== "");
+    } = useUpdatingDataValidation(targetProduct.description, (value) => value?.trim() !== "");
 
-    const [productImage, setProductImage] = useState(targetProduct.image);
-    const [urlObj, setUrlObj] = useState(targetProduct.image_file);
+    const [productImageIsBeingChanged, setProductImageIsBeingChanged] = useState(false);
 
-    const editImageHandler = (image, urlObj) => {
+    const editImageHandler = (image, urlObj, isBeingChanged) => {
         setProductImage(image);
         setUrlObj(urlObj);
+        setProductImageIsBeingChanged(isBeingChanged);
     };
 
     const categoryInputRef = useRef();
-
-    const [enteredCategoryName, setEnteredCategoryName] = useState("");
-    const [selectedCategories, setSelectedCategories] = useState(targetProduct.product_category);
-    const [categoryDropdownIsShown, setCategoryDropdownIsShown] = useState(false);
-    const [categoriesFieldIsTouched, setCategoriesFieldIsTouched] = useState(false);
 
     const addSelectedCategoryHandler = (event, selectedCategory) => {
         event.stopPropagation();
@@ -92,24 +110,25 @@ const EditProduct = (props) => {
         setCategoryDropdownIsShown(false);
     };
 
-    const categoriesFieldIsValid = selectedCategories.length !== 0;
+    const categoriesFieldIsValid = selectedCategories?.length !== 0;
     const categoriesFieldIsInvalid = categoriesFieldIsTouched && !categoriesFieldIsValid;
 
     const filteredCategoriesByName = categories.filter(category => category.name.toLowerCase().includes(enteredCategoryName.toLowerCase()));
 
     const productDataFormIsValid = productNameInputIsValid && descriptionInputIsValid && productImage && salePriceInputIsValid && normalPriceInputIsValid && categoriesFieldIsValid;
 
-    const [isFromAddProduct, setIsFromAddProduct] = useState(false);
+    // const [isFromAddProduct, setIsFromAddProduct] = useState(false);
 
     const editProductDataHandler = (event) => {
         event.preventDefault();
         const productData = {
+            id: targetProduct.id,
             name: enteredProductName,
-            image: urlObj.name,
+            image: urlObj?.name || productImage,
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
-            product_category: selectedCategories.map(category => category.id),
+            category_id: selectedCategories?.map(category => category.id) || 1,
             folder: '/product_images/'
         };
         const formData = new FormData();
@@ -120,16 +139,19 @@ const EditProduct = (props) => {
             }
         }
 
-        formData.append('image_file', productData.image_file, productData.image_file.name);
+        if (urlObj) {
+            formData.append('image_file', urlObj, urlObj.name);
+        }
         for (let value of formData.values()) {
             console.log(value);
         }
         console.log(productData);
-        axios.post(`${process.env.REACT_APP_API_URL}/products/add`, formData)
+        axios.put(`${process.env.REACT_APP_API_URL}/products/update`, formData)
             .then((res) => {
-                props.onTrigger(res.data, isFromAddProduct);
-                setIsFromAddProduct(true);
+                // props.onTrigger(res.data, isFromAddProduct);
+                // setIsFromAddProduct(true);
                 history.push('/admin/products');
+                console.log("works")
             })
             .catch((err) => {
                 console.log(err);
@@ -152,7 +174,8 @@ const EditProduct = (props) => {
             }
             main={
                 <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
-                    <div className="store-info-box info-box-margin" onClick={ (event) => hideCategoryNamesDropdownHandler(event) }>
+                    <div className="store-info-box info-box-margin"
+                         onClick={(event) => hideCategoryNamesDropdownHandler(event)}>
                         <form action="#" name="productForm" id="product-form" onSubmit={editProductDataHandler}>
                             <div className="user-inputs">
                                 <div className="user-inputs__container">
@@ -185,7 +208,7 @@ const EditProduct = (props) => {
                                         </p>
                                         {productImage && (
                                             <div className="tumbnail">
-                                                <img src={productImage} alt=""/>
+                                                <img src={ productImageIsBeingChanged ? `${productImage}` : `${process.env.REACT_APP_API_URL}/uploads/product_images/${productImage}` } alt={productImage}/>
                                             </div>
                                         )}
                                     </div>
@@ -261,13 +284,13 @@ const EditProduct = (props) => {
                                         className={`categories-box ${categoriesFieldIsInvalid ? "invalid" : categoriesFieldIsValid ? "valid" : ""}`}>
                                         <div className="products-and-input-container">
                                             {
-                                                selectedCategories.map(selectedCategory => {
+                                                selectedCategories?.map(selectedCategory => {
                                                     return (
-                                                        <div 
-                                                            className="selected-categories-box" 
-                                                            key={selectedCategory.id}
+                                                        <div
+                                                            className="selected-categories-box"
+                                                            key={selectedCategory?.id}
                                                         >
-                                                            <p className="selected-category-name"> {selectedCategory.name} </p>
+                                                            <p className="selected-category-name"> {selectedCategory?.name} </p>
                                                             <span
                                                                 className="remove-sel-category-icon"
                                                                 onClick={removeSelectedCategoryHandler.bind(null, selectedCategory)}

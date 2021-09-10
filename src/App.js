@@ -308,18 +308,10 @@ const App = () => {
 
   const removingCtx = useContext(RemovingContext);
 
-  const [targetProduct, setTargetProduct] = useState({});
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
   const [targetBanner, setTargetBanner] = useState({});
 
-  const showProductHandler = (currentProduct) => {
-    setTargetProduct(currentProduct);
-    console.log(currentProduct);
-  };
-  // const addProductDataHandler = (newProductData) => {
-  //   setProducts((prevProducts) => [newProductData, ...prevProducts]);
-  // };
 
   const [addedProducts, setAddedProducts] = useState([]);
   const [isFromAddProduct, setIsFromAddProduct] = useState(false);
@@ -453,21 +445,15 @@ const App = () => {
         </Route>
         <Route path="/admin/products">
           <Products 
-            onShow={showProductHandler}
             addedProducts={addedProducts}
             isFromAddedProduct={isFromAddProduct}
           />
         </Route>
         <Route path="/admin/add-product">
-          <AddProduct 
-            onTrigger={triggerProductsHandler} 
-          />
+          <AddProduct />
         </Route>
-        <Route path="/admin/edit-product">
-          <EditProduct 
-            targetProduct={targetProduct}
-            onTrigger={triggerProductsHandler}
-          />
+        <Route path="/admin/edit-product/:id">
+          <EditProduct />
         </Route>
         <Route path="/admin/drivers">
           <Drivers drivers={drivers} onReject={rejectDriverHandler} />
