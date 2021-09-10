@@ -283,43 +283,11 @@ const App = () => {
     },
   ]);
 
-  // const [products, setProducts] = useState([
-  //   {
-  //     id: Math.random().toString(),
-  //     productName: "Kitkat",
-  //     productImage: productsPageImages.kitkatImage,
-  //     productDescription: "Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate Wafer Chocolate",
-  //     productSalePrice: 25,
-  //     productNormalPrice: 20,
-  //     productCategory: ["Sweet Treats"],
-  //     productGroup: [],
-  //   },
-  //   {
-  //     id: Math.random().toString(),
-  //     productName: "Merlot",
-  //     productImage: productsPageImages.merlotImage,
-  //     productDescription: "Wine is an alcoholic beverage made from fermented grapes or other fruits. Due to the natural chemical balance, grapes ferment without the addition of    sugars, acids, enzymes, water, or other nutrients.",
-  //     productSalePrice: 48,
-  //     productNormalPrice: 38,
-  //     productCategory: ["Beverages"],
-  //     productGroup: [],
-  //   },
-  // ]);
-
   const removingCtx = useContext(RemovingContext);
 
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
   const [targetBanner, setTargetBanner] = useState({});
-
-
-  const [addedProducts, setAddedProducts] = useState([]);
-  const [isFromAddProduct, setIsFromAddProduct] = useState(false);
-
-  const triggerProductsHandler = (products, isFromAdd) => {
-    setAddedProducts(products);
-    setIsFromAddProduct(isFromAdd);
-  };
 
   const makeDriverActive = (changingDriver) => {
     console.log(changingDriver);
@@ -444,10 +412,7 @@ const App = () => {
           <EditCategory />
         </Route>
         <Route path="/admin/products">
-          <Products 
-            addedProducts={addedProducts}
-            isFromAddedProduct={isFromAddProduct}
-          />
+          <Products />
         </Route>
         <Route path="/admin/add-product">
           <AddProduct />

@@ -45,7 +45,6 @@ const EditProduct = (props) => {
             });
     }, []);
 
-    console.log(targetProduct);
 
     const history = useHistory();
 
@@ -128,7 +127,7 @@ const EditProduct = (props) => {
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
-            category_id: selectedCategories?.map(category => category.id) || 1,
+            category_ids: selectedCategories?.map(category => category.id),
             folder: '/product_images/'
         };
         const formData = new FormData();
@@ -157,7 +156,7 @@ const EditProduct = (props) => {
                 console.log(err);
             });
     };
-
+console.log(selectedCategories)
     return (
         <Blaze
             onClick={justCtx.onJustify}

@@ -99,8 +99,6 @@ const AddProduct = (props) => {
 
     const productDataFormIsValid = productNameInputIsValid && descriptionInputIsValid && productImage && salePriceInputIsValid && normalPriceInputIsValid && categoriesFieldIsValid;
 
-    const [isFromAddProduct, setIsFromAddProduct] = useState(false);
-
     const addProductDataHandler = (event) => {
         event.preventDefault();
         const productData = {
@@ -109,7 +107,7 @@ const AddProduct = (props) => {
             sales_price: enteredSalePrice,
             normal_price: enteredNormalPrice,
             description: enteredDescription,
-            category_id: selectedCategories.map(category => category.id),
+            category_ids: selectedCategories.map(category => category.id),
             folder: '/product_images/'
         };
         const formData = new FormData();
@@ -125,8 +123,6 @@ const AddProduct = (props) => {
         console.log(productData);
         axios.post(`${process.env.REACT_APP_API_URL}/products/add`, formData)
             .then((res) => {
-                props.onTrigger(res.data, isFromAddProduct);
-                setIsFromAddProduct(true);
                 history.push('/admin/products');
             })
             .catch((err) => {
