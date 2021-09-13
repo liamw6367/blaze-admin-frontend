@@ -12,6 +12,7 @@ const Stores = (props) => {
     const [stores, setStores] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
         .then((res) => {
@@ -54,6 +55,25 @@ const Stores = (props) => {
             </div>
         );
     }
+
+    // const triggerAndRemoveStore = (id) => {
+    //     console.log(id);
+    //     axios.delete(`${process.env.REACT_APP_API_URL}/stores/remove?id=${id}`,)
+    //         .then(res => {
+    //             console.log(res.data, "ddddddddddddddddaaaaataaaaaa");
+    //             setStores(res.data);
+    //         })
+    //         .catch(err => console.log(err));
+    // };
+    const removeHandler = (id) => {
+        console.log(id);
+        axios.delete(`${process.env.REACT_APP_API_URL}/stores/remove?id=${id}`,)
+            .then(res => {
+                console.log(res.data, "ddddddddddddddddaaaaataaaaaa");
+                setStores(res.data);
+            })
+            .catch(err => console.log(err));
+    };
 
     return (
         <Blaze
@@ -99,6 +119,8 @@ const Stores = (props) => {
                                                 index={index + 1} 
                                                 key={store.store_email_id} 
                                                 onPass={passStoreHandler}
+                                                // onTrigger={triggerAndRemoveStore}
+                                                onRemove={removeHandler}
                                             />
                                         );
                                     }) 

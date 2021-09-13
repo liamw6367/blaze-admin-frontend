@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import reactDom from 'react-dom';
 import { RemovingContext } from '../Contexts/RemoveItemContext';
 
@@ -14,8 +14,9 @@ const Backdrop = (props) => {
 const DeletingModalContainer = (props) => {
     const removingCtx = useContext(RemovingContext);
 
-    const removeCard = () => {
+    const remove = () => {
         removingCtx.removeSelectedOrder();
+        props.onTrigger(props.storeId);
     };
 
     return ( 
@@ -26,12 +27,18 @@ const DeletingModalContainer = (props) => {
                     <button 
                         type="button" 
                         className="deleting-btn"
-                        onClick={removeCard}
+                        onClick={() => {
+                            remove();
+                            props.onClick();
+                        }}
                     > Delete </button>
                     <button 
                         type="button" 
                         className="cancelling-btn"
-                        onClick={props.onClick}
+                        onClick={() => {
+                            props.onClick();
+                        }
+                    }
                     > Cancel </button>
                 </div>
             </div>
@@ -39,10 +46,15 @@ const DeletingModalContainer = (props) => {
     );
 };
 const DeletingModal = (props) => {
+
+    const triggerIdHandler = (id) => {
+        props.onPass(id);
+    };
+
     return (
         <React.Fragment>
             { reactDom.createPortal(<Backdrop onClick={props.onClick} />, document.getElementById("deleting-modal")) }
-            { reactDom.createPortal(<DeletingModalContainer onClick={props.onClick} />, document.getElementById("deleting-modal")) }
+            { reactDom.createPortal(<DeletingModalContainer onClick={props.onClick} storeId={props.storeId} onTrigger={triggerIdHandler} />, document.getElementById("deleting-modal")) }
         </React.Fragment>
     );
 }
