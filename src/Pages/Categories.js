@@ -45,6 +45,16 @@ const Categories = (props) => {
     ? filteredCategoriesByData.filter(category => !category.is_active)
     : filteredCategoriesByData;
 
+    const removeHandler = (id) => {
+        console.log(id);
+        axios.delete(`${process.env.REACT_APP_API_URL}/categories/remove?id=${id}`,)
+            .then(res => {
+                console.log(res.data, "sssssssssssssssss");
+                setCategories(res.data);
+            })
+            .catch(err => console.log(err));
+    };
+
     if(isLoading) {
         return (
             <div>
@@ -102,7 +112,7 @@ const Categories = (props) => {
                                                         category={category} 
                                                         index={index + 1} 
                                                         key={category.id} 
-                                                        onPass={passCategoryHandler}
+                                                        onRemove={removeHandler}
                                                     />
                                                 );
                                             }) 

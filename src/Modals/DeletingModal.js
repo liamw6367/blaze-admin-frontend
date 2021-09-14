@@ -16,7 +16,7 @@ const DeletingModalContainer = (props) => {
 
     const remove = () => {
         removingCtx.removeSelectedOrder();
-        props.onTrigger(props.storeId);
+        props.onTrigger(props.id);
     };
 
     return ( 
@@ -54,7 +54,7 @@ const DeletingModal = (props) => {
     return (
         <React.Fragment>
             { reactDom.createPortal(<Backdrop onClick={props.onClick} />, document.getElementById("deleting-modal")) }
-            { reactDom.createPortal(<DeletingModalContainer onClick={props.onClick} storeId={props.storeId} onTrigger={triggerIdHandler} />, document.getElementById("deleting-modal")) }
+            { reactDom.createPortal(<DeletingModalContainer onClick={props.onClick} id={props.id} onTrigger={triggerIdHandler} />, document.getElementById("deleting-modal")) }
         </React.Fragment>
     );
 }

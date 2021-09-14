@@ -16,7 +16,6 @@ const StoresInfo = (props) => {
     const storeStatus = props.store.is_active ? "Active" : "Inactive";
 
     const removeStoreHandler = (id) => {
-        // props.onTrigger(id);
         setStoreId(id);
         setModalIsOpen(true);
     };
@@ -63,12 +62,11 @@ const StoresInfo = (props) => {
                                 alt="remove banner"
                                 onClick={ removeStoreHandler.bind(null, props.store.id) }
                             />
-
                         </div>
                     </div>
                 </td>
             </tr>
-            { modalIsOpen && <DeletingModal onClick={ closeModalHandler } storeId={storeId} onPass={passIdHandler} /> }
+            { modalIsOpen && <DeletingModal onClick={ closeModalHandler } id={storeId} onPass={passIdHandler} /> }
         </>
     );
 }
