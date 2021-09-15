@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import  { useHistory } from "react-router";
+import  { useHistory } from "react-router-dom";
 import './Dashboard.css';
 import uploadCloudImage from '../assets/images/main/upload-cloud-image.png';
 import walletImage from '../assets/images/main/wallet-image.png';
@@ -24,6 +24,7 @@ const Dashboard = (props) => {
     const [path, isLoggedIn] = useToken('/admin/dashboard');
 
     useEffect(() => {
+        console.log(history)
         history.push(path);
     }, []);
 
