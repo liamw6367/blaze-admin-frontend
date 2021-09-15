@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import  { useHistory } from "react-router";
 import './Dashboard.css';
 import uploadCloudImage from '../assets/images/main/upload-cloud-image.png';
 import walletImage from '../assets/images/main/wallet-image.png';
@@ -11,19 +12,30 @@ import Blaze from './Blaze';
 import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import JustifyContext from '../Contexts/JustifyingContext';
 import axios from 'axios';
+import {useToken} from "../hooks/useToken";
 
 const Dashboard = (props) => {
     const justCtx = useContext(JustifyContext);
     const [stores, setStores] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const history = useHistory();
+
+    const [path, isLoggedIn] = useToken('/admin/dashboard');
+
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
-        .then((res) => {
-            setStores(res.data);
-            setIsLoading(false);
-        })
-        .catch((err) => console.log(err));
+        history.push(path);
+    }, []);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
+                .then((res) => {
+                    setStores(res.data);
+                    setIsLoading(false);
+                })
+                .catch((err) => console.log(err));
+        }
     }, []);
     
     let currentMonth = new Date().getMonth() + 1;

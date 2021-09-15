@@ -6,12 +6,14 @@ import StoreStatusDropdown from '../Dropdowns/StoreStatusDropdown';
 import Blaze from './Blaze';
 import StoresInfo from '../Lists/StoresInfo';
 import axios from 'axios';
+import {useToken} from "../hooks/useToken";
 
 const Stores = (props) => {
     const justCtx = useContext(JustifyContext);
     const [stores, setStores] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    useToken('/admin/stores');
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
