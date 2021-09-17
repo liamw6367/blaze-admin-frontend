@@ -39,7 +39,7 @@ const BannerModalContainer = (props) => {
             <div className="tumbnail-area banner-area">
                 <img src={imgData} alt="" />
             </div>
-            <label htmlFor="categoryTumbnail">Crop Thumbnail</label>
+            <label htmlFor="categoryTumbnail">Browse Banner</label>
             <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
             <button type="button" className="submit-image-button" onClick={() => bannerPutHandler(imgData)}>Done</button>
         </div>

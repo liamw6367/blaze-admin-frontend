@@ -16,6 +16,7 @@ tr .box-width {
 .edit-icon {
     width: 17px;
     height: 16px;
+    cursor: pointer;
 }
 .send-msg-button {
     width: 157px;

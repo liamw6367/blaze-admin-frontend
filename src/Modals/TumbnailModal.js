@@ -46,7 +46,7 @@ const TumbnailModalContainer = (props) => {
             <div className="tumbnail-area">
                 <img src={imgData} alt="" />
             </div>
-            <label htmlFor="categoryTumbnail">Crop Thumbnail</label>
+            <label htmlFor="categoryTumbnail">Browse Thumbnail</label>
             <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
             <button type="button" className="submit-image-button" onClick={() => tumbnailPutHandler(imgData, selectedPicture)}>Done</button>
         </div>
