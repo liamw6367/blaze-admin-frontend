@@ -32,10 +32,9 @@ import Products from './Pages/Products';
 import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
-import axios from 'axios';
 import AddProduct from './UI/AddProduct';
 import EditProduct from './UI/EditProduct';
-require('dotenv').config();
+import {ProtectedRoute} from "./custom-route/ProtectedRoute";
 
 const App = () => {
   const [drivers, setDrivers] = useState([

@@ -19,24 +19,20 @@ const Dashboard = (props) => {
     const [stores, setStores] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const history = useHistory();
-
-    const [path, isLoggedIn] = useToken('/admin/dashboard');
-
-    useEffect(() => {
-        console.log(history)
-        history.push(path);
-    }, []);
+    // const history = useHistory();
+    // const [path, isLoggedIn] = useToken('/admin/dashboard');
 
     useEffect(() => {
-        if (isLoggedIn) {
+        // if (isLoggedIn) {
             axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
                 .then((res) => {
                     setStores(res.data);
                     setIsLoading(false);
                 })
                 .catch((err) => console.log(err));
-        }
+        // }
+        // console.log(history);
+        // history.push(path);
     }, []);
     
     let currentMonth = new Date().getMonth() + 1;
