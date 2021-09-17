@@ -55,15 +55,21 @@ const Products = (props) => {
         setChosenCategoryName(allCategories);
         console.log(allCategories);
     };
-    const passProductHandler = (product) => {
-        props.onShow(product);
-        console.log(product);
-    };   
 
     const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
                                         : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
+
+    const removeHandler = (id) => {
+        console.log(id);
+        axios.delete(`${process.env.REACT_APP_API_URL}/products/remove?id=${id}`,)
+            .then(res => {
+                console.log(res.data, "sssssssssssssssss");
+                setProducts(res.data);
+            })
+            .catch(err => console.log(err));
+    };
 
     if(isLoading) {
         return (
@@ -127,8 +133,8 @@ const Products = (props) => {
                                                     <ProductInfo 
                                                         product={product} 
                                                         index={index + 1} 
-                                                        key={product.id} 
-                                                        onTrigger={passProductHandler}
+                                                        key={product.id}
+                                                        onRemove={removeHandler}
                                                     />
                                                 );
                                             }) 
