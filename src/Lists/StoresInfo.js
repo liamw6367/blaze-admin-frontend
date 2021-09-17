@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import './StoresInfo.css';
 import editIcon from '../assets/icons/main/edit-icon.png';
 import removeIcon from "../assets/icons/main/remove-icon.png";

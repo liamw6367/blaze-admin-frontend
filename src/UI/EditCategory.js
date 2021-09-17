@@ -21,6 +21,7 @@ const EditCategory = (props) => {
     });
     const [tumbNail, setTumbNail] = useState(null);
     const [banner, setBanner] = useState(null);
+    const [categoryIsActive, setCategoryIsActive] = useState(false);
 
     const [error, setError] = useState();
 
@@ -34,6 +35,7 @@ const EditCategory = (props) => {
                 setTargetCategory(res.data);
                 setTumbNail(res.data.thumbnail);
                 setBanner(res.data.banner);
+                setCategoryIsActive(res.data.is_active);
                 // console.log(targetCategory);
                 // console.log(res.data, "sudasda");
             })
@@ -65,7 +67,6 @@ const EditCategory = (props) => {
 
     const [thumbnailUrlObj, setThumbnailUrlObj] = useState(null);
     const [bannerUrlObj, setBannerUrlObj] = useState(null);
-    const [categoryIsActive, setCategoryIsActive] = useState(targetCategory.is_active);
 
     const [thumbnailIsBeingChanged, setThumbnailIsBeingChanged] = useState(false);
     const [bannerIsBeingChanged, setBannerIsBeingChanged] = useState(false);
