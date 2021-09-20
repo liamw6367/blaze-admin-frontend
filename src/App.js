@@ -265,22 +265,22 @@ const App = () => {
       percentage: 5.6,
     },
   ]);
-  const [banners, setBanners] = useState([
-    {
-      id: Math.random().toString(),
-      bannerName: "Introductionary Offer",
-      bannerImage: bannersPageImages.tumbnail_1,
-      position: "2",
-      bannerIsActive: true,
-    },
-    {
-      id: Math.random().toString(),
-      bannerName: "Another Offer",
-      bannerImage: bannersPageImages.tumbnail_2,
-      position: 3,
-      bannerIsActive: true,
-    },
-  ]);
+  // const [banners, setBanners] = useState([
+  //   {
+  //     id: Math.random().toString(),
+  //     bannerName: "Introductionary Offer",
+  //     bannerImage: bannersPageImages.tumbnail_1,
+  //     position: "2",
+  //     bannerIsActive: true,
+  //   },
+  //   {
+  //     id: Math.random().toString(),
+  //     bannerName: "Another Offer",
+  //     bannerImage: bannersPageImages.tumbnail_2,
+  //     position: 3,
+  //     bannerIsActive: true,
+  //   },
+  // ]);
 
   const removingCtx = useContext(RemovingContext);
 
@@ -359,28 +359,28 @@ const App = () => {
     setTaxes((prevTaxes) => [newTaxData, ...prevTaxes]);
   };
 
-  const showBannerHandler = (currentBanner) => {
-    setTargetBanner(currentBanner);
-    console.log(currentBanner);
-  };
-  const removeBannerHandler = (id) => {
-    setBanners(prevBanners => {
-      return prevBanners.filter(banner => banner.id !== id);
-    });
-  };
-  const addBannerDataHandler = (newBannerData) => {
-    setBanners((prevBanners) => [newBannerData, ...prevBanners]);
-  };
-  const updateBannerDataHandler = (updatedBannerData) => {
-    console.log(updatedBannerData);
-    const updatedBanners = [...banners];
-    updatedBanners.forEach((banner, index, array) => {
-      if(banner.id === updatedBannerData.id) {
-        array[index] = updatedBannerData;
-      }
-    });
-    setBanners(updatedBanners);
-  };
+  // const showBannerHandler = (currentBanner) => {
+  //   setTargetBanner(currentBanner);
+  //   console.log(currentBanner);
+  // };
+  // const removeBannerHandler = (id) => {
+  //   setBanners(prevBanners => {
+  //     return prevBanners.filter(banner => banner.id !== id);
+  //   });
+  // };
+  // const addBannerDataHandler = (newBannerData) => {
+  //   setBanners((prevBanners) => [newBannerData, ...prevBanners]);
+  // };
+  // const updateBannerDataHandler = (updatedBannerData) => {
+  //   console.log(updatedBannerData);
+  //   const updatedBanners = [...banners];
+  //   updatedBanners.forEach((banner, index, array) => {
+  //     if(banner.id === updatedBannerData.id) {
+  //       array[index] = updatedBannerData;
+  //     }
+  //   });
+  //   setBanners(updatedBanners);
+  // };
 
   return (
     <div className="App">
@@ -389,11 +389,11 @@ const App = () => {
         <Route exact path="/admin/login">
           <LoginPage />
         </Route>
-        <Route path="/admin/dashboard">
-          <Dashboard />
-        </Route>
         <Route path="/admin/stores">
           <Stores />
+        </Route>
+        <Route path="/admin/dashboard">
+          <Dashboard />
         </Route>
         <Route path="/admin/add-store">
           <AddStore />
@@ -471,13 +471,22 @@ const App = () => {
           <AddTax triggerTaxData={addTaxDataHandler} />
         </Route>
         <Route path="/admin/banners">
-          <Banners banners={banners} showBanner={showBannerHandler} onRemove={removeBannerHandler} />
+          <Banners
+              // banners={banners}
+              // showBanner={showBannerHandler}
+              // onRemove={removeBannerHandler}
+              />
         </Route>
         <Route path="/admin/add-banner">
-          <AddBanner triggerBannerData={addBannerDataHandler} />
+          <AddBanner
+              // triggerBannerData={addBannerDataHandler}
+              />
         </Route>
-        <Route path="/admin/edit-banner">
-          <EditBanner targetBanner={targetBanner} onUpdate={updateBannerDataHandler} />
+        <Route path="/admin/edit-banner/:id">
+          <EditBanner
+              // targetBanner={targetBanner}
+              // onUpdate={updateBannerDataHandler}
+              />
         </Route>
         <Route path="/admin/delivery-fee">
           <DeliveryFee />

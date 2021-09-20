@@ -118,11 +118,6 @@ const EditCategory = (props) => {
             console.log(err.response.data.msg);
             console.log(new Error());
         });
-
-
-        // props.onUpdate(updatedCategoryData);
-        //
-        // history.push('/admin/categories');
     };
 
     if(error) {
@@ -202,7 +197,7 @@ const EditCategory = (props) => {
                                         {banner && (
                                             <div className="banner">
                                                 <img
-                                                    src={ bannerIsBeingChanged ? `${banner}` : `${process.env.REACT_APP_API_URL}/uploads/category_banners/${banner}`}
+                                                    src={ bannerIsBeingChanged ? `${banner}` : `${process.env.REACT_APP_API_URL}/uploads/banners/${banner}`}
                                                     alt={`banner`}
                                                     className="banner"
                                                 />

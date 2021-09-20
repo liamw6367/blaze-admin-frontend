@@ -58,15 +58,6 @@ const Stores = (props) => {
         );
     }
 
-    // const triggerAndRemoveStore = (id) => {
-    //     console.log(id);
-    //     axios.delete(`${process.env.REACT_APP_API_URL}/stores/remove?id=${id}`,)
-    //         .then(res => {
-    //             console.log(res.data, "ddddddddddddddddaaaaataaaaaa");
-    //             setStores(res.data);
-    //         })
-    //         .catch(err => console.log(err));
-    // };
     const removeHandler = (id) => {
         console.log(id);
         axios.delete(`${process.env.REACT_APP_API_URL}/stores/remove?id=${id}`,)
@@ -121,7 +112,6 @@ const Stores = (props) => {
                                                 index={index + 1} 
                                                 key={store.store_email_id} 
                                                 onPass={passStoreHandler}
-                                                // onTrigger={triggerAndRemoveStore}
                                                 onRemove={removeHandler}
                                             />
                                         );

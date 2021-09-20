@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
@@ -8,7 +8,7 @@ import BannerButton from '../Buttons/BannerButton';
 import {useDataValidation} from '../hooks/use-validation';
 import axios from 'axios';
 
-const AddCategory = (props) => {
+const AddCategory = () => {
     const justCtx = useContext(JustifyContext);
 
     const history = useHistory();
@@ -70,7 +70,6 @@ const AddCategory = (props) => {
         }).catch((err) => {
             console.log(err);
         });
-        // props.triggerCategoryData(categoryData);
     };
 
     return (

@@ -1,17 +1,36 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useUpdatingDataValidation } from '../hooks/use-validation';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import BannerButton from '../Buttons/BannerButton';
+import axios from "axios";
 
 const EditBanner = (props) => {
-    const { targetBanner } = props;
-
+    const { id } = useParams();
     const justCtx = useContext(JustifyContext);
-
     const history = useHistory();
+
+    const [targetBanner, setTargetBanner] = useState({});
+    const [bannerIsActive, setBannerIsActive] = useState(targetBanner.bannerIsActive);
+    const [banner, setBanner] = useState(targetBanner.bannerImage);
+    const [bannerUrlObj, setBannerUrlObj] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/banners/get-one?id=${id}`)
+            .then((res) => {
+                setIsLoading(false);
+                setTargetBanner(res.data);
+                setBanner(res.data.banner);
+                setBannerIsActive(res.data.is_active);
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                console.log(err.message, "mmessage");
+            });
+    }, [id]);
 
     const {
         enteredValue: enteredBannerName,
@@ -27,19 +46,16 @@ const EditBanner = (props) => {
         changeInputValueHandler: changePositionInputValueHandler,
         blurInputHandler: blurPositionInputHandler,
     } = useUpdatingDataValidation( targetBanner.position, (value) => value.trim() !== "" );
-    
-    const [bannerIsActive, setBannerIsActive] = useState(targetBanner.bannerIsActive);
-    const [banner, setBanner] = useState(targetBanner.bannerImage);
-    const [bannerAreaIsOpen, setBannerAreaIsOpen] = useState(false);    
 
     useEffect(() => {
-        setBannerAreaIsOpen(true);
         console.log("useEffect running in edit banner page");
     }, []);
+    const [bannerIsBeingChanged, setBannerIsBeingChanged] = useState(false);
 
-    const addBannerHandler = (banner) => {
+    const addBannerHandler = (banner, urlObj, isBeingChanged) => {
         setBanner(banner);
-        setBannerAreaIsOpen(true);
+        setBannerUrlObj(urlObj);
+        setBannerIsBeingChanged(isBeingChanged);
     };
     const updatedBannerDataFormIsValid = bannerNameInputIsValid && positionInputIsValid && banner;
 
@@ -47,16 +63,24 @@ const EditBanner = (props) => {
         event.preventDefault();
         const updatedBannerData = {
             id: targetBanner.id,
-            bannerName: enteredBannerName,
-            bannerImage: banner,
+            name: enteredBannerName,
+            image: bannerUrlObj.name,
             position: enteredPosition,
-            bannerIsActive, 
+            is_active: bannerIsActive,
         }
         props.onUpdate(updatedBannerData);
 
         history.push('/admin/banners');
     };
-    
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
+
     return (
         <Blaze
             onClick={justCtx.onJustify}
@@ -97,9 +121,13 @@ const EditBanner = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 1024x512
                                         </p>
-                                        { bannerAreaIsOpen && (
+                                        { banner && (
                                             <div className="banner">
-                                                <img src={banner} alt="banner" className="banner" />
+                                                <img
+                                                    src={ bannerIsBeingChanged ? `${banner}` : `${process.env.REACT_APP_API_URL}/uploads/banners/${banner}`}
+                                                    alt="banner"
+                                                    className="banner"
+                                                />
                                             </div>
                                         ) }
                                     </div>

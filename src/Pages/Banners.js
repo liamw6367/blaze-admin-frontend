@@ -1,18 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import StoreStatusDropdown from '../Dropdowns/StoreStatusDropdown';
 import BannerInfo from '../Lists/BannerInfo';
 import Blaze from './Blaze';
+import axios from "axios";
+
 
 const Banners = (props) => {
     const justCtx = useContext(JustifyContext);
 
+    const [banners, setBanners] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [currentBannerStatus, setCurrentBannerStatus] = useState("All");
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/banners/get`)
+            .then((res) => {
+                console.log(res.data);
+                setBanners(res.data);
+                setIsLoading(false);
+            })
+            .catch((err) => console.log(err));
+            setIsLoading(false);
+    }, []);
 
     const triggerStatusHandler = (selectedStatus) => {
         setCurrentBannerStatus(selectedStatus.status);
-    // console.log(selectedStatus)
+        // console.log(selectedStatus)
     };
     const passBannerHandler = (currentBanner) => {
         props.showBanner(currentBanner);
@@ -21,12 +36,29 @@ const Banners = (props) => {
         props.onRemove(id);
     };
 
-    const {banners} = props;
     const filteredBannersByStatus = (currentBannerStatus === "Active")
     ? banners.filter(banner => banner.bannerIsActive)
     : (currentBannerStatus === "Inactive")
     ? banners.filter(banner => !banner.bannerIsActive)
     : banners;
+
+    const removeHandler = (id) => {
+        console.log(id);
+        axios.delete(`${process.env.REACT_APP_API_URL}/banners/remove?id=${id}`,)
+            .then(res => {
+                console.log(res.data, "ddddddddddddddddaaaaataaaaaa");
+                setBanners(res.data);
+            })
+            .catch(err => console.log(err));
+    };
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
 
     return (
         <Blaze
@@ -73,8 +105,9 @@ const Banners = (props) => {
                                                         banner={banner} 
                                                         index={index + 1} 
                                                         key={banner.id} 
-                                                        onPass={passBannerHandler}
-                                                        onTrigger={triggerBannerIdHandler}
+                                                        // onPass={passBannerHandler}
+                                                        // onTrigger={triggerBannerIdHandler}
+                                                        onRemove={removeHandler}
                                                     />
                                                 );
                                             }) 

@@ -5,9 +5,10 @@ import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import BannerButton from '../Buttons/BannerButton';
 import { useDataValidation } from '../hooks/use-validation';
+import axios from "axios";
 
 
-const AddBanner = (props) => {
+const AddBanner = () => {
     const justCtx = useContext(JustifyContext);
 
     const history = useHistory();
@@ -29,28 +30,46 @@ const AddBanner = (props) => {
 
     const [banner, setBanner] = useState(null);
     const [bannerIsActive, setBannerIsActive] = useState(false);
-    const [bannerAreaIsOpen, setBannerAreaIsOpen] = useState(false);    
+    const [bannerUrlObj, setBannerUrlObj] = useState(null);
 
-    const addBannerHandler = (banner) => {
+    const addBannerHandler = (banner, urlObj) => {
         setBanner(banner);
-        setBannerAreaIsOpen(true);
+        setBannerUrlObj(urlObj);
     };
 
     const bannerDataFormIsValid = bannerNameInputIsValid && positionInputIsValid && banner;
 
     const bannerDataHandler = (event) => {
         event.preventDefault();
-
         const bannerData = {
-            id: Math.random().toString(),
-            bannerName: enteredBannerName,
-            bannerImage: banner,
+            name: enteredBannerName,
+            image: bannerUrlObj.name,
             position: enteredPosition,
-            bannerIsActive, 
-        }
-        props.triggerBannerData(bannerData);
-
-        history.push('/admin/banners');
+            is_active: +bannerIsActive,
+        };
+        axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, {
+            ...bannerData
+        }).then((res) => {
+            console.log(res);
+            history.push('/admin/banners');
+        }).catch((err) => {
+            console.log(err);
+        });
+        // const formData = new FormData();
+        // for (let key in bannerData) {
+        //     formData.append(key, bannerData[key]);
+        // }
+        // formData.append('banner_file', bannerUrlObj, bannerUrlObj.name);
+        // for (let value of formData.values()) {
+        //     console.log(value);
+        // }
+        // console.log(bannerData);
+        // axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, formData).then((res) => {
+        //     console.log(res);
+        //     history.push('/admin/banners');
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
     };
 
     return (
@@ -93,9 +112,9 @@ const AddBanner = (props) => {
                                         <p className="explanation-text">
                                             Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 1024x512
                                         </p>
-                                        { bannerAreaIsOpen && (
+                                        { banner && (
                                             <div className="banner">
-                                                <img src={banner} alt="banner" className="banner" />
+                                                <img src={ banner } alt="banner" className="banner" />
                                             </div>
                                         ) }
                                     </div>
