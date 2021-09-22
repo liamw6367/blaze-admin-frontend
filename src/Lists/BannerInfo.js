@@ -37,7 +37,7 @@ const BannerInfo = (props) => {
                 </td>
                 <td className="banner-image-container">
                     <img
-                        src={ props.banner.image }
+                        src={ `${process.env.REACT_APP_API_URL}/uploads/banners/${props.banner.image}` }
                         alt="banner"
                     />
                 </td>

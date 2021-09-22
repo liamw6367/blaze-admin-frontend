@@ -54,8 +54,7 @@ tr .box-width {
 
 /* styles for banners page */
 .banner-image-container {
-    width: 682px;
-    height: 261px;
+    width: 200px;
 }
 .banner-image-container > img {
     width: 100%;

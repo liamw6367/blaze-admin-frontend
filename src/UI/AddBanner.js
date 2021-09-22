@@ -47,29 +47,29 @@ const AddBanner = () => {
             position: enteredPosition,
             is_active: +bannerIsActive,
         };
-        axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, {
-            ...bannerData
-        }).then((res) => {
-            console.log(res);
-            history.push('/admin/banners');
-        }).catch((err) => {
-            console.log(err);
-        });
-        // const formData = new FormData();
-        // for (let key in bannerData) {
-        //     formData.append(key, bannerData[key]);
-        // }
-        // formData.append('banner_file', bannerUrlObj, bannerUrlObj.name);
-        // for (let value of formData.values()) {
-        //     console.log(value);
-        // }
-        // console.log(bannerData);
-        // axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, formData).then((res) => {
+        // axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, {
+        //     ...bannerData
+        // }).then((res) => {
         //     console.log(res);
         //     history.push('/admin/banners');
         // }).catch((err) => {
         //     console.log(err);
         // });
+        const formData = new FormData();
+        for (let key in bannerData) {
+            formData.append(key, bannerData[key]);
+        }
+        formData.append('banner_file', bannerUrlObj, bannerUrlObj.name);
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        console.log(bannerData);
+        axios.post(`${process.env.REACT_APP_API_URL}/banners/add`, formData).then((res) => {
+            console.log(res);
+            history.push('/admin/banners');
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 
     return (
