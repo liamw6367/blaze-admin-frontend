@@ -34,7 +34,7 @@ import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
 import AddProduct from './UI/AddProduct';
 import EditProduct from './UI/EditProduct';
-import {ProtectedRoute} from "./custom-route/ProtectedRoute";
+// import {ProtectedRoute} from "./custom-route/ProtectedRoute";
 
 const App = () => {
   const [drivers, setDrivers] = useState([
@@ -265,28 +265,11 @@ const App = () => {
       percentage: 5.6,
     },
   ]);
-  // const [banners, setBanners] = useState([
-  //   {
-  //     id: Math.random().toString(),
-  //     bannerName: "Introductionary Offer",
-  //     bannerImage: bannersPageImages.tumbnail_1,
-  //     position: "2",
-  //     bannerIsActive: true,
-  //   },
-  //   {
-  //     id: Math.random().toString(),
-  //     bannerName: "Another Offer",
-  //     bannerImage: bannersPageImages.tumbnail_2,
-  //     position: 3,
-  //     bannerIsActive: true,
-  //   },
-  // ]);
 
   const removingCtx = useContext(RemovingContext);
 
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
-  const [targetBanner, setTargetBanner] = useState({});
 
   const makeDriverActive = (changingDriver) => {
     console.log(changingDriver);
@@ -359,28 +342,6 @@ const App = () => {
     setTaxes((prevTaxes) => [newTaxData, ...prevTaxes]);
   };
 
-  // const showBannerHandler = (currentBanner) => {
-  //   setTargetBanner(currentBanner);
-  //   console.log(currentBanner);
-  // };
-  // const removeBannerHandler = (id) => {
-  //   setBanners(prevBanners => {
-  //     return prevBanners.filter(banner => banner.id !== id);
-  //   });
-  // };
-  // const addBannerDataHandler = (newBannerData) => {
-  //   setBanners((prevBanners) => [newBannerData, ...prevBanners]);
-  // };
-  // const updateBannerDataHandler = (updatedBannerData) => {
-  //   console.log(updatedBannerData);
-  //   const updatedBanners = [...banners];
-  //   updatedBanners.forEach((banner, index, array) => {
-  //     if(banner.id === updatedBannerData.id) {
-  //       array[index] = updatedBannerData;
-  //     }
-  //   });
-  //   setBanners(updatedBanners);
-  // };
 
   return (
     <div className="App">
@@ -471,22 +432,13 @@ const App = () => {
           <AddTax triggerTaxData={addTaxDataHandler} />
         </Route>
         <Route path="/admin/banners">
-          <Banners
-              // banners={banners}
-              // showBanner={showBannerHandler}
-              // onRemove={removeBannerHandler}
-              />
+          <Banners />
         </Route>
         <Route path="/admin/add-banner">
-          <AddBanner
-              // triggerBannerData={addBannerDataHandler}
-              />
+          <AddBanner />
         </Route>
         <Route path="/admin/edit-banner/:id">
-          <EditBanner
-              // targetBanner={targetBanner}
-              // onUpdate={updateBannerDataHandler}
-              />
+          <EditBanner />
         </Route>
         <Route path="/admin/delivery-fee">
           <DeliveryFee />

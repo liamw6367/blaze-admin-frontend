@@ -16,7 +16,7 @@ const EditStore = () => {
     const [enteredContactNumber, setEnteredContactNumber] = useState();
     const [enteredBlazePersonNumber, setEnteredBlazePersonNumber] = useState();
     const [enteredAddress, setEnteredAddress] = useState();
-    const [isActive, setIsActive] = useState();
+    const [isActive, setIsActive] = useState(false);
     const [enteredLatitude, setEnteredLatitude] = useState();
     const [enteredLongitude, setEnteredLongitude] = useState();
 
@@ -124,7 +124,7 @@ const EditStore = () => {
                 address: enteredAddress,
                 store_email_id: targetStore.storeEmailId,
                 password: enteredPassword,
-                is_active: isActive,
+                is_active: +isActive,
             }
         )
         .then((res) => {
@@ -357,7 +357,7 @@ const EditStore = () => {
                                         />
                                         {
                                             storeEmailIdInputIsBeingChanged &&
-                                            <p className="error-message">You can not change this email id!</p>
+                                            <p className="error-message">You can not change the email id!</p>
                                         }
                                     </div>
                                 </div>

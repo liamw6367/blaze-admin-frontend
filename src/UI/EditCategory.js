@@ -94,7 +94,7 @@ const EditCategory = (props) => {
             banner: bannerUrlObj?.name || banner,
             description: enteredDescription,
             is_active: +categoryIsActive
-        }
+        };
 
         const formData = new FormData();
         for (let key in updatedCategoryData) {

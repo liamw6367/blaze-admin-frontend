@@ -7,14 +7,14 @@ import Blaze from '../Pages/Blaze';
 import BannerButton from '../Buttons/BannerButton';
 import axios from "axios";
 
-const EditBanner = (props) => {
+const EditBanner = () => {
     const { id } = useParams();
     const justCtx = useContext(JustifyContext);
     const history = useHistory();
 
     const [targetBanner, setTargetBanner] = useState({});
-    const [bannerIsActive, setBannerIsActive] = useState(targetBanner.bannerIsActive);
-    const [banner, setBanner] = useState(targetBanner.bannerImage);
+    const [bannerIsActive, setBannerIsActive] = useState(false);
+    const [banner, setBanner] = useState(null);
     const [bannerUrlObj, setBannerUrlObj] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -23,13 +23,14 @@ const EditBanner = (props) => {
             .then((res) => {
                 setIsLoading(false);
                 setTargetBanner(res.data);
-                setBanner(res.data.banner);
+                setBanner(res.data.image);
                 setBannerIsActive(res.data.is_active);
             })
             .catch((err) => {
                 setIsLoading(false);
                 console.log(err.message, "mmessage");
             });
+        console.log(id,"id");
     }, [id]);
 
     const {
@@ -38,18 +39,15 @@ const EditBanner = (props) => {
         inputIsInvalid: bannerNameInputIsInvalid,
         changeInputValueHandler: changeBannerNameInputValueHandler,
         blurInputHandler: blurBannerNameInputHandler,
-    } = useUpdatingDataValidation( targetBanner.bannerName, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetBanner.name, (value) => value?.trim() !== "" );
     const {
         enteredValue: enteredPosition,
         inputIsValid: positionInputIsValid,
         inputIsInvalid: positionInputIsInvalid,
         changeInputValueHandler: changePositionInputValueHandler,
         blurInputHandler: blurPositionInputHandler,
-    } = useUpdatingDataValidation( targetBanner.position, (value) => value.trim() !== "" );
+    } = useUpdatingDataValidation( targetBanner.position, (value) => value?.toString().trim() !== "" );
 
-    useEffect(() => {
-        console.log("useEffect running in edit banner page");
-    }, []);
     const [bannerIsBeingChanged, setBannerIsBeingChanged] = useState(false);
 
     const addBannerHandler = (banner, urlObj, isBeingChanged) => {
@@ -61,16 +59,32 @@ const EditBanner = (props) => {
 
     const updatedBannerDataHandler = (event) => {
         event.preventDefault();
+
         const updatedBannerData = {
             id: targetBanner.id,
             name: enteredBannerName,
-            image: bannerUrlObj.name,
+            image: bannerUrlObj?.name || banner,
             position: enteredPosition,
-            is_active: bannerIsActive,
-        }
-        props.onUpdate(updatedBannerData);
+            is_active: +bannerIsActive,
+        };
 
-        history.push('/admin/banners');
+        const formData = new FormData();
+        for (let key in updatedBannerData) {
+            formData.append(key, updatedBannerData[key]);
+        }
+        if(bannerUrlObj) {
+            formData.append('banner_file', bannerUrlObj, bannerUrlObj.name);
+        }
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        console.log(updatedBannerData);
+        axios.put(`${process.env.REACT_APP_API_URL}/banners/update`, formData).then((res) => {
+            console.log(res);
+            history.push('/admin/banners');
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 
     if(isLoading) {
