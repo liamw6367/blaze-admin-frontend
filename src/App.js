@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './UI/LoginPage';
@@ -34,7 +34,7 @@ import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
 import AddProduct from './UI/AddProduct';
 import EditProduct from './UI/EditProduct';
-// import {ProtectedRoute} from "./custom-route/ProtectedRoute";
+import {useToken} from "./hooks/useToken";
 
 const App = () => {
   const [drivers, setDrivers] = useState([
@@ -136,7 +136,7 @@ const App = () => {
     },
   ]);
   const [orders, setOrders] = useState([
-    {   
+    {
         orderName: "Order Name",
         email: "example@gmail.com",
         store: "Store Name",
@@ -169,7 +169,7 @@ const App = () => {
         isOrderDelivered: true,
         isOrderCanceled: false,
     },
-    {   
+    {
       orderName: "Order Name",
       email: "example@gmail.com",
       store: "Store Name",
@@ -343,105 +343,85 @@ const App = () => {
   };
 
 
+
+  const ProtectedRoute = ({ component: Component, ...rest }) => {
+    const isLoggedIn = useToken();
+    console.log(isLoggedIn, 'isLoggedIn       from ProtectedRoute');
+
+    return (
+        <Route {...rest}
+           render={(props) => {
+             return isLoggedIn ? <Component {...props} /> : <Redirect to="/admin/login" />
+           }}
+        />
+    );
+  };
+
   return (
     <div className="App">
       <Switch>
         <Redirect exact from="/" to="/admin/login" />
-        <Route exact path="/admin/login">
-          <LoginPage />
-        </Route>
-        <Route path="/admin/stores">
-          <Stores />
-        </Route>
-        <Route path="/admin/dashboard">
-          <Dashboard />
-        </Route>
-        <Route path="/admin/add-store">
-          <AddStore />
-        </Route>
-        <Route path="/admin/edit-store/:id">
-          <EditStore />
-        </Route>
-        <Route path="/admin/categories">
-          <Categories />
-        </Route>
-        <Route path="/admin/add-category">
-          <AddCategory />
-        </Route>
-        <Route path="/admin/edit-category/:id">
-          <EditCategory />
-        </Route>
-        <Route path="/admin/products">
-          <Products />
-        </Route>
-        <Route path="/admin/add-product">
-          <AddProduct />
-        </Route>
-        <Route path="/admin/edit-product/:id">
-          <EditProduct />
-        </Route>
+        <Route exact path="/admin/login" component={LoginPage} />
+        <ProtectedRoute path="/admin/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/admin/stores" component={Stores} />
+        <ProtectedRoute path="/admin/add-store" component={AddStore} />
+        <ProtectedRoute path="/admin/edit-store/:id" component={EditStore} />
+        <ProtectedRoute path="/admin/categories" component={Categories} />
+        <ProtectedRoute path="/admin/add-category" component={AddCategory} />
+        <ProtectedRoute path="/admin/edit-category/:id" component={EditCategory} />
+        <ProtectedRoute path="/admin/products" component={Products} />
+        <ProtectedRoute path="/admin/add-product" component={AddProduct} />
+        <ProtectedRoute path="/admin/edit-product/:id" component={EditProduct} />
+        <ProtectedRoute path="/admin/user-list" component={UserList} />
+        <ProtectedRoute path="/admin/promotional-message" component={PromotionalMessage} />
+        <ProtectedRoute path="/admin/banners" component={Banners} />
+        <ProtectedRoute path="/admin/add-banner" component={AddBanner} />
+        <ProtectedRoute path="/edit-banner/:id" component={EditBanner} />
+        <ProtectedRoute path="/admin/delivery-fee" component={DeliveryFee} />
         <Route path="/admin/drivers">
           <Drivers drivers={drivers} onReject={rejectDriverHandler} />
         </Route>
         <Route path="/admin/drivers-pending">
           <DriversPending drivers={drivers} onActivate={makeDriverActive} />
         </Route>
-        <Route path="/admin/user-list">
-          <UserList />
-        </Route>
-        <Route path="/admin/promotional-message">
-          <PromotionalMessage />
-        </Route>
         <Route path="/admin/all-orders">
           <AllOrders orders={orders} />
         </Route>
         <Route path="/admin/cancel-transaction">
-          <CancelTransaction orders={orders} 
-          // onRemove={removeOrderHandler} 
+          <CancelTransaction orders={orders}
+          // onRemove={removeOrderHandler}
           />
         </Route>
         <Route path="/admin/discounts">
           <Discounts discounts={discounts} showDiscount={showDiscountHandler} groups={groups} showGroup={showGroupHandler} />
         </Route>
         <Route path="/admin/add-discount">
-            <AddDiscount 
-              triggerDiscountData={addDiscountDataHandler} 
+            <AddDiscount
+              triggerDiscountData={addDiscountDataHandler}
             />
         </Route>
         <Route path="/admin/edit-discount">
-            <EditDiscount 
-              targetDiscount={targetDiscount} 
-              onUpdate={updateDiscountDataHandler} 
+            <EditDiscount
+              targetDiscount={targetDiscount}
+              onUpdate={updateDiscountDataHandler}
             />
         </Route>
         <Route path="/admin/add-group">
-            <AddGroup 
-              triggerGroupData={addGroupDataHandler} 
+            <AddGroup
+              triggerGroupData={addGroupDataHandler}
             />
         </Route>
         <Route path="/admin/edit-group">
-            <EditGroup 
-              targetGroup={targetGroup} 
-              onUpdate={updateGroupDataHandler} 
+            <EditGroup
+              targetGroup={targetGroup}
+              onUpdate={updateGroupDataHandler}
             />
         </Route>
-        <Route path="/admin/tax"> 
+        <Route path="/admin/tax">
           <Tax taxes={taxes} />
         </Route>
         <Route path="/admin/add-tax">
           <AddTax triggerTaxData={addTaxDataHandler} />
-        </Route>
-        <Route path="/admin/banners">
-          <Banners />
-        </Route>
-        <Route path="/admin/add-banner">
-          <AddBanner />
-        </Route>
-        <Route path="/admin/edit-banner/:id">
-          <EditBanner />
-        </Route>
-        <Route path="/admin/delivery-fee">
-          <DeliveryFee />
         </Route>
       </Switch>
     </div>
@@ -449,3 +429,24 @@ const App = () => {
 };
 
 export default App;
+
+
+//between editproduct and userlist
+
+// <ProtectedRoute path="/admin/drivers" component={Drivers} />
+// <ProtectedRoute path="/admin/drivers-pending" component={DriversPending} />
+
+
+
+
+//between PromotionalMessage and Banners
+
+// <ProtectedRoute path="/admin/all-orders" component={AllOrders} />
+// <ProtectedRoute path="/admin/cancel-transaction" component={CancelTransaction} />
+// <ProtectedRoute path="/admin/discounts" component={Discounts} />
+// <ProtectedRoute path="/admin/add-discount" component={AddDiscount} />
+// <ProtectedRoute path="/admin/edit-discount" component={EditDiscount} />
+// <ProtectedRoute path="/admin/add-group" component={AddGroup} />
+// <ProtectedRoute path="/admin/edit-group" component={EditGroup} />
+// <ProtectedRoute path="/admin/tax" component={Tax} />
+// <ProtectedRoute path="/admin/add-tax" component={AddTax} />
