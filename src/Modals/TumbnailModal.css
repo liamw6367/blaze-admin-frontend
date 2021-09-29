@@ -357,3 +357,11 @@ input[type="file"] {
     background-color: #028383;
     color: #FFFFFF;
 } */
+
+.error-message {
+    font-family: Roboto-Regular, sans-serif;
+    font-weight: normal;
+    font-size: 8px;
+    color: #ff0000;
+    margin: 40px 0 !important;
+}

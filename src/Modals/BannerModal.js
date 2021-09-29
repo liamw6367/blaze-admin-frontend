@@ -13,19 +13,37 @@ const Backdrop = (props) => {
 const BannerModalContainer = (props) => {
     const [selectedPicture, setSelectedPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
-
+    const [imageError, setImageError] = useState("");
     const [bannerIsBeingChanged, setBannerIsBeingChanged] = useState(false);
 
+    const errorMessage = "Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 1024x512";
+
+    const _URL = window.URL || window.webkitURL;
+
     const imageChangeHandler = (event) => {
-        if(event.target.files[0]) {
-            setSelectedPicture(event.target.files[0]);
-            console.log(selectedPicture);
-            const reader = new FileReader();
-            reader.addEventListener("load", () => {
-                setImgData(reader.result);
-            });
-            reader.readAsDataURL(event.target.files[0]);
-            setBannerIsBeingChanged(true);
+        const img = new Image();
+        const file = event.target.files[0];
+
+        if(file) {
+            setSelectedPicture(file);
+            const objectUrl = _URL.createObjectURL(file);
+            img.onload = function () {
+                if (this.width < 1024 && this.height < 512 || this.height < 512 || this.width < 1024) {
+                    setImageError(errorMessage);
+                    setImgData(null);
+                } else {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", (e) => {
+                        console.log(reader.offsetHeight, 'size');
+                        setImgData(reader.result);
+                    });
+                    reader.readAsDataURL(event.target.files[0]);
+                    setBannerIsBeingChanged(true);
+                    setImageError("");
+                };
+                _URL.revokeObjectURL(objectUrl);
+            };
+            img.src = objectUrl;
         }
     };
     const bannerPutHandler = (banner) => {
@@ -41,6 +59,7 @@ const BannerModalContainer = (props) => {
             </div>
             <label htmlFor="categoryTumbnail">Browse Banner</label>
             <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
+            { imageError && <p className="error-message"> { errorMessage } </p> }
             <button type="button" className="submit-image-button" onClick={() => bannerPutHandler(imgData)}>Done</button>
         </div>
     );

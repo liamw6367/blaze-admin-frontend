@@ -137,7 +137,11 @@ const AddCategory = () => {
                                         </p>
                                         {banner && (
                                             <div className="banner">
-                                                <img src={banner} alt="banner" className="banner"/>
+                                                <img
+                                                    src={banner}
+                                                    alt="banner"
+                                                    className="banner"
+                                                />
                                             </div>
                                         )}
                                     </div>

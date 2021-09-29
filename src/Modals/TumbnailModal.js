@@ -15,24 +15,37 @@ const Backdrop = (props) => {
 const TumbnailModalContainer = (props) => {
     const [selectedPicture, setSelectedPicture] = useState(null);
     const [imgData, setImgData] = useState(null);
-
+    const [imageError, setImageError] = useState("");
     const [thumbnailIsBeingChanged, setThumbnailIsBeingChanged] = useState(false);
 
+    const errorMessage = "Please upload only image files consisting of jpg, png, bitmap file formats and greater resolution than 150x150";
+
+    const _URL = window.URL || window.webkitURL;
+
     const imageChangeHandler = (event) => {
-        if(event.target.files[0]) {
-            setSelectedPicture(event.target.files[0]);
-            // if(event.target.files[0].size < 150150) {
-            //     alert("image is small, choose another one!")
-            //     return
-            // }
-            console.log(selectedPicture);
-            console.log(event.target.files[0].size)
-            const reader = new FileReader();
-            reader.addEventListener("load", () => {
-                setImgData(reader.result);
-            });
-            reader.readAsDataURL(event.target.files[0]);
-            setThumbnailIsBeingChanged(true);
+        const img = new Image();
+        const file = event.target.files[0];
+
+        if(file) {
+            setSelectedPicture(file);
+            const objectUrl = _URL.createObjectURL(file);
+            img.onload = function () {
+                if(this.width < 150 && this.height < 150 || this.height < 150 || this.width < 150) {
+                    setImageError(errorMessage);
+                    setImgData(null);
+                } else {
+                    const reader = new FileReader();
+                    reader.addEventListener("load", (e) => {
+                        console.log(reader.offsetHeight, 'size');
+                        setImgData(reader.result);
+                    });
+                    reader.readAsDataURL(event.target.files[0]);
+                    setThumbnailIsBeingChanged(true);
+                    setImageError("");
+                };
+                _URL.revokeObjectURL(objectUrl);
+            };
+            img.src = objectUrl;
         }
     };
     const tumbnailPutHandler = (tumbNail, urlObj) => {
@@ -47,8 +60,21 @@ const TumbnailModalContainer = (props) => {
                 <img src={imgData} alt="" />
             </div>
             <label htmlFor="categoryTumbnail">Browse Thumbnail</label>
-            <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
-            <button type="button" className="submit-image-button" onClick={() => tumbnailPutHandler(imgData, selectedPicture)}>Done</button>
+            <input
+                type="file"
+                name=""
+                id="categoryTumbnail"
+                accept="image/png, image/jpg, image/jpeg, image/bitmap"
+                onChange={imageChangeHandler}
+                />
+            { imageError && <p className="error-message"> { errorMessage } </p> }
+            <button
+                type="button"
+                className="submit-image-button"
+                onClick={() => tumbnailPutHandler(imgData, selectedPicture)}
+                >
+                    Done
+            </button>
         </div>
     );
 };
