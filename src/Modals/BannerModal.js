@@ -24,7 +24,7 @@ const BannerModalContainer = (props) => {
         const img = new Image();
         const file = event.target.files[0];
         const file_type = file.type;
-        const fileTypeIsAcceptable = file_type === "image/png" || file_type === "image/jpeg" || file_type === "image/bitmap";
+        const fileTypeIsAcceptable = file_type === "image/png" || file_type === "image/jpeg" || file_type === "image/bmp";
 
         if(file) {
             setSelectedPicture(file);
