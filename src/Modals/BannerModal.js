@@ -23,12 +23,14 @@ const BannerModalContainer = (props) => {
     const imageChangeHandler = (event) => {
         const img = new Image();
         const file = event.target.files[0];
+        const file_type = file.type;
+        const fileTypeIsAcceptable = file_type === "image/png" || file_type === "image/jpeg" || file_type === "image/bitmap";
 
         if(file) {
             setSelectedPicture(file);
             const objectUrl = _URL.createObjectURL(file);
             img.onload = function () {
-                if (this.width < 1024 && this.height < 512 || this.height < 512 || this.width < 1024) {
+                if (this.width < 1024 && this.height < 512 || this.height < 512 || this.width < 1024 || !fileTypeIsAcceptable) {
                     setImageError(errorMessage);
                     setImgData(null);
                 } else {
@@ -58,7 +60,7 @@ const BannerModalContainer = (props) => {
                 <img src={imgData} alt="" />
             </div>
             <label htmlFor="categoryTumbnail">Browse Banner</label>
-            <input type="file" name="" id="categoryTumbnail" accept="image/*jpg,png,bitmap" onChange={imageChangeHandler} />
+            <input type="file" name="" id="categoryTumbnail" accept="image/*" onChange={imageChangeHandler} />
             { imageError && <p className="error-message"> { errorMessage } </p> }
             <button type="button" className="submit-image-button" onClick={() => bannerPutHandler(imgData)}>Done</button>
         </div>

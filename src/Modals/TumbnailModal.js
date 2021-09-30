@@ -25,14 +25,18 @@ const TumbnailModalContainer = (props) => {
     const imageChangeHandler = (event) => {
         const img = new Image();
         const file = event.target.files[0];
+        const file_type = file.type;
+        const fileTypeIsAcceptable = file_type === "image/png" || file_type === "image/jpeg" || file_type === "image/bitmap";
 
         if(file) {
             setSelectedPicture(file);
             const objectUrl = _URL.createObjectURL(file);
             img.onload = function () {
-                if(this.width < 150 && this.height < 150 || this.height < 150 || this.width < 150) {
+                if(this.width < 150 && this.height < 150 || this.height < 150 || this.width < 150 || !fileTypeIsAcceptable) {
                     setImageError(errorMessage);
                     setImgData(null);
+                    console.log(fileTypeIsAcceptable);
+                    console.log(file.type);
                 } else {
                     const reader = new FileReader();
                     reader.addEventListener("load", (e) => {
@@ -42,6 +46,7 @@ const TumbnailModalContainer = (props) => {
                     reader.readAsDataURL(event.target.files[0]);
                     setThumbnailIsBeingChanged(true);
                     setImageError("");
+                    console.log(file.type);
                 };
                 _URL.revokeObjectURL(objectUrl);
             };
@@ -64,7 +69,7 @@ const TumbnailModalContainer = (props) => {
                 type="file"
                 name=""
                 id="categoryTumbnail"
-                accept="image/png, image/jpg, image/jpeg, image/bitmap"
+                accept="image/*"
                 onChange={imageChangeHandler}
                 />
             { imageError && <p className="error-message"> { errorMessage } </p> }
