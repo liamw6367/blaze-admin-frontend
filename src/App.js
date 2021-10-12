@@ -37,104 +37,104 @@ import EditProduct from './UI/EditProduct';
 import {useToken} from "./hooks/useToken";
 
 const App = () => {
-  const [drivers, setDrivers] = useState([
-    {
-      driverName: 'Simon',
-      phone: '12132365689898989',
-      userName: 'SIMON_99',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'The U.S. cities of Key West, Florida',
-      bankAccountDetail: '3456122145547878',
-      workTiming: '11AM - 8PM',
-      salaryAmt: '124',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: true,
-      isPending: false,
-    },
-    {
-      driverName: 'Andy',
-      phone: '15567736568944489',
-      userName: 'ANDY_55',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'The U.S.A., California',
-      bankAccountDetail: '3456455478781221',
-      workTiming: '10AM - 7PM',
-      salaryAmt: '50',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: true,
-      isPending: false,
-    },
-    {
-      driverName: 'John',
-      phone: '1344622656833300',
-      userName: 'JOHN_11',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'Great Britain, London',
-      bankAccountDetail: '4554787812213456',
-      workTiming: '09AM - 6PM',
-      salaryAmt: '65',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: false,
-      isPending: true,
-    },
-    {
-      driverName: 'Steve',
-      phone: '44442365685511989',
-      userName: 'STEVE_77',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'The U.S., Canada',
-      bankAccountDetail: '3456122145546662',
-      workTiming: '11AM - 8PM',
-      salaryAmt: '45',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: true,
-      isPending: false,
-    },
-    {
-      driverName: 'Peter',
-      phone: '15567736568944489',
-      userName: 'PETER_22',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'South America, Brazil',
-      bankAccountDetail: '3456455478780099',
-      workTiming: '10AM - 7PM',
-      salaryAmt: '50',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: true,
-      isPending: false,
-    },
-    {
-      driverName: 'Tom',
-      phone: '1266622656833300',
-      userName: 'TOM_88',
-      password: '',
-      profileImage: driverInfoModalImages.driverProfile,
-      address: 'France, Marseille',
-      bankAccountDetail: '4554787812211154',
-      workTiming: '09AM - 6PM',
-      salaryAmt: '65',
-      drivingLicense: driverInfoModalImages.drivingLicenseImage,
-      otherCarPaper: driverInfoModalImages.paperLicenseImage,
-      largePreview: driverInfoModalImages.largePreviewImage,
-      driverIsActive: false,
-      isPending: true,
-    },
-  ]);
+  // const [drivers, setDrivers] = useState([
+  //   {
+  //     driverName: 'Simon',
+  //     phone: '12132365689898989',
+  //     userName: 'SIMON_99',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'The U.S. cities of Key West, Florida',
+  //     bankAccountDetail: '3456122145547878',
+  //     workTiming: '11AM - 8PM',
+  //     salaryAmt: '124',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: true,
+  //     isPending: false,
+  //   },
+  //   {
+  //     driverName: 'Andy',
+  //     phone: '15567736568944489',
+  //     userName: 'ANDY_55',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'The U.S.A., California',
+  //     bankAccountDetail: '3456455478781221',
+  //     workTiming: '10AM - 7PM',
+  //     salaryAmt: '50',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: true,
+  //     isPending: false,
+  //   },
+  //   {
+  //     driverName: 'John',
+  //     phone: '1344622656833300',
+  //     userName: 'JOHN_11',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'Great Britain, London',
+  //     bankAccountDetail: '4554787812213456',
+  //     workTiming: '09AM - 6PM',
+  //     salaryAmt: '65',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: false,
+  //     isPending: true,
+  //   },
+  //   {
+  //     driverName: 'Steve',
+  //     phone: '44442365685511989',
+  //     userName: 'STEVE_77',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'The U.S., Canada',
+  //     bankAccountDetail: '3456122145546662',
+  //     workTiming: '11AM - 8PM',
+  //     salaryAmt: '45',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: true,
+  //     isPending: false,
+  //   },
+  //   {
+  //     driverName: 'Peter',
+  //     phone: '15567736568944489',
+  //     userName: 'PETER_22',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'South America, Brazil',
+  //     bankAccountDetail: '3456455478780099',
+  //     workTiming: '10AM - 7PM',
+  //     salaryAmt: '50',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: true,
+  //     isPending: false,
+  //   },
+  //   {
+  //     driverName: 'Tom',
+  //     phone: '1266622656833300',
+  //     userName: 'TOM_88',
+  //     password: '',
+  //     profileImage: driverInfoModalImages.driverProfile,
+  //     address: 'France, Marseille',
+  //     bankAccountDetail: '4554787812211154',
+  //     workTiming: '09AM - 6PM',
+  //     salaryAmt: '65',
+  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
+  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
+  //     largePreview: driverInfoModalImages.largePreviewImage,
+  //     driverIsActive: false,
+  //     isPending: true,
+  //   },
+  // ]);
   const [orders, setOrders] = useState([
     {
         orderName: "Order Name",
@@ -271,28 +271,28 @@ const App = () => {
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
 
-  const makeDriverActive = (changingDriver) => {
-    console.log(changingDriver);
-    const sameDrivers = drivers.slice();
-    sameDrivers.forEach(driver => {
-      if(driver.userName === changingDriver.userName) {
-        changingDriver.driverIsActive = true;
-        changingDriver.isPending = false;
-      }
-    });
-    setDrivers(sameDrivers);
-  };
-  const rejectDriverHandler = (rejectedDriver) => {
-    console.log(rejectedDriver);
-    const sameDrivers = drivers.slice();
-    sameDrivers.forEach(driver => {
-      if(driver.userName === rejectedDriver.userName) {
-        rejectedDriver.driverIsActive = false;
-        rejectedDriver.isPending = true;
-      }
-    });
-    setDrivers(sameDrivers);
-  };
+  // const makeDriverActive = (changingDriver) => {
+  //   console.log(changingDriver);
+  //   const sameDrivers = drivers.slice();
+  //   sameDrivers.forEach(driver => {
+  //     if(driver.userName === changingDriver.userName) {
+  //       changingDriver.driverIsActive = true;
+  //       changingDriver.isPending = false;
+  //     }
+  //   });
+  //   setDrivers(sameDrivers);
+  // };
+  // const rejectDriverHandler = (rejectedDriver) => {
+  //   console.log(rejectedDriver);
+  //   const sameDrivers = drivers.slice();
+  //   sameDrivers.forEach(driver => {
+  //     if(driver.userName === rejectedDriver.userName) {
+  //       rejectedDriver.driverIsActive = false;
+  //       rejectedDriver.isPending = true;
+  //     }
+  //   });
+  //   setDrivers(sameDrivers);
+  // };
 
   // const removeOrderHandler = (selectedOrder) => {
   //   setOrders(orders.filter(order => order.transactionId !== selectedOrder.transactionId));
@@ -379,10 +379,16 @@ const App = () => {
         <ProtectedRoute path="/edit-banner/:id" component={EditBanner} />
         <ProtectedRoute path="/admin/delivery-fee" component={DeliveryFee} />
         <Route path="/admin/drivers">
-          <Drivers drivers={drivers} onReject={rejectDriverHandler} />
+          <Drivers 
+            // drivers={drivers} 
+            // onReject={rejectDriverHandler} 
+          />
         </Route>
         <Route path="/admin/drivers-pending">
-          <DriversPending drivers={drivers} onActivate={makeDriverActive} />
+          <DriversPending 
+            // drivers={drivers} 
+            // onActivate={makeDriverActive} 
+          />
         </Route>
         <Route path="/admin/all-orders">
           <AllOrders orders={orders} />

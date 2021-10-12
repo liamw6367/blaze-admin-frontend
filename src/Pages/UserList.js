@@ -1,52 +1,76 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import UserInfo from '../Lists/UserInfo';
+import axios from 'axios';
+
+
+// const users = [
+//     {
+//         userFullName: 'Reenu Varaiya',
+//         userEmail: 'reenu.varaiya@gmail.com',
+//         password: '',
+//         userPhoneNumber: '565 65656 5656',
+//         gender: 'Female',
+//     },
+//     {
+//         userFullName: 'John',
+//         userEmail: 'cpatel804@gmail.com',
+//         password: '',
+//         userPhoneNumber: '5464 665645 5454',
+//         gender: 'Male',
+//     },
+//     {
+//         userFullName: 'Richard',
+//         userEmail: 'some.example12@gmail.com',
+//         password: '',
+//         userPhoneNumber: '323 45510 44426',
+//         gender: 'Male',
+//     },
+//     {
+//         userFullName: 'Sue',
+//         userEmail: 'anyemail45@gmail.com',
+//         password: '',
+//         userPhoneNumber: '557 999121 442210',
+//         gender: 'Female',
+//     },
+// ];
 
 const UserList = () => {
     const justCtx = useContext(JustifyContext);
 
-    const [users, setUsers] = useState([
-        {
-            userFullName: 'Reenu Varaiya',
-            userEmail: 'reenu.varaiya@gmail.com',
-            password: '',
-            userPhoneNumber: '565 65656 5656',
-            gender: 'Female',
-        },
-        {
-            userFullName: 'John',
-            userEmail: 'cpatel804@gmail.com',
-            password: '',
-            userPhoneNumber: '5464 665645 5454',
-            gender: 'Male',
-        },
-        {
-            userFullName: 'Richard',
-            userEmail: 'some.example12@gmail.com',
-            password: '',
-            userPhoneNumber: '323 45510 44426',
-            gender: 'Male',
-        },
-        {
-            userFullName: 'Sue',
-            userEmail: 'anyemail45@gmail.com',
-            password: '',
-            userPhoneNumber: '557 999121 442210',
-            gender: 'Female',
-        },
-    ]);
     const [searchingText, setSearchingText] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role`)
+        .then((res) => {
+            setIsLoading(false);
+            setUsers(res.data);
+            console.log(res.data);
+        })
+        .catch((err) => {
+            setIsLoading(false);
+            console.log(err);
+        });
+    }, []);
 
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
     };
     const filteredUsersByData = users.filter( user => {
-        return user.userFullName.toLowerCase().includes(searchingText.toLowerCase()) 
-            || user.userEmail.toLowerCase().includes(searchingText.toLowerCase()) 
-            || user.userPhoneNumber.toString().toLowerCase().includes(searchingText.toLowerCase()) 
-            || user.gender.toLowerCase().startsWith(searchingText.toLowerCase())
-    } );
+        return user.first_name.toLowerCase().includes(searchingText.toLowerCase())
+            || user.last_name.toLowerCase().includes(searchingText.toLowerCase()); 
+    });
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
     
     return (
         <Blaze
@@ -83,9 +107,9 @@ const UserList = () => {
                                     filteredUsersByData.map((user, index) => {
                                         return (
                                             <UserInfo 
-                                                user={user} 
-                                                index={index + 1} 
-                                                key={user.userEmail} 
+                                                user={ user } 
+                                                index={ index + 1 } 
+                                                key={ user.email } 
                                             />
                                         );
                                     }) 

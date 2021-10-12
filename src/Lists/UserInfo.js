@@ -2,20 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SendMsgButton from '../Buttons/SendMsgButton';
 
-const UserInfo = (props) => {
+const UserInfo = ({ user, index }) => {
 
     const goToMailPage = (event) => {
-        window.location = `mailto:${props.user.userEmail}`;
+        window.location = `mailto:${ user.userEmail }`;
         event.preventDefault();
     };
 
     return (
         <tr>
             <td> 
-                { props.index } 
+                { index } 
             </td>
             <td> 
-                { props.user.userFullName } 
+                { user.first_name + " " + user.last_name } 
             </td>
             <td> 
                 <Link
@@ -23,14 +23,14 @@ const UserInfo = (props) => {
                     onClick={goToMailPage}
                     className="mail-link"
                 >
-                    { props.user.userEmail }
+                    { user.email }
                 </Link> 
             </td>
             <td> 
-                { props.user.userPhoneNumber } 
+                { user.phone } 
             </td>
             <td> 
-                { props.user.gender } 
+                { user.gender } 
             </td>
             <td 
                 className="send-msg-box"

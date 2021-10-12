@@ -31,7 +31,7 @@ const DriversInfo = (props) => {
                 <td 
                     className="padding-left"
                 >
-                    { props.driver.driverName }
+                    { props.driver.first_name + " " + props.driver.last_name }
                 </td>
                 <td>
                     { props.driver.phone }
@@ -48,7 +48,15 @@ const DriversInfo = (props) => {
                     />
                 </td>
             </tr>
-            { modalIsShown && <DriverInfoModal hideModal={hideModalHandler} currentDriver={currentActiveDriver}  onTrigger={triggerDriver} /> }
+            {
+                modalIsShown && (
+                    <DriverInfoModal 
+                        hideModal={hideModalHandler} 
+                        currentDriver={currentActiveDriver}  
+                        onTrigger={triggerDriver} 
+                    />
+                )
+            }
         </React.Fragment>
     );
 }

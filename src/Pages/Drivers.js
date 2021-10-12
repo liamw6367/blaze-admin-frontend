@@ -1,20 +1,47 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import DriversInfo from '../Lists/DriversInfo';
+import axios from 'axios';
 
-const Drivers = (props) => {
+
+
+const Drivers = () => {
     const justCtx = useContext(JustifyContext);
 
-    const activeDrivers = props.drivers.filter(driver => driver.driverIsActive);
+    const [drivers, setDrivers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role?role_id=11`)
+        .then((res) => {
+            setIsLoading(false);
+            setDrivers(res.data);
+            console.log(res.data);
+        })
+        .catch((err) => {
+            setIsLoading(false);
+            console.log(err);
+        });
+    }, []);
+
+    // const active_drivers = drivers.filter(driver => driver.driverIsActive);
     // const passDriverHandler = (driver) => {
     //     props.showDriver(driver);
     // };
 
-    const rejectDriver = (driver) => {
-        props.onReject(driver);
-    };
+    // const rejectDriver = (driver) => {
+    //     props.onReject(driver);
+    // };
+
+    if(isLoading) {
+        return (
+            <div>
+                <p> LOADING..... </p>
+            </div>
+        );
+    }
     
     return (
         <Blaze
@@ -29,7 +56,7 @@ const Drivers = (props) => {
             main={
                 <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
                     {
-                        (activeDrivers.length === 0)
+                        (drivers.length === 0)
                         ? (
                             <div className="store-info-box all-orders-box">
                                 <h2 className="no-orders-available">no active drivers available.</h2>
@@ -49,14 +76,14 @@ const Drivers = (props) => {
                                     </thead>
                                     <tbody>
                                         {
-                                            activeDrivers.map((driver, index) => {
+                                            drivers.map((driver, index) => {
                                                 return (
                                                     <DriversInfo 
-                                                        driver={driver} 
-                                                        index={index + 1} 
-                                                        key={driver.userName} 
+                                                        driver={ driver } 
+                                                        index={ index + 1 } 
+                                                        key={ driver.email } 
                                                         // onPass={passDriverHandler}
-                                                        onReject={rejectDriver}
+                                                        // onReject={rejectDriver}
                                                     />
                                                 );
                                             }) 

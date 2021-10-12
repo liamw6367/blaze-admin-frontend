@@ -1,5 +1,6 @@
 import React from 'react';
 import reactDom from 'react-dom';
+import { driverInfoModalImages } from '../imagesData/Image';
 
 const Backdrop = (props) => {
 
@@ -13,7 +14,9 @@ const Backdrop = (props) => {
 
 const DriverInfoContainer = (props) => {
 
-    const preservedBankAccountDetail = "**** **** **** " + props.currentDriver.bankAccountDetail.slice(12, 16);
+    // const preservedBankAccountDetail = "**** **** **** " + props.currentDriver.bankAccountDetail.slice(12, 16);
+    const bank_acc_detail = '3456122145547878';
+    const preserved_Bank_acc_detail = "**** **** **** " + bank_acc_detail.slice(12, 16);
     
     const acceptDriverHandler = () => {
         props.hideModal();
@@ -29,10 +32,10 @@ const DriverInfoContainer = (props) => {
             <p className="file-modal__closer" onClick={props.hideModal}>&times;</p>
             <div className="driver-profile-and-info-box">
                 <div className="driver-profile">
-                    <img src={props.currentDriver.profileImage} alt="driver profile" />
+                    <img src={ driverInfoModalImages.driverProfile } alt="driver profile" />
                 </div>
                 <div className="driver-info">
-                    <h2>{`${props.currentDriver.driverName} ${props.currentDriver.userName}`}</h2>
+                    <h2>{`${props.currentDriver.first_name} ${props.currentDriver.last_name}`}</h2>
                     <ul>
                         <li> 
                             <i className="phone-icon" /> 
@@ -40,27 +43,31 @@ const DriverInfoContainer = (props) => {
                         </li>
                         <li> 
                             <i className="address-icon" /> 
-                            <p>{props.currentDriver.address}</p> 
+                            {/* <p>{props.currentDriver.address}</p>  */}
+                            <p> { 'The U.S. cities of Key West, Florida' } </p>
                         </li>
                         <li> 
                             <i className="work-timing-icon" /> 
-                            <p>{props.currentDriver.workTiming}</p> 
+                            {/* <p>{props.currentDriver.workTiming}</p>  */}
+                            <p> { '11AM - 8PM' } </p>
                         </li>
                         <li> 
                             <i className="salary-amt-icon" /> 
-                            <p>{`$${props.currentDriver.salaryAmt}`}</p> 
+                            {/* <p>{`$${props.currentDriver.salaryAmt}`}</p>  */}
+                            <p> { '$124' } </p>
                         </li>
                         <li> 
                             <i className="bank-account-detail-icon" /> 
-                            <p>{preservedBankAccountDetail}</p> 
+                            {/* <p>{preservedBankAccountDetail}</p>  */}
+                            <p> { preserved_Bank_acc_detail } </p>
                         </li>
                     </ul>
                 </div>
             </div>
             <div className="driver-license-image-box">
-                <div> <img src={props.currentDriver.drivingLicense} alt="driving license" /> </div>
-                <div> <img src={props.currentDriver.otherCarPaper} alt="paper license" /> </div>
-                <div> <img src={props.currentDriver.largePreview} alt="large preview" /> </div>
+                <div> <img src={ driverInfoModalImages.drivingLicenseImage } alt="driving license" /> </div>
+                <div> <img src={ driverInfoModalImages.paperLicenseImage } alt="paper license" /> </div>
+                <div> <img src={ driverInfoModalImages.largePreviewImage } alt="large preview" /> </div>
             </div>
             <div className="accept-reject-butns-box">
                 { 
@@ -69,7 +76,7 @@ const DriverInfoContainer = (props) => {
                         <button 
                             type="button" 
                             className="reject-butn"
-                            onClick={rejectDriverHandler}
+                            // onClick={rejectDriverHandler}
                         >
                             Reject
                         </button>
@@ -79,14 +86,14 @@ const DriverInfoContainer = (props) => {
                             <button 
                                 type="button" 
                                 className="accept-butn"
-                                onClick={acceptDriverHandler}
+                                // onClick={acceptDriverHandler}
                             >
                                 Accept
                             </button>
                             <button 
                                 type="button" 
                                 className="reject-butn"
-                                onClick={props.hideModal}
+                                // onClick={props.hideModal}
                             >
                                 Reject
                             </button>
