@@ -18,21 +18,24 @@ const DriverInfoContainer = (props) => {
     const bank_acc_detail = '3456122145547878';
     const preserved_Bank_acc_detail = "**** **** **** " + bank_acc_detail.slice(12, 16);
     
-    const acceptDriverHandler = () => {
-        props.hideModal();
-        props.onTrigger(props.currentDriver);
-    };
-    const rejectDriverHandler = () => {
-        props.hideModal();
-        props.onPass(props.currentDriver);
-    };
+    // const acceptDriverHandler = () => {
+    //     props.hideModal();
+    //     props.onTrigger(props.currentDriver);
+    // };
+    // const rejectDriverHandler = () => {
+    //     props.hideModal();
+    //     props.onPass(props.currentDriver);
+    // };
 
     return (
         <div className="file-modal driver-info-modal-box animate__animated animate__backInDown">
             <p className="file-modal__closer" onClick={props.hideModal}>&times;</p>
             <div className="driver-profile-and-info-box">
                 <div className="driver-profile">
-                    <img src={ driverInfoModalImages.driverProfile } alt="driver profile" />
+                    <img 
+                        src={`${process.env.REACT_APP_API_URL}/uploads/avatars/${props.currentDriver.avatar}`} 
+                        alt="driver profile" 
+                    />
                 </div>
                 <div className="driver-info">
                     <h2>{`${props.currentDriver.first_name} ${props.currentDriver.last_name}`}</h2>
@@ -43,8 +46,8 @@ const DriverInfoContainer = (props) => {
                         </li>
                         <li> 
                             <i className="address-icon" /> 
-                            {/* <p>{props.currentDriver.address}</p>  */}
-                            <p> { 'The U.S. cities of Key West, Florida' } </p>
+                            <p>{props.currentDriver.address}</p> 
+                            {/* <p> { 'The U.S. cities of Key West, Florida' } </p> */}
                         </li>
                         <li> 
                             <i className="work-timing-icon" /> 
@@ -65,9 +68,24 @@ const DriverInfoContainer = (props) => {
                 </div>
             </div>
             <div className="driver-license-image-box">
-                <div> <img src={ driverInfoModalImages.drivingLicenseImage } alt="driving license" /> </div>
-                <div> <img src={ driverInfoModalImages.paperLicenseImage } alt="paper license" /> </div>
-                <div> <img src={ driverInfoModalImages.largePreviewImage } alt="large preview" /> </div>
+                <div>
+                    <img 
+                        src={`${process.env.REACT_APP_API_URL}/uploads/license_files/${props.currentDriver.license}`} 
+                        alt="driving license" 
+                    /> 
+                </div>
+                <div>
+                    <img 
+                        src={`${process.env.REACT_APP_API_URL}/uploads/paper_files/${props.currentDriver.paper}`}  
+                        alt="paper license" 
+                    /> 
+                </div>
+                <div>
+                    <img 
+                        src={ driverInfoModalImages.largePreviewImage } 
+                        alt="large preview" 
+                    /> 
+                </div>
             </div>
             <div className="accept-reject-butns-box">
                 { 

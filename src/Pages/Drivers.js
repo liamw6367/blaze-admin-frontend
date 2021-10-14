@@ -18,7 +18,7 @@ const Drivers = () => {
         .then((res) => {
             setIsLoading(false);
             setDrivers(res.data);
-            console.log(res.data);
+            console.log(res.data, "drivers");
         })
         .catch((err) => {
             setIsLoading(false);

@@ -4,20 +4,22 @@ import { useHistory } from 'react-router';
 import './BlazeAside.css';
 import logoIcon from '../assets/icons/aside/logo-icon.png';
 import JustifyContext from '../Contexts/JustifyingContext';
+
+
 const BlazeAside = () => {
     const justCtx = useContext(JustifyContext);
 
     const history = useHistory();
 
-    const redirectHomeHandler = () => {
-        history.push('/admin/dashboard')
-    };
-
     return (
         <aside className={justCtx.isExtended ? "blaze-aside" : "narrow-blaze-aside"}>
-            <div className={justCtx.isExtended ? "blaze-aside__logo" : "narrow-blaze-aside__logo"} onClick={redirectHomeHandler}>
+            <button
+                type="button" 
+                className={justCtx.isExtended ? "blaze-aside__logo" : "narrow-blaze-aside__logo"} 
+                onClick={ () => history.push('/admin/dashboard') }
+            >
                 <img src={logoIcon} alt="logo icon" />
-            </div>
+            </button>
             <div className={justCtx.isExtended ? "blaze-aside__links" : "narrow-blaze-aside__links"}>
                 <NavLink to='/admin/dashboard' className={justCtx.isExtended ? "dashboard" : "narrow-dashboard"}>
                     <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Dashboard</p> : ""} 
