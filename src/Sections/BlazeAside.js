@@ -15,7 +15,7 @@ const BlazeAside = () => {
             <button
                 type="button" 
                 className={justCtx.isExtended ? "blaze-aside__logo" : "narrow-blaze-aside__logo"} 
-                onClick={ () => history.push('/admin/dashboard') }
+                onClick={ () => history.push('/') }
             >
                 <img src={logoIcon} alt="logo icon" />
             </button>
