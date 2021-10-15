@@ -29,9 +29,6 @@ const UserInfo = ({ user, index }) => {
             <td> 
                 { user.phone } 
             </td>
-            <td> 
-                { user.gender } 
-            </td>
             <td 
                 className="send-msg-box"
             > 

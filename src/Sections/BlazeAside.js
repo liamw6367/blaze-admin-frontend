@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { NavLink, useHistory } from 'react-router-dom';
 import './BlazeAside.css';
 import logoIcon from '../assets/icons/aside/logo-icon.png';
 import JustifyContext from '../Contexts/JustifyingContext';

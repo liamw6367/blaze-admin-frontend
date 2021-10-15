@@ -98,7 +98,6 @@ const UserList = () => {
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone Number</th>
-                                    <th>Gender</th>
                                     <th>#</th>
                                 </tr>
                             </thead>
