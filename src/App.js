@@ -36,6 +36,11 @@ import { ORDERS, DISCOUNTS, GROUPS, TAXES } from './dummy-datas/DummyData';
 
 
 const App = () => {
+  // const token = useToken();
+  // const decodedToken = jwtDecode(token);
+  // const roleName = decodedToken.user_role?.name;
+
+
   const [orders, setOrders] = useState(ORDERS);
   const [discounts, setDiscounts] = useState(DISCOUNTS);
   const [groups, setGroups] = useState(GROUPS);
@@ -95,7 +100,7 @@ const App = () => {
 
   const ProtectedRoute = ({ component: Component, ...rest }) => {
     const token = useToken();
-
+    
     return (
         <Route { ...rest }
           render={ (props) => {
@@ -167,6 +172,12 @@ const App = () => {
         <Route path="/admin/add-tax">
           <AddTax triggerTaxData={addTaxDataHandler} />
         </Route>
+        <ProtectedRoute path="/admin/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/admin/products" component={Products} />
+        <ProtectedRoute path="/admin/add-product" component={AddProduct} />
+        <ProtectedRoute path="/admin/edit-product/:id" component={EditProduct} />
+        <ProtectedRoute path="/admin/drivers" component={Drivers} />
+        <ProtectedRoute path="/admin/drivers-pending" component={DriversPending} />
       </Switch>
     </div>
   );
