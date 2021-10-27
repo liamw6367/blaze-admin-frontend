@@ -1,1 +1,1 @@
-export const useToken = () => !!localStorage.getItem("token");
+export const useToken = () => localStorage.getItem("token");

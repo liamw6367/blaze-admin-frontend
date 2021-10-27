@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './UI/LoginPage';
@@ -19,10 +19,6 @@ import AddCategory from './UI/AddCategory';
 import EditCategory from './UI/EditCategory';
 import DriversPending from './UI/DriversPending';
 import AddGroup from './UI/AddGroup';
-import { categoriesPageImages } from './imagesData/Image';
-import { driverInfoModalImages } from './imagesData/Image';
-import { bannersPageImages } from './imagesData/Image';
-import { productsPageImages } from './imagesData/Image';
 import AddTax from './UI/AddTax';
 import AddBanner from './UI/AddBanner';
 import EditBanner from './UI/EditBanner';
@@ -35,268 +31,21 @@ import { RemovingContext } from './Contexts/RemoveItemContext';
 import AddProduct from './UI/AddProduct';
 import EditProduct from './UI/EditProduct';
 import {useToken} from "./hooks/useToken";
+import jwtDecode from 'jwt-decode';
+import { ORDERS, DISCOUNTS, GROUPS, TAXES } from './dummy-datas/DummyData';
+
 
 const App = () => {
-  // const [drivers, setDrivers] = useState([
-  //   {
-  //     driverName: 'Simon',
-  //     phone: '12132365689898989',
-  //     userName: 'SIMON_99',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'The U.S. cities of Key West, Florida',
-  //     bankAccountDetail: '3456122145547878',
-  //     workTiming: '11AM - 8PM',
-  //     salaryAmt: '124',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: true,
-  //     isPending: false,
-  //   },
-  //   {
-  //     driverName: 'Andy',
-  //     phone: '15567736568944489',
-  //     userName: 'ANDY_55',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'The U.S.A., California',
-  //     bankAccountDetail: '3456455478781221',
-  //     workTiming: '10AM - 7PM',
-  //     salaryAmt: '50',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: true,
-  //     isPending: false,
-  //   },
-  //   {
-  //     driverName: 'John',
-  //     phone: '1344622656833300',
-  //     userName: 'JOHN_11',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'Great Britain, London',
-  //     bankAccountDetail: '4554787812213456',
-  //     workTiming: '09AM - 6PM',
-  //     salaryAmt: '65',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: false,
-  //     isPending: true,
-  //   },
-  //   {
-  //     driverName: 'Steve',
-  //     phone: '44442365685511989',
-  //     userName: 'STEVE_77',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'The U.S., Canada',
-  //     bankAccountDetail: '3456122145546662',
-  //     workTiming: '11AM - 8PM',
-  //     salaryAmt: '45',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: true,
-  //     isPending: false,
-  //   },
-  //   {
-  //     driverName: 'Peter',
-  //     phone: '15567736568944489',
-  //     userName: 'PETER_22',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'South America, Brazil',
-  //     bankAccountDetail: '3456455478780099',
-  //     workTiming: '10AM - 7PM',
-  //     salaryAmt: '50',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: true,
-  //     isPending: false,
-  //   },
-  //   {
-  //     driverName: 'Tom',
-  //     phone: '1266622656833300',
-  //     userName: 'TOM_88',
-  //     password: '',
-  //     profileImage: driverInfoModalImages.driverProfile,
-  //     address: 'France, Marseille',
-  //     bankAccountDetail: '4554787812211154',
-  //     workTiming: '09AM - 6PM',
-  //     salaryAmt: '65',
-  //     drivingLicense: driverInfoModalImages.drivingLicenseImage,
-  //     otherCarPaper: driverInfoModalImages.paperLicenseImage,
-  //     largePreview: driverInfoModalImages.largePreviewImage,
-  //     driverIsActive: false,
-  //     isPending: true,
-  //   },
-  // ]);
-  const [orders, setOrders] = useState([
-    {
-        orderName: "Order Name",
-        email: "example@gmail.com",
-        store: "Store Name",
-        transactionId: "1m6w8cgm",
-        totalAmount: 6.65,
-        isReceived: true,
-        isOutForDelivery: false,
-        isOrderDelivered: false,
-        isOrderCanceled: false,
-    },
-    {
-        orderName: "Order Name",
-        email: "example@gmail.com",
-        store: "Store Name",
-        transactionId: "2k5w7ffn",
-        totalAmount: 6.65,
-        isReceived: false,
-        isOutForDelivery: false,
-        isOrderDelivered: true,
-        isOrderCanceled: false,
-    },
-    {
-        orderName: "Order Name",
-        email: "example@gmail.com",
-        store: "Store Name",
-        transactionId: "4x3w1rhj",
-        totalAmount: 6.65,
-        isReceived: false,
-        isOutForDelivery: false,
-        isOrderDelivered: true,
-        isOrderCanceled: false,
-    },
-    {
-      orderName: "Order Name",
-      email: "example@gmail.com",
-      store: "Store Name",
-      transactionId: "2c7w8cgm",
-      totalAmount: 6.65,
-      isReceived: true,
-      isOutForDelivery: false,
-      isOrderDelivered: false,
-      isOrderCanceled: false,
-    },
-    {
-        orderName: "Order Name",
-        email: "example@gmail.com",
-        store: "Store Name",
-        transactionId: "8t5w7ffn",
-        totalAmount: 6.65,
-        isReceived: false,
-        isOutForDelivery: false,
-        isOrderDelivered: true,
-        isOrderCanceled: false,
-    },
-    {
-        orderName: "Order Name",
-        email: "example@gmail.com",
-        store: "Store Name",
-        transactionId: "9l0b1rhj",
-        totalAmount: 6.65,
-        isReceived: false,
-        isOutForDelivery: false,
-        isOrderDelivered: true,
-        isOrderCanceled: false,
-    },
-  ]);
-  const [discounts, setDiscounts] = useState([
-    {
-      discountName: "Introductionary Offer",
-      discountCodeName: "565 65656 5656",
-      rewardType: "Percentage(%)",
-      rewardPercentage: "45",
-      rewardProducts: [],
-      criteria: "First Download",
-      minBill: "",
-      duration: "",
-      categories: [],
-      products: [],
-      allProductsAreMarked: true,
-      discountIsActive: true,
-    },
-    {
-      discountName: "Test",
-      discountCodeName: "5464 665645 5454",
-      rewardType: "Percentage(%)",
-      rewardPercentage: "20",
-      rewardProducts: [],
-      criteria: "None",
-      minBill: "",
-      duration: "",
-      categories: [],
-      products: [],
-      allProductsAreMarked: true,
-      discountIsActive: true,
-    },
-  ]);
-  const [groups, setGroups] = useState([
-    {
-        id: Math.random().toString(),
-        groupName: "Some Name",
-        quantity: "3",
-        rewardType: "Percentage(%)",
-        rewardPercentage: "50",
-        rewardProducts: [],
-        totalAmount: "10",
-    },
-    {
-        id: Math.random().toString(),
-        groupName: "Other Name",
-        quantity: "1",
-        rewardType: "Percentage(%)",
-        rewardPercentage: "15",
-        rewardProducts: [],
-        totalAmount: "5",
-    },
-  ]);
-  const [taxes, setTaxes] = useState([
-    {
-      id: Math.random().toString(),
-      taxName: "FL Sales Tax",
-      percentage: 7.5,
-    },
-    {
-      id: Math.random().toString(),
-      taxName: "Test",
-      percentage: 5.6,
-    },
-  ]);
+  const [orders, setOrders] = useState(ORDERS);
+  const [discounts, setDiscounts] = useState(DISCOUNTS);
+  const [groups, setGroups] = useState(GROUPS);
+  const [taxes, setTaxes] = useState(TAXES);
 
   const removingCtx = useContext(RemovingContext);
 
   const [targetDiscount, setTargetDiscount] = useState({});
   const [targetGroup, setTargetGroup] = useState({});
 
-  // const makeDriverActive = (changingDriver) => {
-  //   console.log(changingDriver);
-  //   const sameDrivers = drivers.slice();
-  //   sameDrivers.forEach(driver => {
-  //     if(driver.userName === changingDriver.userName) {
-  //       changingDriver.driverIsActive = true;
-  //       changingDriver.isPending = false;
-  //     }
-  //   });
-  //   setDrivers(sameDrivers);
-  // };
-  // const rejectDriverHandler = (rejectedDriver) => {
-  //   console.log(rejectedDriver);
-  //   const sameDrivers = drivers.slice();
-  //   sameDrivers.forEach(driver => {
-  //     if(driver.userName === rejectedDriver.userName) {
-  //       rejectedDriver.driverIsActive = false;
-  //       rejectedDriver.isPending = true;
-  //     }
-  //   });
-  //   setDrivers(sameDrivers);
-  // };
-
-  // const removeOrderHandler = (selectedOrder) => {
-  //   setOrders(orders.filter(order => order.transactionId !== selectedOrder.transactionId));
-  // };
   removingCtx.removeSelectedOrder = () => {
     setOrders(orders.filter(order => order.transactionId !== removingCtx.removingOrderId));
     console.log("ok");
@@ -345,14 +94,13 @@ const App = () => {
 
 
   const ProtectedRoute = ({ component: Component, ...rest }) => {
-    const isLoggedIn = useToken();
-    console.log(isLoggedIn, 'isLoggedIn       from ProtectedRoute');
+    const token = useToken();
 
     return (
-        <Route {...rest}
-           render={(props) => {
-             return isLoggedIn ? <Component {...props} /> : <Redirect to="/admin/login" />
-           }}
+        <Route { ...rest }
+          render={ (props) => {
+            return token ? <Component { ...props } /> : <Redirect to="/admin/login" />
+          } }
         />
     );
   };
@@ -378,18 +126,8 @@ const App = () => {
         <ProtectedRoute path="/admin/add-banner" component={AddBanner} />
         <ProtectedRoute path="/edit-banner/:id" component={EditBanner} />
         <ProtectedRoute path="/admin/delivery-fee" component={DeliveryFee} />
-        <Route path="/admin/drivers">
-          <Drivers 
-            // drivers={drivers} 
-            // onReject={rejectDriverHandler} 
-          />
-        </Route>
-        <Route path="/admin/drivers-pending">
-          <DriversPending 
-            // drivers={drivers} 
-            // onActivate={makeDriverActive} 
-          />
-        </Route>
+        <ProtectedRoute path="/admin/drivers" component={Drivers} />
+        <ProtectedRoute path="/admin/drivers-pending" component={DriversPending} />
         <Route path="/admin/all-orders">
           <AllOrders orders={orders} />
         </Route>
