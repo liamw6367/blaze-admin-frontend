@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import LoginPage from './UI/LoginPage';
@@ -36,10 +36,16 @@ import { ORDERS, DISCOUNTS, GROUPS, TAXES } from './dummy-datas/DummyData';
 
 
 const App = () => {
-  // const token = useToken();
-  // const decodedToken = jwtDecode(token);
-  // const roleName = decodedToken.user_role?.name;
 
+  let roleName = ''
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(token) {
+    const decodedToken = jwtDecode(token);
+    roleName = decodedToken.user_role?.name
+    }
+  },[])
 
   const [orders, setOrders] = useState(ORDERS);
   const [discounts, setDiscounts] = useState(DISCOUNTS);
@@ -100,11 +106,15 @@ const App = () => {
 
   const ProtectedRoute = ({ component: Component, ...rest }) => {
     const token = useToken();
-    
+    if(token) {
+      const decodedToken = jwtDecode(token);
+       roleName = decodedToken.user_role?.name;
+    }
+
     return (
         <Route { ...rest }
           render={ (props) => {
-            return token ? <Component { ...props } /> : <Redirect to="/admin/login" />
+            return token && (roleName === 'store admin' || roleName === 'admin')? <Component { ...props } /> : <Redirect to="/admin/login" />
           } }
         />
     );
