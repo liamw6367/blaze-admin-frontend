@@ -29,6 +29,7 @@ import EditGroup from './UI/EditGroup';
 import DeliveryFee from './Pages/DeliveryFee';
 import { RemovingContext } from './Contexts/RemoveItemContext';
 import AddProduct from './UI/AddProduct';
+import SelectNewProduct from './UI/SelectNewProducts';
 import EditProduct from './UI/EditProduct';
 import {useToken} from "./hooks/useToken";
 import jwtDecode from 'jwt-decode';
@@ -117,7 +118,7 @@ const App = () => {
             return token && (roleName === 'store admin' || roleName === 'admin')? <Component { ...props } /> : <Redirect to="/admin/login" />
           } }
         />
-    );
+    ); 
   };
 
   return (
@@ -134,6 +135,7 @@ const App = () => {
         <ProtectedRoute path="/admin/edit-category/:id" component={EditCategory} />
         <ProtectedRoute path="/admin/products" component={Products} />
         <ProtectedRoute path="/admin/add-product" component={AddProduct} />
+        <ProtectedRoute path="/admin/select-product" component={SelectNewProduct} />
         <ProtectedRoute path="/admin/edit-product/:id" component={EditProduct} />
         <ProtectedRoute path="/admin/user-list" component={UserList} />
         <ProtectedRoute path="/admin/promotional-message" component={PromotionalMessage} />

@@ -68,6 +68,54 @@
     font-size: 16px;
     color: #FFFFFF;
 }
+.add-new-button {
+    width: 123px;
+    height: 47px;
+    position: absolute;
+    margin-top: 45px;
+    right: 50px;
+    transform: translateY(-50%);
+    background-color: rgba(255, 132, 0, 0.8);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.1s linear;
+}
+.add-new-button:hover {
+    background-color: rgb(255, 132, 0);
+}
+.add-new-button > a {
+    text-decoration: none;
+    outline: none;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #FFFFFF;
+}
+.admin-button {
+    width: 123px;
+    height: 47px;
+    position: absolute;
+    top: 50%;
+    right: 155px;
+    transform: translateY(-50%);
+    background-color: rgba(38, 69, 155, 0.9);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.1s linear;
+}
+.admin-button:hover {
+    background-color: rgb(38, 69, 155);
+}
+.admin-button > a {
+    text-decoration: none;
+    outline: none;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #FFFFFF;
+}
 .info-table {
     width: 100%;
     border-collapse: collapse;
