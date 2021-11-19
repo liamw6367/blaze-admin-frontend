@@ -10,6 +10,13 @@ tr td:last-child {
 tr .padding-left {
     padding-left: 30px;
 }
+tr .selected-product {
+    width: 50px;
+    padding-left: 30px;
+}
+tr .selected-product-desc {
+    padding-left: 100px;
+}
 tr .box-width {
     width: 30px;
 }
