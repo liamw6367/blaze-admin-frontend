@@ -18,6 +18,7 @@ const SelectedProducts = (props) => {
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
     const [items,setItems] = useState()
+    const [allSelect, setAllselect] = useState([]);
     const history = useHistory()
 
     let user_id;
@@ -61,16 +62,17 @@ const SelectedProducts = (props) => {
       if(store_id){
         obj.store_id = 1;
       }
-      
+
+
 
       axios.get(`${process.env.REACT_APP_API_URL}/products/get`,{ params: obj})
             .then(res => {
-              const data = res.data
-              setItems(data)
+                const data = res.data
+                setItems(data)
             })
     },[])
 
-    
+
     // useEffect(() => {
     //     axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
     //     .then((res) => {
@@ -100,7 +102,7 @@ const SelectedProducts = (props) => {
     const filteredProductsByCategory = (chosenCategoryName === "All") ? filteredProductsByData 
       : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
 
-    const [allSelect, setAllselect] = useState([]);
+
  
   
     useEffect(() => {
@@ -116,10 +118,10 @@ const SelectedProducts = (props) => {
   //     )
   //     })
   //       setAllselect(tempUser);
-        
+
   // },[])
-    
-  
+
+
 
     //console.log(filteredProductsByCategory, "allselect");
     console.log(items)
@@ -127,6 +129,7 @@ const SelectedProducts = (props) => {
     
     const handleChange = (e) => {
       const {name, checked} = e.target;
+        console.log(name, checked)
 
       if (name === "allSelect") {
         let tempUser = allSelect.map((item) => {
@@ -139,13 +142,10 @@ const SelectedProducts = (props) => {
         let tempUser = allSelect.map((item) =>
           item.name === name ? { ...item, isChecked: checked } : item
         )
+          console.log(tempUser)
         setAllselect(tempUser);
-        
       }
     }
-
-    localStorage.setItem('items',)
-
 
     const addProductToStore = (e) => {
       e.preventDefault();
@@ -179,6 +179,12 @@ const SelectedProducts = (props) => {
             </div>
         );
     }
+
+       function dataChecked(product) {
+        let found = items?.find(item => item.id === product.id)
+        // setAllselect(found, {isChecked : !!found})
+           return found
+       }
     //let selectedProductList = [];
 
     return (
@@ -226,7 +232,7 @@ const SelectedProducts = (props) => {
                           type="checkbox"
                           name = "allSelect"
                           //className="form-check-input"
-                          checked={!allSelect.some((item) => item?.isChecked !== true) }
+                          checked={!allSelect?.some((item) => item?.isChecked !== true) }
                           onChange={handleChange}
                         />
                       </th>
@@ -237,7 +243,7 @@ const SelectedProducts = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {allSelect.map((product, index) => {
+                    {allSelect?.map((product, index) => {
                       return (
                         <tr>
                           <td className="selected-product">
@@ -245,7 +251,7 @@ const SelectedProducts = (props) => {
                               type="checkbox"
                               name={product.name}
                               //className="form-check-input"
-                              checked={product?.isChecked || false}
+                              checked={product?.isChecked || dataChecked(product)}
                               onChange={handleChange}
                             />
                           </td>
