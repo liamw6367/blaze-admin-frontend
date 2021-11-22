@@ -3,7 +3,7 @@ import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 
 const SelectedProducts = (props) => {
@@ -14,54 +14,55 @@ const SelectedProducts = (props) => {
     const [searchingText, setSearchingText] = useState("");
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
-    const [items,setItems] = useState()
+    const [checkProduct, setCheckProduct] = useState()
+    const [allSelect, setAllselect] = useState([]);
     const history = useHistory()
 
     let user_id;
     let token = localStorage.getItem('token')
-    if(token) {
-      user_id = jwtDecode(token).id
+    if (token) {
+        user_id = jwtDecode(token).id
     }
 
     let roleName;
     let store_id;
 
-       if(token) {
-      const decodedToken = jwtDecode(token);
-       roleName = decodedToken.user_role?.name;
-       if(roleName === "store admin"){
-        store_id = jwtDecode(token).id
-       }
-      }
+    if (token) {
+        const decodedToken = jwtDecode(token);
+        roleName = decodedToken.user_role?.name;
+        if (roleName === "store admin") {
+            store_id = jwtDecode(token).id
+        }
+    }
 
     useEffect(() => {
-        if(!props.isFromAddProduct) {
+        if (!props.isFromAddProduct) {
 
-        axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
-        .then((res) => {
-            setIsLoading(false);
-            setProducts(res.data);
-            
-        })
-        .catch((err) => {
-            console.log(err);
-            setIsLoading(false);
-        })
+            axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
+                .then((res) => {
+                    setIsLoading(false);
+                    setProducts(res.data);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setIsLoading(false);
+                })
         }
     }, [props]);
 
     useEffect(() => {
       let obj = {};
       if(store_id){
-        obj.store_id = 1;
+        obj.store_id = store_id
       }
       axios.get(`${process.env.REACT_APP_API_URL}/products/get`,{ params: obj})
             .then(res => {
               const data = res.data
-              console.log(localStorage.getItem('itemId'),'sdvvfsdvfd');
-              setItems(data)
+              setCheckProduct(data)
             })
-    },[])
+    }, [])
+
 
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
@@ -80,15 +81,21 @@ const SelectedProducts = (props) => {
     const filteredProductsByCategory = (chosenCategoryName === "All") ? filteredProductsByData 
       : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
  
-    const [allSelect, setAllselect] = useState([]);
+    //const [allSelect, setAllselect] = useState([]);
     useEffect(() => {
-      let tempUser;
-      
-      savedItems = JSON.parse(localStorage.getItem("savedItems"));
-      tempUser = products.map(item => {
-        return savedItems.includes(item.id) ? { ...item, isChecked: true } : item
-      })
-      setAllselect(tempUser);
+      if(checkProduct){
+        let tempUser;
+        console.log(checkProduct);
+        let arr =[]
+        checkProduct.map(item => {
+          return arr.push(item.id)
+        })
+        // savedItems = JSON.parse(localStorage.getItem("savedItems"));
+        tempUser = products.map(item => {
+          return arr.includes(item.id) ? { ...item, isChecked: true } : item
+        })
+        setAllselect(tempUser);
+      }
     }, [products])
 
     
@@ -119,28 +126,32 @@ const SelectedProducts = (props) => {
     }
 
     const addProductToStore = (e) => {
-      e.preventDefault();
 
-      const data = {
-        store_id: user_id,
-        product_ids: []
-      }
+        e.preventDefault();
 
-      allSelect.forEach(item => {
-        if(item.isChecked){
-          data.product_ids.push(item.id)
+        const data = {
+            store_id: user_id,
+            product_ids: []
         }
-      })
-      axios.post(`${process.env.REACT_APP_API_URL}/products/add-to-store`, data)
-          .then((res) => {
-            history.push('/admin/products')
-          }) 
-          .catch((err) => {
-              console.log(err);
-          }); 
+        console.log(data)
+
+        allSelect.forEach(item => {
+            if (item.isChecked) {
+                data.product_ids.push(item.id)
+            }
+        })
+        axios.post(`${process.env.REACT_APP_API_URL}/products/add-to-store`, data)
+            .then((res) => {
+                history.push('/admin/products')
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
     }
 
-    if(isLoading) {
+
+    if (isLoading) {
         return (
             <div>
                 <p> Loading... </p>
@@ -234,12 +245,12 @@ const SelectedProducts = (props) => {
                 <div className="add-new-button">
                    <button  type="submit" onClick={addProductToStore}>Add</button>
                 </div>
-              </div>
+             </div>
             )}
           </div>
         }
       />
     );
-};
+ };
 
 export default SelectedProducts;
