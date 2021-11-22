@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from '../Pages/Blaze';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
-//import SelectedProductInfo from '../Lists/SelectedProductInfo';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -13,7 +11,6 @@ const SelectedProducts = (props) => {
 
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
     const [searchingText, setSearchingText] = useState("");
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
@@ -37,7 +34,6 @@ const SelectedProducts = (props) => {
        }
       }
 
-
     useEffect(() => {
         if(!props.isFromAddProduct) {
 
@@ -54,35 +50,19 @@ const SelectedProducts = (props) => {
         }
     }, [props]);
 
-
-
     useEffect(() => {
       let obj = {};
       if(store_id){
         obj.store_id = 1;
       }
-      
-
       axios.get(`${process.env.REACT_APP_API_URL}/products/get`,{ params: obj})
             .then(res => {
               const data = res.data
+              console.log(localStorage.getItem('itemId'),'sdvvfsdvfd');
               setItems(data)
             })
     },[])
 
-    
-    // useEffect(() => {
-    //     axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
-    //     .then((res) => {
-    //         console.log(res);
-    //         setCategories(res.data);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //     });
-    // }, []);
-
- 
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
     };
@@ -99,53 +79,44 @@ const SelectedProducts = (props) => {
     const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") ? filteredProductsByData 
       : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
-
-    const [allSelect, setAllselect] = useState([]);
  
-  
+    const [allSelect, setAllselect] = useState([]);
     useEffect(() => {
-      setAllselect(products)
+      let tempUser;
+      
+      savedItems = JSON.parse(localStorage.getItem("savedItems"));
+      tempUser = products.map(item => {
+        return savedItems.includes(item.id) ? { ...item, isChecked: true } : item
+      })
+      setAllselect(tempUser);
     }, [products])
 
-  //   useEffect(() => {
-  //     let checked = true
-  //     let tempUser;
-  //     items && items.map(newElem => {
-  //       tempUser = allSelect &&  allSelect?.map((item) =>
-  //       newElem.id === item.id ? { ...item, isChecked: checked }: item
-  //     )
-  //     })
-  //       setAllselect(tempUser);
-        
-  // },[])
     
-  
-
-    //console.log(filteredProductsByCategory, "allselect");
-    console.log(items)
-    console.log(allSelect)
-    
+    let savedItems = [];
     const handleChange = (e) => {
       const {name, checked} = e.target;
+      let tempUser;
 
       if (name === "allSelect") {
-        let tempUser = allSelect.map((item) => {
+        tempUser = allSelect.map((item) => {
           return { ...item, isChecked: checked };
         });
         setAllselect(tempUser);
         
       }
       else {
-        let tempUser = allSelect.map((item) =>
-          item.name === name ? { ...item, isChecked: checked } : item
-        )
-        setAllselect(tempUser);
-        
+        tempUser = allSelect.map( item => {
+          return item.name === name ? { ...item, isChecked: checked } : item
+        })
+        setAllselect(tempUser);  
       }
+      tempUser.forEach(item => {
+        item.isChecked ? savedItems.push(item.id) : savedItems.filter(si => si!==item.id)
+      })
+    
+      localStorage.setItem("savedItems", JSON.stringify(savedItems));
+      console.log(savedItems, "saved")
     }
-
-    localStorage.setItem('items',)
-
 
     const addProductToStore = (e) => {
       e.preventDefault();
@@ -167,10 +138,7 @@ const SelectedProducts = (props) => {
           .catch((err) => {
               console.log(err);
           }); 
-      
     }
-
-    console.log(items)
 
     if(isLoading) {
         return (
@@ -179,8 +147,7 @@ const SelectedProducts = (props) => {
             </div>
         );
     }
-    //let selectedProductList = [];
-
+  
     return (
       <Blaze
         onClick={justCtx.onJustify}
@@ -225,7 +192,6 @@ const SelectedProducts = (props) => {
                         <input
                           type="checkbox"
                           name = "allSelect"
-                          //className="form-check-input"
                           checked={!allSelect.some((item) => item?.isChecked !== true) }
                           onChange={handleChange}
                         />
@@ -244,7 +210,6 @@ const SelectedProducts = (props) => {
                             <input
                               type="checkbox"
                               name={product.name}
-                              //className="form-check-input"
                               checked={product?.isChecked || false}
                               onChange={handleChange}
                             />
@@ -262,20 +227,12 @@ const SelectedProducts = (props) => {
                           </td>
                           <td>{product.description}</td>
                         </tr>
-
-                        // <SelectedProductInfo
-                        //   product={product}
-                        //   index={index + 1}
-                        //   key={product.id}
-                        //   checked={true}
-                        //   onChange={handleChange}
-                        // />
                       );
                     })}
                   </tbody>
                 </table>
                 <div className="add-new-button">
-                   <button className="" type="submit" onClick={addProductToStore}>Add</button>
+                   <button  type="submit" onClick={addProductToStore}>Add</button>
                 </div>
               </div>
             )}
