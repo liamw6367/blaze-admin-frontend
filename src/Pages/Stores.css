@@ -27,6 +27,10 @@
     color: #3A3F50;
     width: 100%;
 }
+.react-hooks-paginator .page-item:hover .page-link, .react-hooks-paginator .page-item.active .page-link {
+    background-color: #004c8a !important;
+    border-color: #004c8a !important;
+}
 .justify > .search-input > i {
     background-image: url('../assets/icons/main/search-icon.png');
     background-repeat: no-repeat;

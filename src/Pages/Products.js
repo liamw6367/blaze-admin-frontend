@@ -7,6 +7,8 @@ import ProductInfo from '../Lists/ProductInfo';
 import { useToken } from "../hooks/useToken";
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import Paginator from 'react-hooks-paginator';
+
 
 const Products = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -17,6 +19,12 @@ const Products = (props) => {
     const [searchingText, setSearchingText] = useState("");
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
+
+    const pageLimit = 7;
+    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState();
+    const [data ,setData] = useState([]);
+    const [currentData, setCurrentData] = useState([]);
 
     let roleName = "";
 
@@ -66,6 +74,49 @@ const Products = (props) => {
             console.log(err);
         });
     }, []);
+
+    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
+    const filteredProductsByCategory = (chosenCategoryName === "All") 
+                                        ? filteredProductsByData 
+                                        : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
+
+    // {filteredProductsByCategory.map((product, index) => {
+    //   return (
+    //     <ProductInfo
+    //       product={product}
+    //       index={index + 1}
+    //       key={product.id}
+    //       onRemove={removeHandler}
+    //     />
+    //   );
+    // })}
+    const removeHandler = (id) => {
+      console.log(id);
+      axios.delete(`${process.env.REACT_APP_API_URL}/products/remove?id=${id}`,)
+          .then(res => {
+              console.log(res.data, "sssssssssssssssss");
+              setProducts(res.data);
+          })
+          .catch(err => console.log(err));
+  };
+
+    let mediaCardElementRevers = filteredProductsByCategory.map((product, index) =>{
+      return (
+        <ProductInfo
+          product={product}
+          index={index + 1}
+          key={product.id}
+          onRemove={removeHandler}
+        />
+      );
+})
+
+    
+    useEffect(() => {
+      setCurrentData(mediaCardElement.slice(offset, offset + pageLimit));
+  }, [offset, data]);
+
+  let mediaCardElement = mediaCardElementRevers.reverse()
  
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
@@ -81,21 +132,6 @@ const Products = (props) => {
     };
 
     console.log(products, "fff");
-
-    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
-    const filteredProductsByCategory = (chosenCategoryName === "All") 
-                                        ? filteredProductsByData 
-                                        : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
-
-    const removeHandler = (id) => {
-        console.log(id);
-        axios.delete(`${process.env.REACT_APP_API_URL}/products/remove?id=${id}`,)
-            .then(res => {
-                console.log(res.data, "sssssssssssssssss");
-                setProducts(res.data);
-            })
-            .catch(err => console.log(err));
-    };
 
     if(isLoading) {
         return (
@@ -161,20 +197,22 @@ const Products = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredProductsByCategory.map((product, index) => {
-                      return (
-                        <ProductInfo
-                          product={product}
-                          index={index + 1}
-                          key={product.id}
-                          onRemove={removeHandler}
-                        />
-                      );
-                    })}
+                   {  currentData.map(mediaCardElement => (
+                        <>{mediaCardElement}</>
+                  ))}
                   </tbody>
                 </table>
               </div>
+              
             )}
+             <Paginator
+                    totalRecords={mediaCardElement.length}
+                    pageLimit={pageLimit}
+                    pageNeighbours={1}
+                    setOffset={setOffset}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
           </div>
         }
       />
