@@ -89,7 +89,13 @@ const Products = (props) => {
 
     const removeHandler = (id) => {
         console.log(id);
-        axios.delete(`${process.env.REACT_APP_API_URL}/products/remove?id=${id}`,)
+        const obj = {id};
+        if(roleName === "store admin"){
+            obj.store_id = store_id
+        }
+        axios.delete(`${process.env.REACT_APP_API_URL}/products/remove`,{data:
+                obj
+        })
             .then(res => {
                 console.log(res.data, "sssssssssssssssss");
                 setProducts(res.data);
