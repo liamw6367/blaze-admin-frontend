@@ -35,22 +35,22 @@ const SelectedProducts = (props) => {
         }
     }
 
+ 
+
     useEffect(() => {
-        if (!props.isFromAddProduct) {
+      async function fetchMyAPI() {
+        let response = await axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
+        response = await response.data
+        setProducts(response)
+        setIsLoading(false);
+      }
+  
+      fetchMyAPI()
+    }, [])
 
-            axios.get(`${process.env.REACT_APP_API_URL}/products/get`)
-                .then((res) => {
-                    setIsLoading(false);
-                    setProducts(res.data);
+    
 
-                })
-                .catch((err) => {
-                    console.log(err);
-                    setIsLoading(false);
-                })
-        }
-    }, [props]);
-
+    
     useEffect(() => {
       let obj = {};
       if(store_id){
@@ -82,7 +82,10 @@ const SelectedProducts = (props) => {
       : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
  
     //const [allSelect, setAllselect] = useState([]);
+
     useEffect(() => {
+
+      setAllselect(products)
       if(checkProduct){
         let tempUser;
         console.log(checkProduct);
@@ -90,14 +93,12 @@ const SelectedProducts = (props) => {
         checkProduct.map(item => {
           return arr.push(item.id)
         })
-        // savedItems = JSON.parse(localStorage.getItem("savedItems"));
         tempUser = products.map(item => {
           return arr.includes(item.id) ? { ...item, isChecked: true } : item
         })
         setAllselect(tempUser);
       }
-    }, [products])
-
+    }, [checkProduct,products])
     
     let savedItems = [];
     const handleChange = (e) => {
@@ -121,8 +122,6 @@ const SelectedProducts = (props) => {
         item.isChecked ? savedItems.push(item.id) : savedItems.filter(si => si!==item.id)
       })
     
-      localStorage.setItem("savedItems", JSON.stringify(savedItems));
-      console.log(savedItems, "saved")
     }
 
     const addProductToStore = (e) => {
@@ -147,9 +146,7 @@ const SelectedProducts = (props) => {
             .catch((err) => {
                 console.log(err);
             });
-
     }
-
 
     if (isLoading) {
         return (
@@ -214,6 +211,7 @@ const SelectedProducts = (props) => {
                     </tr>
                   </thead>
                   <tbody>
+                    {console.log(allSelect)}
                     {allSelect.map((product, index) => {
                       return (
                         <tr>
@@ -242,9 +240,7 @@ const SelectedProducts = (props) => {
                     })}
                   </tbody>
                 </table>
-                <div className="add-new-button">
-                   <button  type="submit" onClick={addProductToStore}>Add</button>
-                </div>
+                <button className="add-new-button" type="submit" onClick={addProductToStore}>Add</button>
              </div>
             )}
           </div>

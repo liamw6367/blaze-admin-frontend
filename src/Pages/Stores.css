@@ -85,9 +85,8 @@
 .add-new-button:hover {
     background-color: rgb(255, 132, 0);
 }
-.add-new-button > button {
+.add-new-button {
     text-decoration: none;
-    background-color: rgba(255, 132, 0, 0.1);
     outline: none;
     font-family: "Muli-SemiBold";
     font-size: 16px;
