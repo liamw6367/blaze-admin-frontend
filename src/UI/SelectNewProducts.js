@@ -5,6 +5,7 @@ import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
+import Paginator from 'react-hooks-paginator';
 
 const SelectedProducts = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -16,8 +17,16 @@ const SelectedProducts = (props) => {
     const [categories, setCategories] = useState([]);
     const [checkProduct, setCheckProduct] = useState()
     const [allSelect, setAllselect] = useState([]);
-    const history = useHistory()
+    const history = useHistory();
+    const [filteredAllSelect,setFilteredAllSelect] = useState()
 
+    const pageLimit = 2;
+    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [data ,setData] = useState([]);
+    const [currentData, setCurrentData] = useState([])
+
+    console.log(currentPage);
     let user_id;
     let token = localStorage.getItem('token')
     if (token) {
@@ -35,7 +44,7 @@ const SelectedProducts = (props) => {
         }
     }
 
- 
+
 
     useEffect(() => {
       async function fetchMyAPI() {
@@ -84,7 +93,7 @@ const SelectedProducts = (props) => {
     //const [allSelect, setAllselect] = useState([]);
 
     useEffect(() => {
-
+      setFilteredAllSelect(products)
       setAllselect(products)
       if(checkProduct){
         let tempUser;
@@ -99,18 +108,32 @@ const SelectedProducts = (props) => {
         setAllselect(tempUser);
       }
     }, [checkProduct,products])
+
+    console.log(filteredAllSelect)
     
     let savedItems = [];
     const handleChange = (e) => {
       const {name, checked} = e.target;
       let tempUser;
+      console.log(name, checked);
 
       if (name === "allSelect") {
-        tempUser = allSelect.map((item) => {
+        tempUser = currentData.map((item) => {
           return { ...item, isChecked: checked };
         });
-        setAllselect(tempUser);
+
+      const data =  filteredAllSelect.map(fall => {
+          if(currentData.find(el => el.id === fall.id)){
+          return   fall.isChecked= checked ;
+          }
+        })
+        console.log(filteredAllSelect);
+      
+
+        setFilteredAllSelect(data)
+        setCurrentData(tempUser);
         
+        console.log(tempUser);
       }
       else {
         tempUser = allSelect.map( item => {
@@ -123,6 +146,14 @@ const SelectedProducts = (props) => {
       })
     
     }
+  
+    // useEffect(() => {
+    //    setData(allSelect)
+    // }, [allSelect]);
+
+      useEffect(() => {
+    setCurrentData(allSelect.slice(offset, offset + pageLimit));
+  }, [offset, allSelect]);
 
     const addProductToStore = (e) => {
 
@@ -200,7 +231,7 @@ const SelectedProducts = (props) => {
                         <input
                           type="checkbox"
                           name = "allSelect"
-                          checked={!allSelect.some((item) => item?.isChecked !== true) }
+                          checked={!currentData.some((item) => item?.isChecked !== true) }
                           onChange={handleChange}
                         />
                       </th>
@@ -212,7 +243,7 @@ const SelectedProducts = (props) => {
                   </thead>
                   <tbody>
                     {console.log(allSelect)}
-                    {allSelect.map((product, index) => {
+                    {currentData.map((product, index) => {
                       return (
                         <tr>
                           <td className="selected-product">
@@ -242,7 +273,16 @@ const SelectedProducts = (props) => {
                 </table>
                 <button className="add-new-button" type="submit" onClick={addProductToStore}>Add</button>
              </div>
+             
             )}
+        <Paginator
+        totalRecords={allSelect.length}
+        pageLimit={pageLimit}
+        pageNeighbours={1}
+        setOffset={setOffset}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
           </div>
         }
       />

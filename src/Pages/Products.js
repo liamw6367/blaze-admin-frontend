@@ -20,7 +20,7 @@ const Products = (props) => {
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
 
-    const pageLimit = 7;
+    const pageLimit = 2;
     const [offset, setOffset] = useState(0);
     const [currentPage, setCurrentPage] = useState();
     const [data ,setData] = useState([]);
