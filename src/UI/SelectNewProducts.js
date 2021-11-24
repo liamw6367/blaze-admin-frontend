@@ -122,15 +122,15 @@ const SelectedProducts = (props) => {
           return { ...item, isChecked: checked };
         });
 
-      const data =  filteredAllSelect.map(fall => {
+        filteredAllSelect.map(fall => {
           if(currentData.find(el => el.id === fall.id)){
-          return   fall.isChecked= checked ;
+             fall.isChecked= false ;
           }
         })
         console.log(filteredAllSelect);
       
 
-        setFilteredAllSelect(data)
+        // setFilteredAllSelect()
         setCurrentData(tempUser);
         
         console.log(tempUser);
