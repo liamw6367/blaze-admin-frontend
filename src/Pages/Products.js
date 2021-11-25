@@ -91,8 +91,14 @@ const Products = (props) => {
     //   );
     // })}
     const removeHandler = (id) => {
-      console.log(id);
-      axios.delete(`${process.env.REACT_APP_API_URL}/products/remove?id=${id}`,)
+      let params = {
+          id
+      };
+      if(store_id){
+          params.store_id = store_id;
+      }
+      console.log(params);
+      axios.delete(`${process.env.REACT_APP_API_URL}/products/remove`,{params})
           .then(res => {
               console.log(res.data, "sssssssssssssssss");
               setProducts(res.data);
