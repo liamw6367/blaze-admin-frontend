@@ -79,7 +79,8 @@ const Products = (props) => {
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
                                         : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
-
+                                    
+  
     // {filteredProductsByCategory.map((product, index) => {
     //   return (
     //     <ProductInfo
@@ -90,6 +91,8 @@ const Products = (props) => {
     //     />
     //   );
     // })}
+
+    console.log(filteredProductsByData)
     const removeHandler = (id) => {
       let params = {
           id
@@ -117,15 +120,22 @@ const Products = (props) => {
       );
 })
 
+let filtered 
+
     
     useEffect(() => {
       setCurrentData(mediaCardElement.slice(offset, offset + pageLimit));
   }, [offset, data]);
 
-  let mediaCardElement = mediaCardElementRevers.reverse()
+  let mediaCardElement = mediaCardElementRevers.reverse();
+
+  // const filtered = !searchingText
+  //   ? currentData.map(mediaCardElement => (
+  //     <>{mediaCardElement}</>))
+  //   :products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
  
-    const changeInputHandler = (event) => {
-        setSearchingText(event.target.value);
+    const changeInputHandler = (event) => {;
+      setSearchingText(event.target.value);
     };
     const passCategoryNameHandler = (currentCategory) => {
         setChosenCategoryName(currentCategory.categoryName);
@@ -138,6 +148,7 @@ const Products = (props) => {
     };
 
     console.log(products, "fff");
+    console.log(currentData, "curent")
 
     if(isLoading) {
         return (
@@ -177,11 +188,11 @@ const Products = (props) => {
                 onChange={changeCategoryNameHandler}
                 chosenCategoryName={chosenCategoryName}
               />
-              { token && roleName === "store admin" ? (
+              {token && roleName === "store admin" ? (
                 <div className="admin-button">
                   <Link to="/admin/select-product">Select New</Link>
                 </div>
-              ) : null }
+              ) : null}
               <div className="add-store-button">
                 <Link to="/admin/add-product">Add New</Link>
               </div>
@@ -203,22 +214,33 @@ const Products = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                   {  currentData.map(mediaCardElement => (
-                        <>{mediaCardElement}</>
-                  ))}
+                    {console.log(currentData, "wwwwww")}
+                    {!searchingText
+                      ? currentData.map((mediaCardElement) => (
+                          <>{mediaCardElement}</>
+                        ))
+                      : filteredProductsByData.map((product, index) =>{
+                        return (
+                          <ProductInfo
+                            product={product}
+                            index={index + 1}
+                            key={product.id}
+                            onRemove={removeHandler}
+                          />
+                        );
+                  })}
                   </tbody>
                 </table>
               </div>
-              
             )}
-             <Paginator
-                    totalRecords={mediaCardElement.length}
-                    pageLimit={pageLimit}
-                    pageNeighbours={1}
-                    setOffset={setOffset}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                />
+            <Paginator
+              totalRecords={mediaCardElement.length}
+              pageLimit={pageLimit}
+              pageNeighbours={1}
+              setOffset={setOffset}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         }
       />

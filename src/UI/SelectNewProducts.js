@@ -239,7 +239,7 @@ const SelectedProducts = (props) => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {console.log(allSelect)}
+                                {console.log(currentData)}
                                 {currentData.map((product, index) => {
                                     return (
                                         <tr>
