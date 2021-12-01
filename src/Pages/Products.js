@@ -72,7 +72,7 @@ const Products = (props) => {
     const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
-                                        : filteredProductsByData.filter( product => product.product_category[0].name === chosenCategoryName );
+                                        : filteredProductsByData.filter( product => product.product_category.find(pc=> pc.name === chosenCategoryName) );
                                     
     console.log(filteredProductsByData);                                  
     const removeHandler = (id) => {
