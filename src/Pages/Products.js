@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
-import ProductInfo from '../Lists/ProductInfo';
+//import ProductInfo from '../Lists/ProductInfo';
 import { useToken } from "../hooks/useToken";
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
-import Paginator from 'react-hooks-paginator';
+import ProductsTableByCategory from './ProductsTableByCategory';
 
 
 const Products = (props) => {
@@ -20,15 +20,7 @@ const Products = (props) => {
     const [chosenCategoryName, setChosenCategoryName] = useState("All");
     const [categories, setCategories] = useState([]);
 
-    const pageLimit = 2;
-    const [offset, setOffset] = useState(0);
-    const [currentPage, setCurrentPage] = useState();
-    const [data ,setData] = useState([]);
-    const [currentData, setCurrentData] = useState([]);
-
     let roleName = "";
-
-    
 
     const token = useToken();
 
@@ -75,24 +67,14 @@ const Products = (props) => {
         });
     }, []);
 
-    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
+    console.log(categories, "categ");
+
+    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
-                                        : filteredProductsByData.filter( product => product.productCategory === chosenCategoryName );
+                                        : filteredProductsByData.filter( product => product.product_category[0].name === chosenCategoryName );
                                     
-  
-    // {filteredProductsByCategory.map((product, index) => {
-    //   return (
-    //     <ProductInfo
-    //       product={product}
-    //       index={index + 1}
-    //       key={product.id}
-    //       onRemove={removeHandler}
-    //     />
-    //   );
-    // })}
-
-    console.log(filteredProductsByData)
+    console.log(filteredProductsByData);                                  
     const removeHandler = (id) => {
       let params = {
           id
@@ -108,47 +90,22 @@ const Products = (props) => {
           })
           .catch(err => console.log(err));
   };
-
-    let mediaCardElementRevers = filteredProductsByCategory.map((product, index) =>{
-      return (
-        <ProductInfo
-          product={product}
-          index={index + 1}
-          key={product.id}
-          onRemove={removeHandler}
-        />
-      );
-})
-
-let filtered 
-
-    
-    useEffect(() => {
-      setCurrentData(mediaCardElement.slice(offset, offset + pageLimit));
-  }, [offset, data]);
-
-  let mediaCardElement = mediaCardElementRevers.reverse();
-
-  // const filtered = !searchingText
-  //   ? currentData.map(mediaCardElement => (
-  //     <>{mediaCardElement}</>))
-  //   :products.filter( product => product.name.toLowerCase().includes(searchingText.toLowerCase()) );
+ 
  
     const changeInputHandler = (event) => {;
       setSearchingText(event.target.value);
     };
     const passCategoryNameHandler = (currentCategory) => {
-        setChosenCategoryName(currentCategory.categoryName);
+        setChosenCategoryName(currentCategory.name);
         console.log(currentCategory);
-        console.log(currentCategory.categoryName);
+        console.log(currentCategory.name);
     };
     const changeCategoryNameHandler = (allCategories) => {
         setChosenCategoryName(allCategories);
-        console.log(allCategories);
+        console.log(allCategories, "change");
     };
 
-    console.log(products, "fff");
-    console.log(currentData, "curent")
+    console.log(chosenCategoryName);
 
     if(isLoading) {
         return (
@@ -197,49 +154,10 @@ let filtered
                 <Link to="/admin/add-product">Add New</Link>
               </div>
             </div>
-            {filteredProductsByCategory.length === 0 ? (
-              <div className="store-info-box all-orders-box">
-                <h2 className="no-orders-available">No Products Available</h2>
-              </div>
-            ) : (
-              <div className="store-info-box">
-                <table className="info-table">
-                  <thead>
-                    <tr>
-                      <th className="padding-left">#</th>
-                      <th className="padding-left">Name</th>
-                      <th>Image</th>
-                      <th>Description</th>
-                      <th className="last-box">View</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {console.log(currentData, "wwwwww")}
-                    {!searchingText
-                      ? currentData.map((mediaCardElement) => (
-                          <>{mediaCardElement}</>
-                        ))
-                      : filteredProductsByData.map((product, index) =>{
-                        return (
-                          <ProductInfo
-                            product={product}
-                            index={index + 1}
-                            key={product.id}
-                            onRemove={removeHandler}
-                          />
-                        );
-                  })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            <Paginator
-              totalRecords={mediaCardElement.length}
-              pageLimit={pageLimit}
-              pageNeighbours={1}
-              setOffset={setOffset}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+            <ProductsTableByCategory
+                searchingText={searchingText}
+                filteredProductsByCategory={filteredProductsByCategory}
+                removeHandler={removeHandler}
             />
           </div>
         }

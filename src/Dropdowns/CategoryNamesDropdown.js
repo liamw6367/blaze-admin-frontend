@@ -5,6 +5,7 @@ const CategoryNamesDropdown = (props) => {
     const [text, setText] = useState("");
 
     const ALL_CATEGORIES = "All";
+    const TEST_CATEGORY = "Test Category"
     const FILTERED_ALL_CATEGORIES = ALL_CATEGORIES.toLowerCase().includes(text.toLowerCase());
 
     const openSearchBoxHandler = () => {
@@ -23,6 +24,8 @@ const CategoryNamesDropdown = (props) => {
         setCategoryNamesDropdownIsShown(false);
         setText("");
     };
+
+    console.log(props, "props");
 
     return (
         <div className="dropdown">
@@ -46,11 +49,11 @@ const CategoryNamesDropdown = (props) => {
                         }
                         {
                             props.categories
-                                .filter(category => category.categoryName.toLowerCase().includes(text.toLowerCase()))
+                                .filter(category => category.name?.toLowerCase().includes(text.toLowerCase()))
                                 .map(category => {
                                     return (
                                         <div className="store" key={category.id} onClick={ onTrigger.bind(null, category) }>
-                                            <p> {category.categoryName} </p>
+                                            <p> {category.name} </p>
                                         </div>
                                     );
                                 })
