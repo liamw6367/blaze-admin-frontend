@@ -23,7 +23,7 @@ const ProductsTableByCategory = (props) => {
  
     useEffect(() => {
       setCurrentData(mediaCardElement.slice(offset, offset + pageLimit));
-    }, [offset, data]);
+    }, [offset, data, props]);
 
     let mediaCardElement = mediaCardElementRevers.reverse();
 
