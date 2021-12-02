@@ -34,6 +34,7 @@ import EditProduct from './UI/EditProduct';
 import {useToken} from "./hooks/useToken";
 import jwtDecode from 'jwt-decode';
 import { ORDERS, DISCOUNTS, GROUPS, TAXES } from './dummy-datas/DummyData';
+import DataTable from "./Pages/DataTable";
 
 
 const App = () => {
@@ -183,9 +184,10 @@ const App = () => {
         </Route>
         <Route path="/admin/add-tax">
           <AddTax triggerTaxData={addTaxDataHandler} />
-        </Route>
+        </Route>DataTable
         <ProtectedRoute path="/admin/dashboard" component={Dashboard} />
         <ProtectedRoute path="/admin/products" component={Products} />
+        <ProtectedRoute path="/admin/ui" component={DataTable} />
         <ProtectedRoute path="/admin/add-product" component={AddProduct} />
         <ProtectedRoute path="/admin/edit-product/:id" component={EditProduct} />
         <ProtectedRoute path="/admin/drivers" component={Drivers} />
