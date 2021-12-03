@@ -1,51 +1,148 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import {
+    DataGrid,
+    GridToolbarDensitySelector,
+    GridToolbarFilterButton,
+} from '@mui/x-data-grid';
+import { useDemoData } from '@mui/x-data-grid-generator';
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
+import { createTheme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+import CategoryNamesDropdown from "../Dropdowns/CategoryNamesDropdown";
+import {useState} from "react";
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 90,
-    },
-    {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.getValue(params.id, 'firstName') || ''} ${
-                params.getValue(params.id, 'lastName') || ''
-            }`,
-    },
-];
+function escapeRegExp(value) {
+    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const defaultTheme = createTheme();
+const useStyles = makeStyles(
+    (theme) =>
+        createStyles({
+            root: {
+                padding: theme.spacing(0.5, 0.5, 0),
+                justifyContent: 'space-between',
+                display: 'flex',
+                alignItems: 'flex-start',
+                flexWrap: 'wrap',
+            },
+            textField: {
+                [theme.breakpoints.down('xs')]: {
+                    width: '100%',
+                },
+                margin: theme.spacing(1, 0.5, 1.5),
+                '& .MuiSvgIcon-root': {
+                    marginRight: theme.spacing(0.5),
+                },
+                '& .MuiInput-underline:before': {
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                },
+            },
+        }),
+    { defaultTheme },
+);
 
-export default function DataTable() {
+function QuickSearchToolbar(props) {
+    const classes = useStyles();
+    console.log(props, 'www')
     return (
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
+        <div className={classes.root}>
+            <div>
+
+            </div>
+            <TextField
+                variant="standard"
+                value={props.value}
+                onChange={props.onChange}
+                placeholder="Search…"
+                className={classes.textField}
+                InputProps={{
+                    startAdornment: <SearchIcon fontSize="small" />,
+                    endAdornment: (
+                        <IconButton
+                            title="Clear"
+                            aria-label="Clear"
+                            size="small"
+                            style={{ visibility: props.value ? 'visible' : 'hidden' }}
+                            onClick={props.clearSearch}
+                        >
+                            <ClearIcon fontSize="small" />
+                        </IconButton>
+                    ),
+                }}
             />
         </div>
+    );
+}
+
+QuickSearchToolbar.propTypes = {
+    clearSearch: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+};
+
+export default function QuickFilteringGrid(props) {
+    const { data } = useDemoData({
+        dataSet: 'Commodity',
+        rowLength: 100,
+        maxColumns: 6,
+    });
+
+    const [searchText, setSearchText] = React.useState('');
+    const [rows, setRows] = React.useState(data.rows);
+
+
+    const requestSearch = (searchValue) => {
+        setSearchText(searchValue);
+        const searchRegex = new RegExp(escapeRegExp(searchValue), 'i');
+        const filteredRows = rows.filter((row) => {
+            return Object.keys(row).some((field) => {
+                return searchRegex.test(row[field].toString());
+            });
+        });
+        setRows(filteredRows);
+    };
+    function handler(e) {
+        console.log(e.target.value)
+        if(e.target.value === 'All'){
+            setRows(data.rows)
+        }
+        else {
+            const filteredItems =  data.rows.filter(row => row.commodity === e.target.value)
+            setRows(filteredItems)
+        }
+    }
+
+    React.useEffect(() => {
+        setRows(data.rows);
+    }, [data.rows]);
+
+    return (
+        <>
+            <select onChange={handler}>
+                <option>All</option>
+                <option>Soybeans</option>
+                <option>Coffee C</option>
+            </select>
+        <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+                components={{ Toolbar: QuickSearchToolbar }}
+                rows={rows}
+                columns={data.columns}
+                checkboxSelection={true}
+                componentsProps={{
+                    toolbar: {
+                        value: searchText,
+                        onChange: (event) => requestSearch(event.target.value),
+                        clearSearch: () => requestSearch(''),
+                    },
+                }}
+            />
+        </div>
+            </>
     );
 }

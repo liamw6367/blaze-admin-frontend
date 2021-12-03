@@ -8,6 +8,7 @@ import { useToken } from "../hooks/useToken";
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import ProductsTableByCategory from './ProductsTableByCategory';
+import QuickFilteringGrid from "./DataTable";
 
 
 const Products = (props) => {
@@ -159,6 +160,7 @@ const Products = (props) => {
                 filteredProductsByCategory={filteredProductsByCategory}
                 removeHandler={removeHandler}
             />
+            <QuickFilteringGrid data={products}/>
           </div>
         }
       />
