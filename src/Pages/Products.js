@@ -24,7 +24,7 @@ const Products = (props) => {
 
     const token = useToken();
 
-    let store_id;
+    let store_id; 
     
     if(token) {
       const decodedToken = jwtDecode(token);
