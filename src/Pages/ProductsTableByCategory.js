@@ -65,14 +65,17 @@ const ProductsTableByCategory = (props) => {
                 </table>
               </div>
             )}
-            <Paginator
-              totalRecords={mediaCardElement.length}
-              pageLimit={pageLimit}
-              pageNeighbours={1}
-              setOffset={setOffset}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
+            { !props.searchingText
+               ? <Paginator
+               totalRecords={mediaCardElement.length}
+               pageLimit={pageLimit}
+               pageNeighbours={1}
+               setOffset={setOffset}
+               currentPage={currentPage}
+               setCurrentPage={setCurrentPage}/>
+               : null
+              }
+            
             </div>
             
     );

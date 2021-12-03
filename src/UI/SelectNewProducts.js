@@ -68,13 +68,14 @@ const SelectedProducts = (props) => {
                 setCheckProduct(data)
             })
     }, [])
-
+    
+    console.log(products, "prods");
 
     const changeInputHandler = (event) => {
         setSearchingText(event.target.value);
     };
     const passCategoryNameHandler = (currentCategory) => {
-        setChosenCategoryName(currentCategory.categoryName);
+        setChosenCategoryName(currentCategory.name);
         console.log(currentCategory);
         console.log(currentCategory.categoryName);
     };
@@ -83,15 +84,16 @@ const SelectedProducts = (props) => {
         console.log(allCategories);
     };
 
-    const filteredProductsByData = products.filter(product => product.name.toLowerCase().includes(searchingText.toLowerCase()));
-    const filteredProductsByCategory = (chosenCategoryName === "All") ? filteredProductsByData
-        : filteredProductsByData.filter(product => product.productCategory === chosenCategoryName);
+    const filteredProductsByData = products.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
+    const filteredProductsByCategory = (chosenCategoryName === "All") 
+                                        ? filteredProductsByData 
+                                        : filteredProductsByData.filter( product => product.product_category.find(pc=> pc.name === chosenCategoryName) );
 
     //const [allSelect, setAllselect] = useState([]);
 
     useEffect(() => {
-        setFilteredAllSelect(products)
-        setAllselect(products)
+        setFilteredAllSelect(filteredProductsByCategory)
+        setAllselect(filteredProductsByCategory)
         if (checkProduct) {
             let tempUser;
             console.log(checkProduct);
@@ -99,12 +101,12 @@ const SelectedProducts = (props) => {
             checkProduct.map(item => {
                 return arr.push(item.id)
             })
-            tempUser = products.map(item => {
+            tempUser = filteredProductsByCategory.map(item => {
                 return arr.includes(item.id) ? {...item, isChecked: true} : item
             })
             setAllselect(tempUser);
         }
-    }, [checkProduct, products])
+    }, [checkProduct, products, chosenCategoryName, searchingText])
 
     console.log(filteredAllSelect)
 
@@ -140,17 +142,12 @@ const SelectedProducts = (props) => {
         tempUser.forEach(item => {
             item.isChecked ? savedItems.push(item.id) : savedItems.filter(si => si !== item.id)
         })
-
     }
-
-    // useEffect(() => {
-    //    setData(allSelect)
-    // }, [allSelect]);
 
     useEffect(() => {
         setFilteredAllSelect(allSelect.slice(offset, offset + pageLimit));
         setCurrentData(allSelect.slice(offset, offset + pageLimit));
-    }, [offset, allSelect]);
+    }, [offset, allSelect, chosenCategoryName]);
 
     const addProductToStore = (e) => {
 
@@ -176,6 +173,19 @@ const SelectedProducts = (props) => {
             });
     }
 
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/categories/get`)
+        .then((res) => {
+            console.log(res);
+            setCategories(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+    console.log(chosenCategoryName, "categor");
+
     if (isLoading) {
         return (
             <div>
@@ -184,105 +194,145 @@ const SelectedProducts = (props) => {
         );
     }
 
-    return (
-        <Blaze
-            onClick={justCtx.onJustify}
-            isExtended={justCtx.isExtended}
-            nav={
-                <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
-                    <p> Selected New Products </p>
-                </div>
-            }
-            main={
-                <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
-                    <div className="filtering justify">
-                        <span className="text"> View: </span>
-                        <div className="search-input">
-                            <input
-                                type="text"
-                                name=""
-                                id=""
-                                placeholder="Search..."
-                                onChange={changeInputHandler}
-                            />
-                            <i/>
-                        </div>
-                        <span className="text"> Category: </span>
-                        <CategoryNamesDropdown
-                            categories={categories}
-                            onPass={passCategoryNameHandler}
-                            onChange={changeCategoryNameHandler}
-                            chosenCategoryName={chosenCategoryName}
-                        />
-                    </div>
-                    {filteredProductsByCategory.length === 0 ? (
-                        <div className="store-info-box all-orders-box">
-                            <h2 className="no-orders-available">No Products Available</h2>
-                        </div>
-                    ) : (
-                        <div className="store-info-box">
-                            <table className="info-table">
-                                <thead>
-                                <tr>
-                                    <th className="selected-product">
-                                        <input
-                                            type="checkbox"
-                                            name="allSelect"
-                                            checked={!currentData.some((item) => item?.isChecked !== true)}
-                                            onChange={handleChange}
-                                        />
-                                    </th>
-                                    <th className="selected-product">#</th>
-                                    <th className="selected-product">Name</th>
-                                    <th className="selected-product-desc">Image</th>
-                                    <th className="selected-product-desc">Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {console.log(currentData)}
-                                {currentData.map((product, index) => {
-                                    return (
-                                        <tr>
-                                            <td className="selected-product">
-                                                <input
-                                                    type="checkbox"
-                                                    name={product.name}
-                                                    checked={product?.isChecked || false}
-                                                    onChange={handleChange}
-                                                />
-                                            </td>
-                                            <td className="selected-product">{index + 1}</td>
-                                            <td className="selected-product">
-                                                {product.name}
-                                            </td>
-                                            <td className="selected-product-desc">
-                                                <img
-                                                    width="50"
-                                                    src={`${process.env.REACT_APP_API_URL}/uploads/product_images/${product.image}`}
-                                                    alt="product"
-                                                />
-                                            </td>
-                                            <td>{product.description}</td>
-                                        </tr>
-                                    );
-                                })}
-                                </tbody>
-                            </table>
-                            <button className="add-new-button" type="submit" onClick={addProductToStore}>Add</button>
-                        </div>
+    console.log(filteredProductsByCategory);
 
-                    )}
-                    <Paginator
-                        totalRecords={allSelect.length}
-                        pageLimit={pageLimit}
-                        pageNeighbours={1}
-                        setOffset={setOffset}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
-                </div>
-            }
-        />
+    return (
+      <Blaze
+        onClick={justCtx.onJustify}
+        isExtended={justCtx.isExtended}
+        nav={
+          <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
+            <p> Selected New Products </p>
+          </div>
+        }
+        main={
+          <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
+            <div className="filtering justify">
+              <span className="text"> View: </span>
+              <div className="search-input">
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Search..."
+                  onChange={changeInputHandler}
+                />
+                <i />
+              </div>
+              <span className="text"> Category: </span>
+              <CategoryNamesDropdown
+                categories={categories}
+                onPass={passCategoryNameHandler}
+                onChange={changeCategoryNameHandler}
+                chosenCategoryName={chosenCategoryName}
+              />
+            </div>
+            {filteredProductsByCategory.length === 0 ? (
+              <div className="store-info-box all-orders-box">
+                <h2 className="no-orders-available">No Products Available</h2>
+              </div>
+            ) : (
+              <div className="store-info-box">
+                <table className="info-table">
+                  <thead>
+                    <tr>
+                      <th className="selected-product">
+                        <input
+                          type="checkbox"
+                          name="allSelect"
+                          checked={
+                            !currentData.some(
+                              (item) => item?.isChecked !== true
+                            )
+                          }
+                          onChange={handleChange}
+                        />
+                      </th>
+                      <th className="selected-product">#</th>
+                      <th className="selected-product">Name</th>
+                      <th className="selected-product-desc">Image</th>
+                      <th className="selected-product-desc">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {console.log(currentData)}
+                    {!searchingText
+                      ? currentData.map((product, index) => {
+                          return (
+                            <tr>
+                              <td className="selected-product">
+                                <input
+                                  type="checkbox"
+                                  name={product.name}
+                                  checked={product?.isChecked || false}
+                                  onChange={handleChange}
+                                />
+                              </td>
+                              <td className="selected-product">{index + 1}</td>
+                              <td className="selected-product">
+                                {product.name}
+                              </td>
+                              <td className="selected-product-desc">
+                                <img
+                                  width="50"
+                                  src={`${process.env.REACT_APP_API_URL}/uploads/product_images/${product.image}`}
+                                  alt="product"
+                                />
+                              </td>
+                              <td>{product.description}</td>
+                            </tr>
+                          );
+                        })
+                      : filteredProductsByData.map((product, index) => {
+                          return (
+                            <tr>
+                              <td className="selected-product">
+                                <input
+                                  type="checkbox"
+                                  name={product.name}
+                                  checked={product?.isChecked || false}
+                                  onChange={handleChange}
+                                />
+                              </td>
+                              <td className="selected-product">{index + 1}</td>
+                              <td className="selected-product">
+                                {product.name}
+                              </td>
+                              <td className="selected-product-desc">
+                                <img
+                                  width="50"
+                                  src={`${process.env.REACT_APP_API_URL}/uploads/product_images/${product.image}`}
+                                  alt="product"
+                                />
+                              </td>
+                              <td>{product.description}</td>
+                            </tr>
+                          );
+                        })}
+                  </tbody>
+                </table>
+                <button
+                  className="add-new-button"
+                  type="submit"
+                  onClick={addProductToStore}
+                >
+                  Add
+                </button>
+              </div>
+            )}
+            {!searchingText ? (
+              <Paginator
+                totalRecords={allSelect.length}
+                pageLimit={pageLimit}
+                pageNeighbours={1}
+                setOffset={setOffset}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            ) : null}
+          </div>
+        }
+      />
     );
 };
 
