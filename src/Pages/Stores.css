@@ -191,12 +191,12 @@ thead tr .order-td-box {
     position: relative;
 }
 .status-dropdown-box {
-    position: absolute;
+    /*position: absolute;*/
     top: 20px;
     right: 800px;
 }
 .names-dropdown-box {
-    position: absolute;
+    /*position: absolute;*/
     top: 20px;
     right: 350px;
 }

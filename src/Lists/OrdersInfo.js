@@ -1,35 +1,37 @@
 import React from 'react';
 
 const OrderInfo = (props) => {
+    console.log(props)
     return (
         <tr className="last-tr-border">
-            <td> 
-                { props.index } 
+            <td>
+                {props.order.id}
             </td>
-            <td> 
-                { props.order.orderName } 
+
+            <td>
+                {props.order.user?.first_name + ' ' + props.order?.user?.last_name}
             </td>
-            <td 
+            <td
                 className="order-td-boxes"
             >
-                { props.order.email } 
+                {props.order.user?.email}
             </td>
-            <td 
+            <td
                 className="order-td-boxes"
-            > 
-                { props.order.store } 
+            >
+                {'test'}
             </td>
-            <td 
+            <td
                 className="order-td-boxes"
-            > 
-                { props.order.transactionId } 
+            >
+                {'1m6w8cgm'}
             </td>
-            <td 
+            <td
                 className="order-td-boxes"
-            > 
-                { props.order.totalAmount } 
+            >
+                {props.order.total_price}
             </td>
-        </tr> 
+        </tr>
     );
 }
 

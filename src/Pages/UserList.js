@@ -60,8 +60,8 @@ const UserList = () => {
         setSearchingText(event.target.value);
     };
     const filteredUsersByData = users.filter( user => {
-        return user.first_name.toLowerCase().includes(searchingText.toLowerCase())
-            || user.last_name.toLowerCase().includes(searchingText.toLowerCase()); 
+        return user.first_name?.toLowerCase().includes(searchingText?.toLowerCase())
+            || user.last_name?.toLowerCase().includes(searchingText?.toLowerCase());
     });
 
     if(isLoading) {

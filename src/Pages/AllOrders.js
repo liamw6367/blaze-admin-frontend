@@ -8,9 +8,11 @@ import axios from 'axios';
 
 const AllOrders = (props) => {
     const justCtx = useContext(JustifyContext);
+    console.log(props,'wwww')
 
     const [currentStatus, setCurrentStatus] = useState("All");
     const [stores, setStores] = useState([]);
+    const [orders, setOrders] = useState()
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -22,7 +24,15 @@ const AllOrders = (props) => {
         .catch((err) => console.log(err));
     }, []);
 
-    let currentYear = new Date().getFullYear(); 
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/orders/get`)
+            .then(res => setOrders(res.data))
+            .catch(e => console.log(e))
+    },[])
+
+
+
+    let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth() + 1;
     currentMonth = (currentMonth < 10) ? ("0" + currentMonth) : currentMonth;
     const currentDate = new Date();
@@ -38,14 +48,14 @@ const AllOrders = (props) => {
         console.log(currentDate.setDate(currentDate.getDate() - 7));
     };
     const filteredOrdersByStatus = (currentStatus === "Received")
-    ? props.orders.filter(order => order.isReceived)
+    ? orders.filter(order => order.isReceived)
     : (currentStatus === "Out for Delivery")
-    ? props.orders.filter(order => order.isOutForDelivery)
+    ? orders.filter(order => order.isOutForDelivery)
     : (currentStatus === "Order Delivered")
-    ? props.orders.filter(order => order.isOrderDelivered)
+    ? orders.filter(order => order.isOrderDelivered)
     : (currentStatus === "Order Canceled")
-    ? props.orders.filter(order => order.isOrderCanceled)
-    : props.orders;
+    ? orders.filter(order => order.isOrderCanceled)
+    : orders;
 
     if(isLoading) {
         return (
@@ -54,36 +64,40 @@ const AllOrders = (props) => {
             </div>
         );
     }
-    
+
     return (
         <Blaze
             onClick={justCtx.onJustify}
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
-                    <p>Orders Count : {filteredOrdersByStatus.length}</p>
+                    <p>Orders Count : {filteredOrdersByStatus?.length}</p>
                 </div>
             }
             main={
                 <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
-                    <div className="filtering justify padding">
-                        <label>From
+                    <div className="filtering justify">
+
+                        <label>
+                            <span>From</span>
                             <input type="date" name="" id="" defaultValue={`${currentYear}-${currentMonth}-${sevenDaysAgo}`} />
                         </label>
-                        <label className="date-to">To
+                        {console.log(orders, 'wwww')}
+                        <label className="date-to">
+                            <span>To</span>
                             <input type="date" name="" id="" defaultValue={`${currentYear}-${currentMonth}-${currentDay}`} />
                         </label>
-                        <div className="status-dropdown-box">
-                            <span className="title span-margin">Status</span>
+                        <div className="status-dropdown">
+                            <p className="title span-margin">Status</p>
                             <OrderStatusDropdown onTrigger={triggerStatusHandler} />
                         </div>
-                        <div className="names-dropdown-box">
-                            <span className="title span-margin">Stores</span>
+                        <div className="stores-dropdown">
+                            <p className="title span-margin">Stores</p>
                             <StoreNamesDropdown stores={stores} />
                         </div>
                     </div>
                     {
-                        (filteredOrdersByStatus.length === 0) 
+                        (filteredOrdersByStatus?.length === 0)
                         ? (
                             <div className="store-info-box all-orders-box">
                                 <h2 className="no-orders-available">No Orders Available</h2>
@@ -103,14 +117,14 @@ const AllOrders = (props) => {
                                 </thead>
                                 <tbody>
                                     {
-                                        filteredOrdersByStatus.map((order, index) => {
+                                        filteredOrdersByStatus?.map((order, index) => {
                                             return (
-                                                <OrdersInfo 
+                                                <OrdersInfo
                                                     order={order}
                                                     key={order.transactionId}
                                                     index={index + 1}
                                                 />
-                                            ); 
+                                            );
                                         })
                                     }
                                 </tbody>

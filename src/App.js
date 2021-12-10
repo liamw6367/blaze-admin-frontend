@@ -147,7 +147,7 @@ const App = () => {
         <ProtectedRoute path="/admin/drivers" component={Drivers} />
         <ProtectedRoute path="/admin/drivers-pending" component={DriversPending} />
         <Route path="/admin/all-orders">
-          <AllOrders orders={orders} />
+          <AllOrders />
         </Route>
         <Route path="/admin/cancel-transaction">
           <CancelTransaction orders={orders}
