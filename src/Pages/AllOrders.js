@@ -6,6 +6,7 @@ import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import OrdersInfo from '../Lists/OrdersInfo';
 import axios from 'axios';
+import moment from "moment";
 
 const AllOrders = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -16,6 +17,7 @@ const AllOrders = (props) => {
     const [orders, setOrders] = useState()
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/stores/get`)
             .then((res) => {
@@ -24,6 +26,8 @@ const AllOrders = (props) => {
             })
             .catch((err) => console.log(err));
     }, []);
+
+
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/orders/get`)
@@ -95,6 +99,29 @@ const AllOrders = (props) => {
                     ? stores.filter(order => order.isOrderCanceled)
                     : stores;
 
+    const[startDate,setStartDate] = useState(moment().format('YYYY-MM-DD'))
+    const[endDate,setEndDate] = useState()
+
+console.log(moment().format('YYYY-MM-DD'))
+
+
+    function getByDate() {
+        if(startDate && endDate){
+            axios.get(`${process.env.REACT_APP_API_URL}/orders/get`,{params: {
+                    start_date:startDate,
+                    end_date: endDate
+                }})
+                .then(res => setOrders(res.data))
+        }
+    }
+
+    useEffect(() => {
+        console.log(startDate,endDate,'useEffect')
+        getByDate()
+    },[endDate,startDate])
+
+
+
     if (isLoading) {
         return (
             <div>
@@ -102,7 +129,7 @@ const AllOrders = (props) => {
             </div>
         );
     }
-
+    console.log(startDate,'startDate')
     return (
         <Blaze
             onClick={justCtx.onJustify}
@@ -119,14 +146,20 @@ const AllOrders = (props) => {
                         <label>
                             <span>From</span>
                             <input type="date" name="" id=""
-                                // onChange={startDateHandler}
-                                   defaultValue={`${currentYear}-${currentMonth}-${sevenDaysAgo}`}/>
+                                onChange={(e) => {
+                                    setStartDate(e.target.value)
+                                }}
+                                   value={startDate}
+                                />
                         </label>
                         {console.log(orders, 'wwww')}
                         <label className="date-to">
                             <span>To</span>
                             <input type="date" name="" id=""
-                                // onChange={endDateHandler}
+                                onChange={(e) => {
+                                    setEndDate(e.target.value)
+                                }}
+                                 value={endDate}
                                    defaultValue={`${currentYear}-${currentMonth}-${currentDay}`}/>
                         </label>
                         <div className="status-dropdown">
