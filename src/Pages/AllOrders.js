@@ -3,6 +3,7 @@ import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import OrderStatusDropdown from '../Dropdowns/OrderStatusDropdown';
 import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
+import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import OrdersInfo from '../Lists/OrdersInfo';
 import axios from 'axios';
 
@@ -30,7 +31,20 @@ const AllOrders = (props) => {
             .catch(e => console.log(e))
     },[])
 
+    const filteredProductsByCategory = (currentStatus === "All") 
+                                        ? stores 
+                                        : stores.filter( store => store.name === currentStatus);
 
+
+    const passCategoryNameHandler = (currentCategory) => {
+        setCurrentStatus(currentCategory.name);
+        console.log(currentCategory);
+        console.log(currentCategory.name);
+    };
+    const changeCategoryNameHandler = (allCategories) => {
+        setCurrentStatus(allCategories);
+        console.log(allCategories, "change");
+    };
 
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth() + 1;
@@ -48,14 +62,16 @@ const AllOrders = (props) => {
         console.log(currentDate.setDate(currentDate.getDate() - 7));
     };
     const filteredOrdersByStatus = (currentStatus === "Received")
-    ? orders.filter(order => order.isReceived)
+    ? stores.filter(order => order.isReceived)
     : (currentStatus === "Out for Delivery")
-    ? orders.filter(order => order.isOutForDelivery)
+    ? stores.filter(order => order.isOutForDelivery)       //orders
     : (currentStatus === "Order Delivered")
-    ? orders.filter(order => order.isOrderDelivered)
+    ? stores.filter(order => order.isOrderDelivered)
     : (currentStatus === "Order Canceled")
-    ? orders.filter(order => order.isOrderCanceled)
-    : orders;
+    ? stores.filter(order => order.isOrderCanceled)
+    : stores;
+
+    console.log(filteredOrdersByStatus, '2222222');
 
     if(isLoading) {
         return (
@@ -93,7 +109,12 @@ const AllOrders = (props) => {
                         </div>
                         <div className="stores-dropdown">
                             <p className="title span-margin">Stores</p>
-                            <StoreNamesDropdown stores={stores} />
+                            <CategoryNamesDropdown 
+                                categories={stores} 
+                                onPass={passCategoryNameHandler}
+                                onChange={changeCategoryNameHandler}
+                                chosenCategoryName={currentStatus}
+                            /> 
                         </div>
                     </div>
                     {
@@ -117,7 +138,7 @@ const AllOrders = (props) => {
                                 </thead>
                                 <tbody>
                                     {
-                                        filteredOrdersByStatus?.map((order, index) => {
+                                        filteredProductsByCategory?.map((order, index) => {
                                             return (
                                                 <OrdersInfo
                                                     order={order}

@@ -130,7 +130,7 @@ const Products = (props) => {
             <div className="filtering justify">
               <span className="text"> View: </span>
               <div className="search-input">
-                <input
+                <input 
                   type="text"
                   name=""
                   id=""
@@ -160,7 +160,9 @@ const Products = (props) => {
                 filteredProductsByCategory={filteredProductsByCategory}
                 removeHandler={removeHandler}
             />
-            <QuickFilteringGrid data={products}/>
+            {/* <QuickFilteringGrid 
+              data={filteredProductsByCategory}
+              category={categories}/> */}
           </div>
         }
       />

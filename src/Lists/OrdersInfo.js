@@ -1,7 +1,7 @@
 import React from 'react';
 
 const OrderInfo = (props) => {
-    console.log(props)
+    console.log(props, 'wwwwwwwwwww')
     return (
         <tr className="last-tr-border">
             <td>
@@ -9,12 +9,14 @@ const OrderInfo = (props) => {
             </td>
 
             <td>
-                {props.order.user?.first_name + ' ' + props.order?.user?.last_name}
+                {/* {props.order.user?.first_name + ' ' + props.order?.user?.last_name} */}
+                {props.order.name}
             </td>
             <td
                 className="order-td-boxes"
             >
-                {props.order.user?.email}
+                {/* {props.order.user?.email} */}
+                {props.order.store_email_id}
             </td>
             <td
                 className="order-td-boxes"
@@ -29,7 +31,8 @@ const OrderInfo = (props) => {
             <td
                 className="order-td-boxes"
             >
-                {props.order.total_price}
+                {/* {props.order.total_price} */}
+                {'100$'}
             </td>
         </tr>
     );

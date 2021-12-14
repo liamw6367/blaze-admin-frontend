@@ -14,6 +14,7 @@ const StoreNamesDropdown = (props) => {
     };
     const onTrigger = (store) => {
         setSelectStore(store.name);
+        console.log('1111');
         setStoreNamesDropdownIsShown(false);
         setText("");
     };

@@ -5,7 +5,7 @@ const CategoryNamesDropdown = (props) => {
     const [text, setText] = useState("");
 
     const ALL_CATEGORIES = "All";
-    const TEST_CATEGORY = "Test Category"
+    //const TEST_CATEGORY = "Test Category"
     const FILTERED_ALL_CATEGORIES = ALL_CATEGORIES.toLowerCase().includes(text.toLowerCase());
 
     const openSearchBoxHandler = () => {

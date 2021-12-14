@@ -19,3 +19,29 @@
 //         </table>
 //     )
 // }
+
+
+// var currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// var currencyTitle;
+// var timezones = {
+//     'Asia/Singapore': 'SGD (S$)',
+//     'Pacific/Auckland':'NZD ($)',
+//     'Pacific/Chatham':'NZD ($)',
+//     'Asia/Shanghai': 'CHF (CHF)',
+//     'Asia/Urumqi': 'CHF (CHF)',
+//     'Asia/Taipei':  'CHF (CHF)',
+//     'Europe/London': 'GBP (£)'
+// }
+
+// if(timezones[currentTimeZone] !== undefined){
+//     currencyTitle = timezones[currentTimeZone];
+
+//     $(`[data-hook='dropdown-base']`).click();
+//     $('[title="' + currencyTitle + '"]').click();
+// }
+
+
+
+
+
+

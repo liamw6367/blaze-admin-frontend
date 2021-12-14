@@ -71,9 +71,7 @@ const SelectedProducts = (props) => {
     
     console.log(products, "prods");
 
-    const changeInputHandler = (event) => {
-        setSearchingText(event.target.value);
-    };
+    
     const passCategoryNameHandler = (currentCategory) => {
         setChosenCategoryName(currentCategory.name);
         console.log(currentCategory);
@@ -88,6 +86,8 @@ const SelectedProducts = (props) => {
     const filteredProductsByCategory = (chosenCategoryName === "All") 
                                         ? filteredProductsByData 
                                         : filteredProductsByData.filter( product => product.product_category.find(pc=> pc.name === chosenCategoryName) );
+
+    const filteredProductsBySearch = filteredProductsByCategory.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
 
     //const [allSelect, setAllselect] = useState([]);
 
@@ -108,7 +108,11 @@ const SelectedProducts = (props) => {
         }
     }, [checkProduct, products, chosenCategoryName, searchingText])
 
-    console.log(filteredAllSelect)
+    console.log(filteredAllSelect);
+
+    const changeInputHandler = (event) => {
+      setSearchingText(event.target.value);
+    };
 
     let savedItems = [];
     const handleChange = (e) => {
@@ -283,7 +287,7 @@ const SelectedProducts = (props) => {
                             </tr>
                           );
                         })
-                      : filteredProductsByData.map((product, index) => {
+                      : filteredProductsBySearch.map((product, index) => {
                           return (
                             <tr>
                               <td className="selected-product">

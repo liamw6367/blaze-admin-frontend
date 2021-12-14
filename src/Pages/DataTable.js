@@ -1,4 +1,4 @@
-import * as React from 'react';
+ import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -92,19 +92,21 @@ export default function QuickFilteringGrid(props) {
         maxColumns: 6,
     });
 
-    const [searchText, setSearchText] = React.useState('');
-    const [rows, setRows] = React.useState(data.rows);
+    const [searchText, setSearchText] = useState('');
+    const [rows, setRows] = useState(data.rows);
+    const [category, setCategory] = useState(['All','Soybeans','Coffee C'])
 
 
     const requestSearch = (searchValue) => {
         setSearchText(searchValue);
-        const searchRegex = new RegExp(escapeRegExp(searchValue), 'i');
-        const filteredRows = rows.filter((row) => {
-            return Object.keys(row).some((field) => {
-                return searchRegex.test(row[field].toString());
-            });
-        });
-        setRows(filteredRows);
+        let filteredItems;
+        if(category === 'All') {
+            filteredItems = data.rows.filter(row => row.desk.toLowerCase().includes(searchValue?.toLowerCase()))
+        
+        }else {
+            filteredItems = data.rows.filter(row => row.desk.find(item => item.desk === category))
+        }
+        setRows(filteredItems)
     };
     function handler(e) {
         console.log(e.target.value)
@@ -124,11 +126,11 @@ export default function QuickFilteringGrid(props) {
     return (
         <>
             <select onChange={handler}>
-                <option>All</option>
-                <option>Soybeans</option>
-                <option>Coffee C</option>
+                {category.map(item => (
+                    <option>{item}</option>
+                ))}
             </select>
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 740, width: '100%' }}>
             <DataGrid
                 components={{ Toolbar: QuickSearchToolbar }}
                 rows={rows}
@@ -143,6 +145,6 @@ export default function QuickFilteringGrid(props) {
                 }}
             />
         </div>
-            </>
+        </>
     );
 }
