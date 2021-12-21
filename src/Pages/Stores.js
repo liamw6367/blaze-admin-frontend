@@ -50,13 +50,13 @@ const Stores = (props) => {
     ? filteredStoresByData.filter(store => !store.is_active)
     : filteredStoresByData;
 
-    if(isLoading) {
-        return (
-            <div>
-                <p> LOADING..... </p>
-            </div>
-        );
-    }
+    // if(isLoading) {
+    //     return (
+    //         <div>
+    //             <p> LOADING..... </p>
+    //         </div>
+    //     );
+    // }
 
     const removeHandler = (id) => {
         console.log(id);

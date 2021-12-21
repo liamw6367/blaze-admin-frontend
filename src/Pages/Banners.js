@@ -52,13 +52,13 @@ const Banners = (props) => {
             .catch(err => console.log(err));
     };
 
-    if(isLoading) {
-        return (
-            <div>
-                <p> LOADING..... </p>
-            </div>
-        );
-    }
+    // if(isLoading) {
+    //     return (
+    //         <div>
+    //             <p> LOADING..... </p>
+    //         </div>
+    //     );
+    // }
 
     return (
         <Blaze

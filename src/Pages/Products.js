@@ -108,13 +108,13 @@ const Products = (props) => {
 
     console.log(chosenCategoryName);
 
-    if(isLoading) {
-        return (
-            <div>
-                <p> Loading... </p>
-            </div>
-        );
-    }
+    // if(isLoading) {
+    //     return (
+    //         <div>
+    //             <p> Loading... </p>
+    //         </div>
+    //     );
+    // }
 
     return (
       <Blaze

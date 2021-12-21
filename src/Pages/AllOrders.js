@@ -122,13 +122,13 @@ console.log(moment().format('YYYY-MM-DD'))
 
 
 
-    if (isLoading) {
-        return (
-            <div>
-                <p> LOADING..... </p>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div>
+    //             <p> LOADING..... </p>
+    //         </div>
+    //     );
+    // }
     console.log(startDate,'startDate')
     return (
         <Blaze

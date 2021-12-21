@@ -43,13 +43,13 @@ const Dashboard = (props) => {
     let lastMonth = +currentMonth - 1;
     lastMonth = (lastMonth < 10) ? ("0" + lastMonth) : lastMonth;
 
-    if(isLoading) {
-        return (
-            <div>
-                <p> LOADING..... </p>
-            </div>
-        );
-    }
+    // if(isLoading) {
+    //     return (
+    //         <div>
+    //             <p> LOADING..... </p>
+    //         </div>
+    //     );
+    // }
 
     return (
         <Blaze 
