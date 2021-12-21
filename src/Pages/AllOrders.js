@@ -136,7 +136,7 @@ console.log(moment().format('YYYY-MM-DD'))
             isExtended={justCtx.isExtended}
             nav={
                 <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
-                    <p>Orders Count : {filteredOrdersByStatus?.length}</p>
+                    <p>Orders Count : {filteredProductsByCategory?.length}</p>
                 </div>
             }
             main={
