@@ -35,13 +35,13 @@ const Drivers = () => {
     //     props.onReject(driver);
     // };
 
-    if(isLoading) {
-        return (
-            <div>
-                <p> LOADING..... </p>
-            </div>
-        );
-    }
+    // if(isLoading) {
+    //     return (
+    //         <div>
+    //             <p> LOADING..... </p>
+    //         </div>
+    //     );
+    // }
     
     return (
         <Blaze

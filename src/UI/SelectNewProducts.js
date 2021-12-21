@@ -190,13 +190,13 @@ const SelectedProducts = (props) => {
 
     console.log(chosenCategoryName, "categor");
 
-    if (isLoading) {
-        return (
-            <div>
-                <p> Loading... </p>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div>
+    //             <p> Loading... </p>
+    //         </div>
+    //     );
+    // }
 
     console.log(filteredProductsByCategory);
 
