@@ -87,7 +87,7 @@ const SelectedProducts = (props) => {
                                         ? filteredProductsByData 
                                         : filteredProductsByData.filter( product => product.product_category.find(pc=> pc.name === chosenCategoryName) );
 
-    const filteredProductsBySearch = filteredProductsByCategory.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
+    let filteredProductsBySearch = allSelect.filter( product => product.name.toLowerCase().includes(searchingText?.toLowerCase()) );
 
     //const [allSelect, setAllselect] = useState([]);
 
@@ -97,51 +97,61 @@ const SelectedProducts = (props) => {
         if (checkProduct) {
             let tempUser;
             console.log(checkProduct);
-            let arr = []
+            let arr = []; 
             checkProduct.map(item => {
-                return arr.push(item.id)
+                return arr.push(item.id) 
             })
             tempUser = filteredProductsByCategory.map(item => {
                 return arr.includes(item.id) ? {...item, isChecked: true} : item
             })
             setAllselect(tempUser);
         }
-    }, [checkProduct, products, chosenCategoryName, searchingText])
+    }, [checkProduct, products, chosenCategoryName])
 
     console.log(filteredAllSelect);
 
     const changeInputHandler = (event) => {
       setSearchingText(event.target.value);
     };
-
-    let savedItems = [];
+ 
     const handleChange = (e) => {
         const {name, checked} = e.target;
         let tempUser;
+        let savedItems = [];
         console.log(name, checked);
 
         if (name === "allSelect") {
+          if (!searchingText) {
             tempUser = currentData.map((item) => {
-                return {...item, isChecked: checked};
+              return { ...item, isChecked: checked };
             });
 
-            filteredAllSelect.map(fall => {
-                if (currentData.find(el => el.id === fall.id)) {
-                    fall.isChecked = checked;
-                }
-            })
+            filteredAllSelect.map((fall) => {
+              if (currentData.find((el) => el.id === fall.id)) {
+                fall.isChecked = checked;
+              }
+            });
             console.log(filteredAllSelect);
-
-
-            // setFilteredAllSelect(data)
             setCurrentData(tempUser);
+          } else {
+            tempUser = filteredProductsBySearch.map((item) => {
+              return { ...item, isChecked: checked };
+            });
 
-            console.log(tempUser);
+            filteredAllSelect.map((fall) => {
+              if (filteredProductsBySearch.find((el) => el.id === fall.id)) {
+                fall.isChecked = checked;
+              }
+            });
+            console.log(filteredAllSelect);
+            filteredProductsBySearch = tempUser;
+            //setCurrentData(tempUser);
+          }
         } else {
-            tempUser = allSelect.map(item => {
-                return item.name === name ? {...item, isChecked: checked} : item
-            })
-            setAllselect(tempUser);
+          tempUser = allSelect.map((item) => {
+            return item.name === name ? { ...item, isChecked: checked } : item;
+          });
+          setAllselect(tempUser);
         }
         tempUser.forEach(item => {
             item.isChecked ? savedItems.push(item.id) : savedItems.filter(si => si !== item.id)
@@ -244,11 +254,20 @@ const SelectedProducts = (props) => {
                         <input
                           type="checkbox"
                           name="allSelect"
+                          style={{display: !searchingText ? "block" : "none"}}
                           checked={
                             !currentData.some(
-                              (item) => item?.isChecked !== true
+                              (item) => item?.isChecked !== true                
                             )
                           }
+                          // { !searchingText ?
+                          //   !currentData.some(
+                          //     (item) => item?.isChecked !== true
+                          //   ) :
+                          //   !filteredProductsBySearch.some(
+                          //     (item) => item?.isChecked !== true
+                          //   )
+                          // }
                           onChange={handleChange}
                         />
                       </th>
