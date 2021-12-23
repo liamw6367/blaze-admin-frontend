@@ -6,7 +6,7 @@ import StoreNamesDropdown from '../Dropdowns/StoreNamesDropdown';
 import CategoryNamesDropdown from '../Dropdowns/CategoryNamesDropdown';
 import OrdersInfo from '../Lists/OrdersInfo';
 import axios from 'axios';
-import moment from "moment";
+import moment from 'moment';
 
 const AllOrders = (props) => {
     const justCtx = useContext(JustifyContext);
@@ -102,7 +102,7 @@ const AllOrders = (props) => {
     const[startDate,setStartDate] = useState(moment().format('YYYY-MM-DD'))
     const[endDate,setEndDate] = useState()
 
-console.log(moment().format('YYYY-MM-DD'))
+    console.log(moment().format('YYYY-MM-DD'))
 
 
     function getByDate() {
