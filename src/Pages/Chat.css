@@ -1,0 +1,73 @@
+.sidebar {
+    /* flex: 1 1 240px; */
+    padding-left: 255px;
+}
+
+.card {
+    width: 250px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.contact{
+    padding: 15px;
+    border: 1px solid red;
+}
+
+.sidebar .card-body {
+    max-height: 530px;
+    overflow-y: scroll;
+}
+
+.sidebar .card {
+    border-right: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.sidebar .card-header p,
+.main .card-header p {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.sidebar .card .card-body {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.sidebar .card-body .contact a {
+    height: 50px;
+    /*border: 1px solid #17a2b8*/
+}
+
+.sidebar .card-body .contact .contact-btn {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 50px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar .card-body .contact .contact-btn div {
+    flex: 1
+}
+
+.sidebar .card-body .contact .contact-btn div:nth-child(2) {
+    flex: 4;
+    flex-shrink: 6;
+}
+
+.sidebar .card-body .contact .contact-btn:hover, .active {
+    background: #eee;
+}

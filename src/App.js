@@ -6,6 +6,7 @@ import Dashboard from './Pages/Dashboard';
 import Stores from './Pages/Stores';
 import Categories from './Pages/Categories';
 import Drivers from './Pages/Drivers';
+import Chat from './Pages/Chat';
 import UserList from './Pages/UserList';
 import PromotionalMessage from './Pages/PromotionalMessage';
 import AllOrders from './Pages/AllOrders';
@@ -139,6 +140,7 @@ const App = () => {
         <ProtectedRoute path="/admin/select-product" component={SelectNewProduct} />
         <ProtectedRoute path="/admin/edit-product/:id" component={EditProduct} />
         <ProtectedRoute path="/admin/user-list" component={UserList} />
+        <ProtectedRoute path="/admin/chat" component={Chat} />
         <ProtectedRoute path="/admin/promotional-message" component={PromotionalMessage} />
         <ProtectedRoute path="/admin/banners" component={Banners} />
         <ProtectedRoute path="/admin/add-banner" component={AddBanner} />
