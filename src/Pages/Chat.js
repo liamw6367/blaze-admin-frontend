@@ -81,8 +81,8 @@ const Chat = (props) => {
     }
 
     function renderMsg(msg) {
-        let t = +msg.from_id === user_id;
         return msg.value.map(m => {
+            let t = +m.from_id === user_id;
             return <div className={t ? "myMessage" : "message"}>
                 <div className={t ? "me" : "friend"}>
                     <p>{m.message}</p>
@@ -133,10 +133,10 @@ const Chat = (props) => {
                     <div className='chat'>
                         <div className="messages-container">
                             {chat.map(msg => {
-                                return(
+                                return (
                                     <>
                                         {renderDate(msg)
-                                            }
+                                        }
                                         {renderMsg(msg)}
                                     </>
                                 )
