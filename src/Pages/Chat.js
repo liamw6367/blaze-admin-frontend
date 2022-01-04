@@ -60,6 +60,40 @@ const Chat = (props) => {
         [chat]
     )
 
+    function renderDate(msg) {
+        return <div className="chat-line">
+                                    <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="585" height="1" viewBox="0 0 585 1">
+                                      <line id="Line_32" data-name="Line 32" x2="585" transform="translate(0 0.5)"
+                                            fill="none"
+                                            stroke="#dedede" stroke-width="1"/>
+                                    </svg>
+                                    </span>
+            <p className="chat-text">{msg.key}</p>
+            <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="585" height="1" viewBox="0 0 585 1">
+                                      <line id="Line_32" data-name="Line 32" x2="585" transform="translate(0 0.5)"
+                                            fill="none"
+                                            stroke="#dedede" stroke-width="1"/>
+                                    </svg>
+                                    </span>
+        </div>
+    }
+
+    function renderMsg(msg) {
+        let t = +msg.from_id === user_id;
+        return msg.value.map(m => {
+            return <div className={t ? "myMessage" : "message"}>
+                <div className={t ? "me" : "friend"}>
+                    <p>{m.message}</p>
+                </div>
+                <div className="time">
+                    <span>{moment(m.created_at).format('hh:mm')}</span>
+                </div>
+            </div>
+        })
+    }
+
 
     return (
         <Blaze
@@ -95,36 +129,23 @@ const Chat = (props) => {
                         })}
                     </div>
 
+
                     <div className='chat'>
-                        <div className="chat-line">
-                <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="585" height="1" viewBox="0 0 585 1">
-                  <line id="Line_32" data-name="Line 32" x2="585" transform="translate(0 0.5)" fill="none"
-                        stroke="#dedede" stroke-width="1"/>
-                </svg>
-                </span>
-                            <p className="chat-text">Today</p>
-                            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="585" height="1" viewBox="0 0 585 1">
-                  <line id="Line_32" data-name="Line 32" x2="585" transform="translate(0 0.5)" fill="none"
-                        stroke="#dedede" stroke-width="1"/>
-                </svg>
-                </span>
-                        </div>
                         <div className="messages-container">
                             {chat.map(msg => {
-                                let t = +msg.from_id === user_id;
-                                return <div className={t ? "myMessage" : "message"}>
-                                    <div className={t ? "me" : "friend"}>
-                                        <p>{msg.message}</p>
-                                    </div>
-                                    <div className="time">
-                                        <span>{moment(msg.created_at).format('hh:mm')}</span>
-                                    </div>
-                                </div>
+                                return(
+                                    <>
+                                        {renderDate(msg)
+                                            }
+                                        {renderMsg(msg)}
+                                    </>
+                                )
+
+
                             })}
+
+                            <textarea placeholder='Type your message here ...'></textarea>
                         </div>
-                        <textarea placeholder='Type your message here ...'></textarea>
                     </div>
                     {/* <div className="chat">
               <div className="card-body msg-body">
