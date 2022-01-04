@@ -25,6 +25,7 @@
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     opacity: 1;
+    overflow: auto;
 }
 
 .contact {
@@ -148,7 +149,7 @@ textarea::placeholder {
     padding: 20px;
 }
 
-.chat .me {
+.chat .friend {
     max-width: 400px;
     width: 100%;
     padding: 10px;
@@ -175,7 +176,7 @@ textarea::placeholder {
     word-break: break-all;
 }
 
-.chat .friend {
+.chat .me {
     max-width: 400px;
     width: 100%;
     padding: 10px;
@@ -192,7 +193,7 @@ textarea::placeholder {
     width: 100%;
 }
 
-.message {
+.myMessage {
     justify-content: flex-end;
 }
 

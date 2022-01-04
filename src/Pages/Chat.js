@@ -1,11 +1,27 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import JustifyContext from '../Contexts/JustifyingContext';
 import Blaze from './Blaze';
 import './Chat.css'
+import jwtDecode from "jwt-decode";
+import axios from "axios";
+import io from "socket.io-client";
+import moment from 'moment';
 
 
 const Chat = (props) => {
+
     const justCtx = useContext(JustifyContext);
+    const [chat, setChat] = useState([])
+
+    let token = localStorage.getItem('token');
+
+    const socketRef = useRef();
+
+    let user_id;
+    if (token) {
+        const user = jwtDecode(token);
+        user_id = user.id
+    }
 
     const users = [
         {id: 1, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
@@ -19,8 +35,30 @@ const Chat = (props) => {
         {id: 9, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
         {id: 10, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
         {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
+        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
+        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
+        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
+        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
         {id: 12, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'}
     ]
+
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/chat/get-messages`, {params: {from_id: user_id}})
+            .then(res => setChat(res.data))
+    }, []);
+
+    useEffect(
+        () => {
+            socketRef.current = io.connect(process.env.REACT_APP_API_URL)
+            socketRef.current.on("getMessages", (data) => {
+                console.log(data, '111')
+                setChat(data)
+            })
+            return () => socketRef.current.disconnect()
+        },
+        [chat]
+    )
 
 
     return (
@@ -74,66 +112,17 @@ const Chat = (props) => {
                 </span>
                         </div>
                         <div className="messages-container">
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
+                            {chat.map(msg => {
+                                let t = +msg.from_id === user_id;
+                                return <div className={t ? "myMessage" : "message"}>
+                                    <div className={t ? "me" : "friend"}>
+                                        <p>{msg.message}</p>
+                                    </div>
+                                    <div className="time">
+                                        <span>{moment(msg.created_at).format('hh:mm')}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
-                                </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
-                                </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
-                                </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
-                                </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
-                            <div className="myMessage">
-                                <div className='me'>
-                                    <p>dhgdsjshgudshgdshghdffffffjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdgdgdfgdfgdddddrddddddddddddddddddddddddddddddddjjjj</p>
-                                </div>
-                            </div>
-                            <div className="message">
-                                <div className='friend'>
-                                    <p>sgfsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddg</p>
-                                </div>
-                            </div>
+                            })}
                         </div>
                         <textarea placeholder='Type your message here ...'></textarea>
                     </div>
