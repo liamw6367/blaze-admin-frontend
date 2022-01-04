@@ -27,7 +27,7 @@
     opacity: 1;
 }
 
-.contact{
+.contact {
     padding: 15px;
     border: 1px solid #e4eef1;
     position: relative;
@@ -131,13 +131,15 @@ textarea {
     border: none;
     padding: 20px;
 }
+
 textarea::placeholder {
-    font-family: 'Muli',sans-serif;
+    font-family: 'Muli', sans-serif;
     font-weight: normal;
     font-size: 14px;
     letter-spacing: 0px;
     color: #9E9C9C;
 }
+
 .Blaze_container__3xbTH .sidebar .chat {
     display: flex;
     flex-direction: column;
@@ -146,7 +148,7 @@ textarea::placeholder {
     padding: 20px;
 }
 
-.chat .me{
+.chat .me {
     max-width: 400px;
     width: 100%;
     padding: 10px;
@@ -156,21 +158,24 @@ textarea::placeholder {
     margin: 10px;
     display: flex;
 }
+
 .close-btn {
     position: absolute;
     top: 0;
     right: 10px;
 }
+
 .chat-line {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
 }
-.me p, .friend p{
+
+.me p, .friend p {
     word-break: break-all;
 }
 
-.chat .friend{
+.chat .friend {
     max-width: 400px;
     width: 100%;
     padding: 10px;
@@ -182,11 +187,20 @@ textarea::placeholder {
     display: flex;
 }
 
-.myMessage, .message{
+.myMessage, .message {
     display: flex;
     width: 100%;
 }
 
-.message{
+.message {
     justify-content: flex-end;
+}
+
+.messages-container {
+    height: 815px;
+    overflow: auto;
+}
+
+.messages-container textarea {
+    resize: none;
 }
