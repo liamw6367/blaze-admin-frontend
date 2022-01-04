@@ -50,7 +50,7 @@ const BlazeAside = () => {
                             <NavLink to='/admin/user-list' className={justCtx.isExtended ? "user-list" : "narrow-user-list"}>
                                 <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>User List</p> : ""}  
                             </NavLink>
-                            <NavLink to='/admin/chat' className={justCtx.isExtended ? "chat" : "narrow-chat"}>
+                            <NavLink to='/admin/chat' className={justCtx.isExtended ? "chat" : "narrow-chat "}>
                                 <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Chat/messages</p> : ""}  
                             </NavLink>
                             <NavLink to='/admin/promotional-message' className={justCtx.isExtended ? "prom-message" : "narrow-prom-message"}>
