@@ -50,6 +50,11 @@ const Chat = (props) => {
             .then(res => setChat(res.data))
     }, []);
 
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role`, {params: {role: 'customer'}})
+            .then(res => console.log(res.data))
+    }, []);
+
     useEffect(
         () => {
             socketRef.current = io.connect(process.env.REACT_APP_API_URL)
