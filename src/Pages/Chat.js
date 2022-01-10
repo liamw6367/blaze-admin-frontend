@@ -147,8 +147,9 @@ const Chat = (props) => {
 
                             })}
 
-                            <textarea placeholder='Type your message here ...'></textarea>
+                            
                         </div>
+                        <textarea placeholder='Type your message here ...'></textarea>
                     </div>
                     
                 </div>
