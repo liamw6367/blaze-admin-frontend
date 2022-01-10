@@ -52,8 +52,8 @@ const Chat = (props) => {
         () => {
             socketRef.current = io.connect(process.env.REACT_APP_API_URL)
             socketRef.current.on("getMessages", (data) => {
-                console.log(data, '111')
-                setChat(data)
+                console.log(data, '111');
+                setChat(data);
             })
             return () => socketRef.current.disconnect()
         },
@@ -79,6 +79,7 @@ const Chat = (props) => {
                                     </span>
         </div>
     }
+
 
     function renderMsg(msg) {
         return msg.value.map(m => {
