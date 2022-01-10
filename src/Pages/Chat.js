@@ -18,8 +18,10 @@ const Chat = (props) => {
     const socketRef = useRef();
 
     let user_id;
+    let user;
     if (token) {
-        const user = jwtDecode(token);
+        user = jwtDecode(token);
+        console.log(user)
         user_id = user.id
     }
 
@@ -44,7 +46,7 @@ const Chat = (props) => {
 
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/chat/get-messages`, {params: {from_id: user_id}})
+        axios.get(`${process.env.REACT_APP_API_URL}/chat/get-messages`, {params: {from_id: user_id, role: user?.user_role?.name}})
             .then(res => setChat(res.data))
     }, []);
 

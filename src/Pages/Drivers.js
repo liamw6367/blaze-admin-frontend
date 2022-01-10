@@ -14,7 +14,7 @@ const Drivers = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role?role_id=11`)
+        axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role?role_id=driver`)
         .then((res) => {
             setIsLoading(false);
             setDrivers(res.data);
