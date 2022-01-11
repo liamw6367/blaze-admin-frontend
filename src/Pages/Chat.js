@@ -11,7 +11,9 @@ import moment from 'moment';
 const Chat = (props) => {
 
     const justCtx = useContext(JustifyContext);
-    const [chat, setChat] = useState([])
+    const [chat, setChat] = useState([]);
+    const [users, setUsers] = useState([]);
+
 
     let token = localStorage.getItem('token');
 
@@ -25,25 +27,6 @@ const Chat = (props) => {
         user_id = user.id
     }
 
-    const users = [
-        {id: 1, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 2, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 3, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 4, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 5, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 6, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 7, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 8, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 9, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 10, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 11, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'},
-        {id: 12, name: 'John', dataTime: '7 dec', message: 'dsjkfgsd h fgsdjfghsdgfhsd ffghfgsd'}
-    ]
-
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/chat/get-messages`, {params: {from_id: user_id, role: user?.user_role?.name}})
@@ -52,7 +35,7 @@ const Chat = (props) => {
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role`, {params: {role: 'customer'}})
-            .then(res => console.log(res.data))
+            .then(res => setUsers(res.data))
     }, []);
 
     useEffect(
@@ -96,11 +79,13 @@ const Chat = (props) => {
                     <p>{m.message}</p>
                 </div>
                 <div className="time">
-                    <span>{moment(m.created_at).format('hh:mm')}</span>
+                    <span>{moment(m.created_at).format('hh:mm')+" AM"}</span>
                 </div>
             </div>
         })
-    }
+    } 
+
+    console.log(users);
 
 
     return (
@@ -118,7 +103,7 @@ const Chat = (props) => {
                         {users.map((user) => {
                             return (
                                 <div className="contact">
-                                    <div>{user.name}</div>
+                                    <div>{user.first_name + " " + user.last_name} </div>
                                     <div>{user.dataTime}</div>
                                     <span className='close-btn'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="6.414" height="6.414" viewBox="0 0 6.414 6.414">
@@ -143,18 +128,22 @@ const Chat = (props) => {
                             {chat.map(msg => {
                                 return (
                                     <>
-                                        {renderDate(msg)
-                                        }
+                                        {renderDate(msg)}
                                         {renderMsg(msg)}
                                     </>
                                 )
-
-
                             })}
-
-                            
                         </div>
                         <textarea placeholder='Type your message here ...'></textarea>
+                        <div className='btn-box'>
+                            <button
+                                className="msg-button"
+                                type="submit"
+                                //onClick={addProductToStore}
+                            >
+                                Send msg
+                            </button>
+                        </div>
                     </div>
                     
                 </div>
