@@ -1,20 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import './BlazeAside.css';
 import logoIcon from '../assets/icons/aside/logo-icon.png';
 import JustifyContext from '../Contexts/JustifyingContext';
 import { useToken } from '../hooks/useToken';
+import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
 
 const BlazeAside = () => {
     const justCtx = useContext(JustifyContext);
 
+    useEffect(() => {
+        const fetch = async () => {
+          await axios
+            .get(`${process.env.REACT_APP_API_URL}/delivery-fee/get`)
+            .then((res) => {
+              console.log(res.data);
+              const deliveryFeeData = {
+                id: res.data.id,
+                price: res.data.price
+            };
+            console.log(deliveryFeeData, "deliverydata!!!!!");
+            justCtx.passDeliveryFeeData(deliveryFeeData);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+  
+        fetch();
+      }, []);
+
     const token = useToken();
     const decodedToken = jwtDecode(token);
     const roleName = decodedToken.user_role?.name;
 
-    console.log(roleName, "blaze aside");
+    //console.log(roleName, "blaze aside");
+
 
     const history = useHistory();
 

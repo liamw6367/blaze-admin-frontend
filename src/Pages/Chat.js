@@ -27,7 +27,6 @@ const Chat = (props) => {
         user_id = user.id
     }
 
-
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/chat/get-messages`, {params: {from_id: user_id, role: user?.user_role?.name}})
             .then(res => setChat(res.data))
@@ -49,7 +48,7 @@ const Chat = (props) => {
         },
         [chat]
     )
-
+     console.log(chat);
     function renderDate(msg) {
         return <div className="chat-line">
                                     <span>
@@ -70,7 +69,6 @@ const Chat = (props) => {
         </div>
     }
 
-
     function renderMsg(msg) {
         return msg.value.map(m => {
             let t = +m.from_id === user_id;
@@ -84,45 +82,38 @@ const Chat = (props) => {
             </div>
         })
     } 
-
     console.log(users);
-
-
     return (
         <Blaze
             onClick={justCtx.onJustify}
             isExtended={justCtx.isExtended}
-            // nav={
-            //   <div className={justCtx.isExtended ? "blaze-nav" : "wide-blaze-nav"}>
-            //     <p>Orders Count : </p>
-            //   </div>
-            // }
             main={
                 <div className="sidebar">
                     <div className="card">
                         {users.map((user) => {
                             return (
                                 <div className="contact">
+                                    <div className='item-cnt'>
                                     <div>{user.first_name + " " + user.last_name} </div>
-                                    <div>{user.dataTime}</div>
+                                    <div className="msg-time">{moment(chat[0].value[3].created_at).format('hh:mm')}</div>
                                     <span className='close-btn'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="6.414" height="6.414" viewBox="0 0 6.414 6.414">
-                      <g id="x_26_" data-name="x (26)" transform="translate(1.01 0.957)">
-                        <line id="Line_12" data-name="Line 12" x1="5" y2="5" transform="translate(-0.303 -0.25)"
-                              fill="none" stroke="#004c8a" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1"/>
-                        <line id="Line_13" data-name="Line 13" x2="5" y2="5" transform="translate(-0.303 -0.25)"
-                              fill="none" stroke="#004c8a" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="1"/>
-                      </g>
-                    </svg>
-                    </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="6.414" height="6.414" viewBox="0 0 6.414 6.414">
+                                        <g id="x_26_" data-name="x (26)" transform="translate(1.01 0.957)">
+                                            <line id="Line_12" data-name="Line 12" x1="5" y2="5" transform="translate(-0.303 -0.25)"
+                                                fill="none" stroke="#004c8a" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="1"/>
+                                            <line id="Line_13" data-name="Line 13" x2="5" y2="5" transform="translate(-0.303 -0.25)"
+                                                fill="none" stroke="#004c8a" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="1"/>
+                                        </g>
+                                        </svg>
+                                    </span>
+                                    </div>
+                                    <div className='last-msg'>{chat[0].value[3].message}</div>
                                 </div>
                             );
                         })}
                     </div>
-
-
                     <div className='chat'>
                         <div className="messages-container">
                             {chat.map(msg => {
@@ -150,7 +141,6 @@ const Chat = (props) => {
             }
         />
     );
-
 }
 
 export default Chat;

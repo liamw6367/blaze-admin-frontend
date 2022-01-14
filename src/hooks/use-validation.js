@@ -26,8 +26,8 @@ export const useLoginValidation = (validateInput, checkEmptiness) => {
     };
 };
 
-export const useDataValidation = (validateInput) => {
-    const [enteredValue, setEnteredValue] = useState("");
+export const useDataValidation = (validateInput, initialValue = "") => {
+    const [enteredValue, setEnteredValue] = useState(initialValue);
     const [inputIsTouched, setInputIsTouched] = useState(false);
 
     const inputIsValid = validateInput(enteredValue);

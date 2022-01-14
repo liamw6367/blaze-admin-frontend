@@ -34,6 +34,31 @@
     position: relative;
 }
 
+.item-cnt {
+    display: flex;
+    justify-content: space-between;
+}
+
+.msg-time {
+    color: #b5bbbd;
+    /* padding-top: 10px; */
+    padding-right: 15px;
+    font-size: 10px;
+}
+
+.last-msg {
+    color: #b5bbbd;
+    /* padding-top: 10px; */
+    padding-right: 15px;
+    font-size: 12px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
 .sidebar .card-body {
     max-height: 1000px;
     overflow-y: scroll;
@@ -130,12 +155,6 @@ textarea::placeholder {
     border-radius: 10px;
     margin: 10px;
     display: flex;
-}
-
-.close-btn {
-    position: absolute;
-    top: 0;
-    right: 10px;
 }
 
 .chat-line {

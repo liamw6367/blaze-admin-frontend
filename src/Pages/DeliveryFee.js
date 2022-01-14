@@ -1,13 +1,44 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect} from 'react';
 import JustifyContext from '../Contexts/JustifyingContext';
 import { useDataValidation } from '../hooks/use-validation';
+import axios from 'axios';
 import Blaze from './Blaze';
 
 const DeliveryFee = () => {
     const justCtx = useContext(JustifyContext);
 
-    const [priceIsGiven, setPriceIsGiven] = useState(false);
+    // useEffect(() => {
+    //     axios
+    //         .put(`${process.env.REACT_APP_API_URL}/delivery-fee/update`)
+    //         .then((res) => {
+    //           console.log(res.data);
+    //           const deliveryFeeData = {
+    //             price: res.data.price
+    //         };
+    //         console.log(deliveryFeeData, "deliverydata!!!!!");
+    //         justCtx.passDeliveryFeeData(deliveryFeeData);
+    //         })
+    //         .catch((err) => {
+    //           console.log(err); 
+    //         });
+        
+    //   }, []);
+
+    const {
+        price,
+        id
+    } = justCtx.deliveryFeeData;
+
+    const [priceIsGiven, setPriceIsGiven] = useState(price ? true : false);
     const [wantToEdit, setWantToEdit] = useState(false);
+    //const [price, setPrice] = useState();
+
+    console.log(price);
+    
+
+    const isNotEmpty = value => {
+        return value && value.toString().trim() !== "";
+    }
 
     const {
         enteredValue: enteredPrice,
@@ -15,17 +46,37 @@ const DeliveryFee = () => {
         inputIsInvalid: priceInputIsInvalid,
         changeInputValueHandler: changePriceInputValueHandler,
         blurInputHandler: blurPriceInputHandler,
-    } = useDataValidation((value) => value.trim() !== "");
+    } = useDataValidation(isNotEmpty, price);
 
     const deliveryFeeIsValid = priceInputIsValid;
 
     const deliveryFeeHandler = (event) => {
         event.preventDefault();
+        axios
+            .put(`${process.env.REACT_APP_API_URL}/delivery-fee/update`, {
+                'price': enteredPrice,
+                id
+            
+            })
+            .then((res) => {
+              console.log(res.data);
+              const deliveryFeeData = {
+                price: res.data.price
+            };
+            console.log(deliveryFeeData, "deliverydata!!!!!");
+            justCtx.passDeliveryFeeData(deliveryFeeData);
+            })
+            .catch((err) => {
+              console.log(err); 
+            }
+        );
         const currentDeliveryFee = enteredPrice;
         console.log(currentDeliveryFee);
         setPriceIsGiven(true);
         setWantToEdit(false);
     };
+
+    console.log(enteredPrice);
 
     // const priceInput = document.getElementById("delivery-fee");
 
