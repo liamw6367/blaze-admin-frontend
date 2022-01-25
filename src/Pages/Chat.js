@@ -46,7 +46,7 @@ const Chat = (props) => {
             // })
             socketRef.current.on("userConnected", (data) => {
                 console.log(data, '111');
-                setChat(data);
+                //setChat(data);
             })
             return () => socketRef.current.disconnect()
         },
@@ -98,8 +98,8 @@ const Chat = (props) => {
                             return (
                                 <div className="contact">
                                     <div className='item-cnt'>
-                                    <div>{user.first_name + " " + user.last_name} </div>
-                                    <div className="msg-time">{moment(chat[0].value[3].created_at).format('hh:mm')}</div>
+                                    {/* <div>{user.first_name + " " + user.last_name} </div>
+                                    <div className="msg-time">{moment(chat[0].value[3].created_at).format('hh:mm')}</div> */}
                                     <span className='close-btn'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="6.414" height="6.414" viewBox="0 0 6.414 6.414">
                                         <g id="x_26_" data-name="x (26)" transform="translate(1.01 0.957)">
