@@ -34,13 +34,17 @@ const Chat = (props) => {
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/users/get-users-by-role`, {params: {role: 'customer'}})
-            .then(res => setUsers(res.data))
+            // .then(res => setUsers(res.data))
     }, []);
 
     useEffect(
         () => {
             socketRef.current = io.connect(process.env.REACT_APP_API_URL)
-            socketRef.current.on("getMessages", (data) => {
+            // socketRef.current.on("getMessages", (data) => {
+            //     console.log(data, '111');
+            //     setChat(data);
+            // })
+            socketRef.current.on("userConnected", (data) => {
                 console.log(data, '111');
                 setChat(data);
             })
