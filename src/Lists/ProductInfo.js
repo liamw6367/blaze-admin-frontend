@@ -7,7 +7,7 @@ import {API_URL} from "../configs/config";
 import removeIcon from "../assets/icons/main/remove-icon.png";
 import DeletingModal from "../Modals/DeletingModal";
 
-const ProductInfo = (props) => {
+const    ProductInfo = (props) => {
     const [modalIsShown, setModalIsShown] = useState(false);
     const [currentProduct, setCurrentProduct] = useState({});
     const [modalIsOpen, setModalIsOpen] = useState(false);

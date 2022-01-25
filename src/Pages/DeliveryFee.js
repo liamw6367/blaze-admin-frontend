@@ -7,23 +7,6 @@ import Blaze from './Blaze';
 const DeliveryFee = () => {
     const justCtx = useContext(JustifyContext);
 
-    // useEffect(() => {
-    //     axios
-    //         .put(`${process.env.REACT_APP_API_URL}/delivery-fee/update`)
-    //         .then((res) => {
-    //           console.log(res.data);
-    //           const deliveryFeeData = {
-    //             price: res.data.price
-    //         };
-    //         console.log(deliveryFeeData, "deliverydata!!!!!");
-    //         justCtx.passDeliveryFeeData(deliveryFeeData);
-    //         })
-    //         .catch((err) => {
-    //           console.log(err); 
-    //         });
-        
-    //   }, []);
-
     const {
         price,
         id
@@ -31,11 +14,9 @@ const DeliveryFee = () => {
 
     const [priceIsGiven, setPriceIsGiven] = useState(price ? true : false);
     const [wantToEdit, setWantToEdit] = useState(false);
-    //const [price, setPrice] = useState();
 
     console.log(price);
-    
-
+     
     const isNotEmpty = value => {
         return value && value.toString().trim() !== "";
     }
@@ -56,7 +37,6 @@ const DeliveryFee = () => {
             .put(`${process.env.REACT_APP_API_URL}/delivery-fee/update`, {
                 'price': enteredPrice,
                 id
-            
             })
             .then((res) => {
               console.log(res.data);

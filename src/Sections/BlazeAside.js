@@ -76,6 +76,9 @@ const BlazeAside = () => {
                             <NavLink to='/admin/chat' className={justCtx.isExtended ? "chat" : "narrow-chat "}>
                                 <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Chat/messages</p> : ""}  
                             </NavLink>
+                            <NavLink to='/admin/monitoring' className={justCtx.isExtended ? "monitoring" : "narrow-monitoring "}>
+                                <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Monitoring</p> : ""}  
+                            </NavLink>
                             <NavLink to='/admin/promotional-message' className={justCtx.isExtended ? "prom-message" : "narrow-prom-message"}>
                                 <i/> {justCtx.isExtended ? <p className={justCtx.isExtended ? "p" : "narrow-p"}>Promotional Message</p> : ""}  
                             </NavLink>

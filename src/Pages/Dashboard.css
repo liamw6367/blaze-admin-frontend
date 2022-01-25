@@ -272,3 +272,119 @@
     top: 18px;
     transform: translateX(32px);
 }
+
+.chat_categories {
+    display: flex;
+    justify-content: start;
+    align-items: left;
+    margin: 15px 15px 25px 0px;
+}
+
+.category_item {
+    color: #004C8A;
+    font: normal normal 600 16px/24px Muli;
+    padding: 15px;
+}
+
+.category_item_checked {
+    color: #004C8A;
+    font: normal normal 600 16px/24px Muli;
+    background: #CBDEEE 0% 0% no-repeat padding-box;
+    padding: 15px;
+    border-bottom: 4px solid #FF8400;
+}
+
+.customers-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.customers-info-table th, td {
+    padding: 0 35px;
+}
+.customers-info-table thead tr {
+    text-align: left;
+    color: #000000;
+    font-family: "Muli-Regular";
+    font-size: 16px;
+}
+.customers-info-box {
+    background-color: #FFFFFF;
+}
+.margin-top {
+    margin-top: 42px;
+}
+.customers-info-box > div {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+}
+.customers-info-table th, 
+.customers-info-table td {
+    padding-bottom: 30px;
+}
+.customers-info-table thead tr,
+.customers-info-table tbody tr:not(:last-child),
+.customers-info-table tbody .last-tr-border:last-child {
+    border-bottom: 1px solid #BFBFBF;
+}
+.customers-info-table th {
+    padding-top: 25px;
+     
+}
+.customers-info-table td {
+    padding-top: 30px;
+      
+}
+.customers-info-table tbody tr {
+    font-family: "Muli-Regular";
+    color: #000000;
+    font-size: 15px;
+}
+.customers-info-table thead tr th:last-child {
+    text-align: left;
+}
+
+.customers-info-table tbody tr td:last-child {
+    text-align: left;
+}
+
+tr .group-td-boxes {
+    width: 150px;
+}
+thead tr .text-align {
+    padding-left: 60px;
+}
+.customers-info-table thead tr .last-box {
+    width: 150px;
+}
+.customers-info-table thead tr .send-message-box {
+    text-align: left;
+}
+thead tr .order-td-box {
+    padding-left: 0;
+}
+
+.chat-button {
+    width: 82px;
+    height: 38px;
+    position: absolute;
+    /* margin-top: 45px; */
+    /* right: 50px; */
+    transform: translateY(-50%);
+    background-color: rgba(255, 132, 0, 0.8);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.1s linear;
+}
+.chat-button:hover {
+    background-color: rgb(255, 132, 0);
+}
+.chat-button {
+    text-decoration: none;
+    outline: none;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+    color: #FFFFFF;
+}
