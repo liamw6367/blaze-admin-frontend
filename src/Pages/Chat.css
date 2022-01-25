@@ -104,9 +104,9 @@
     flex-shrink: 6;
 }
 
-.sidebar .card-body .contact .contact-btn:hover, .active {
+/* .sidebar .card-body .contact .contact-btn:hover, .active {
     background: #eee;
-}
+} */
 
 /* .chat {
     width: 100%; 
