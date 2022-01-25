@@ -46,7 +46,6 @@ const Chat = (props) => {
             // })
             socketRef.current.on("userConnected", (data) => {
                 console.log(data, '111');
-                setChat(data);
             })
             return () => socketRef.current.disconnect()
         },
