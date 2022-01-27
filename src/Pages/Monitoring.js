@@ -71,8 +71,8 @@ const UserList = () => {
         main={
           <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
             <div className="chat_categories">
-              <div className={showChat ? "category_item": "category_item_checked"}>Assigned To Me</div>
-              <div className={showChat ? "category_item_checked": "category_item"}>Assigned</div>
+              <div className={showChat ? "category_item": "category_item_checked"}>Unassigned</div>
+              <div className={showChat ? "category_item_checked": "category_item"}>Assigned To Me</div>
               <div className="category_item">Completed</div>
             </div>
             <div className="customers-info-box">
@@ -96,7 +96,7 @@ const UserList = () => {
                         <td>{chat.msg}</td>
                         {chat  ?
                           <td>
-                          <button className="chat-button" onClick={() =>  setShowChat(!showChat)}>Assign</button>
+                          <button className="chat-button" onClick={() =>  setShowChat(!showChat)}>Assign to me</button>
                       </td> :
                       <div></div>}
                       </tr>

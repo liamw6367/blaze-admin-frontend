@@ -365,8 +365,9 @@ thead tr .order-td-box {
 }
 
 .chat-button {
-    width: 82px;
-    height: 38px;
+    width: 120px;
+    height: 30px;
+    padding: 10px;
     position: absolute;
     /* margin-top: 45px; */
     /* right: 50px; */
