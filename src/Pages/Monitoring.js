@@ -96,7 +96,7 @@ const UserList = () => {
                         <td>{chat.msg}</td>
                         {chat  ?
                           <td>
-                          <button className="chat-button" onClick={() =>  setShowChat(!showChat)}>Chat</button>
+                          <button className="chat-button" onClick={() =>  setShowChat(!showChat)}>Assign</button>
                       </td> :
                       <div></div>}
                       </tr>
