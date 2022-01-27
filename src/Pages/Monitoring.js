@@ -5,6 +5,7 @@ import UserInfo from '../Lists/UserInfo';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import io from "socket.io-client";
+import SupportChat from '../Modals/SupportChat';
 
 
 
@@ -16,15 +17,19 @@ const UserList = () => {
     const [completed, setCompleted] = useState(false);
 
     const [chat, setChat] = useState([]);
+    // const [showChatBox, setShowChatBox] = useState(false);
 
     
-    const users = [
-        {fullName: "John Doe", email: "john@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"},
-        {fullName: "Jane Doe", email: "john@gmail.com", location: "Mumbai", phoneNumber: "+18189875433", message: "How are you?"},
-        {fullName: "Liam Richards", email: "test@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"},
-        {fullName: "Ken Norton", email: "norton@gmail.com", location: "Mumbai", phoneNumber: "+18189875433", message: "How are you?"},
-        {fullName: "gbfdhfgnf", email: "john@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"}
-    ]
+ const [showChat, setShowChat] = useState(false)
+
+
+    // const users = [
+    //     {fullName: "John Doe", email: "john@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"},
+    //     {fullName: "Jane Doe", email: "john@gmail.com", location: "Mumbai", phoneNumber: "+18189875433", message: "How are you?"},
+    //     {fullName: "Liam Richards", email: "test@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"},
+    //     {fullName: "Ken Norton", email: "norton@gmail.com", location: "Mumbai", phoneNumber: "+18189875433", message: "How are you?"},
+    //     {fullName: "gbfdhfgnf", email: "john@gmail.com", location: "Dehli", phoneNumber: "+18189875433", message: "How are you?"}
+    // ]
 
     const socketRef = useRef();
 
@@ -42,8 +47,15 @@ const UserList = () => {
           })
           return () => socketRef.current.disconnect()
       },
-      [chat]
+      [chat, setShowChat]
   )
+
+//   function chatAssigned (e) {
+//     e.preventDefault();
+   
+    
+  
+// }
     
   console.log(chat);
     
@@ -59,8 +71,8 @@ const UserList = () => {
         main={
           <div className={`blaze-main ${justCtx.isExtended ? "" : "wide"}`}>
             <div className="chat_categories">
-              <div className="category_item_checked">Unassigned</div>
-              <div className="category_item">Assigned</div>
+              <div className={showChat ? "category_item": "category_item_checked"}>Assigned To Me</div>
+              <div className={showChat ? "category_item_checked": "category_item"}>Assigned</div>
               <div className="category_item">Completed</div>
             </div>
             <div className="customers-info-box">
@@ -82,11 +94,13 @@ const UserList = () => {
                         <td>{chat.location}</td>
                         <td>{chat.phone}</td>
                         <td>{chat.msg}</td>
-                        <td>
-                          <div className="chat-button">Chat</div>
-                        </td>
+                        {chat  ?
+                          <td>
+                          <button className="chat-button" onClick={() =>  setShowChat(!showChat)}>Chat</button>
+                      </td> :
+                      <div></div>}
                       </tr>
-                  {/* {users.map((user) => {
+                  {/* {users.map((user) => { 
                     return (
                       <tr>
                         <td>{user.fullName}</td>
@@ -102,7 +116,9 @@ const UserList = () => {
                   })} */}
                 </tbody>
               </table>
+              <SupportChat setShowChat = { setShowChat } showChat={showChat}/>
             </div>
+            
           </div>
         }
       />
